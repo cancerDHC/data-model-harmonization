@@ -1,0 +1,3 @@
+Open the json-examples.code-workspace in Visual Studio Code.
+
+The **ccdh-json-schema-v1.0.1** folder has been configured to apply schema validation according to the v1.0.1 build. There is a stub file in there to allow for specifying the type of the JSON object by first entering a "_type" field and setting it's value to one of the model types. After that, code completion should only suggest fields and completion based on that type.
