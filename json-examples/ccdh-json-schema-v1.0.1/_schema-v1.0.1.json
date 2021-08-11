@@ -3,6 +3,11 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "https://raw.githubusercontent.com/cancerDHC/ccdhmodel/v1.0.1/jsonschema/ccdhmodel.schema.json",
   "required": ["_type"],
+
+  "properties": {
+    
+
+  },
   "type":"object",
   "allOf": [
 
@@ -17,7 +22,7 @@
     {"if":{"properties":{"_type":{"const":"Coding"}}}, "then":{"$ref": "#/definitions/Coding"}},
     {"if":{"properties":{"_type":{"const":"Diagnosis"}}}, "then":{"$ref": "#/definitions/Diagnosis"}},
     {"if":{"properties":{"_type":{"const":"DimensionalObservation"}}}, "then":{"$ref": "#/definitions/DimensionalObservation"}},
-    {"if":{"properties":{"_type":{"const":"DimensionalObservationSet"}}}, "then":{"$ref": "#/definitions/DimensionalObservationSet"}}
+    {"if":{"properties":{"_type":{"const":"DimensionalObservationSet"}}}, "then":{"$ref": "#/definitions/DimensionalObservationSet"}},
     {"if":{"properties":{"_type":{"const":"Document"}}}, "then":{"$ref": "#/definitions/Document"}},
     {"if":{"properties":{"_type":{"const":"EnvironmentalExposureObservation"}}}, "then":{"$ref": "#/definitions/EnvironmentalExposureObservation"}},
     {"if":{"properties":{"_type":{"const":"ExecutionConditionObservation"}}}, "then":{"$ref": "#/definitions/ExecutionConditionObservation"}},
@@ -31,7 +36,7 @@
     {"if":{"properties":{"_type":{"const":"Organization"}}}, "then":{"$ref": "#/definitions/Organization"}},
     {"if":{"properties":{"_type":{"const":"Quantity"}}}, "then":{"$ref": "#/definitions/Quantity"}},
     {"if":{"properties":{"_type":{"const":"ResearchProject"}}}, "then":{"$ref": "#/definitions/ResearchProject"}},
-    {"if":{"properties":{"_type":{"const":"ResearchSubject"}}}, "then":{"$ref": "#/definitions/ResearchSubject"}}
+    {"if":{"properties":{"_type":{"const":"ResearchSubject"}}}, "then":{"$ref": "#/definitions/ResearchSubject"}},
     {"if":{"properties":{"_type":{"const":"Specimen"}}}, "then":{"$ref": "#/definitions/Specimen"}},
     {"if":{"properties":{"_type":{"const":"SpecimenContainer"}}}, "then":{"$ref": "#/definitions/SpecimenContainer"}},
     {"if":{"properties":{"_type":{"const":"SpecimenCreationActivity"}}}, "then":{"$ref": "#/definitions/SpecimenCreationActivity"}},
