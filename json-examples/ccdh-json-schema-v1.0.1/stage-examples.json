@@ -1,0 +1,21 @@
+{
+  "ccdhx-stage-1": 
+  {
+    "_type": "CancerStageObservationSet",
+    "_instance": {
+      "method_type": [ {"coding": [{ "system": "/stages/systems",  "code": "FIGO Staging System"}]}],
+      "observations": [
+        {
+          "observation_type": { "coding": [ { "system": "/stages/components", "code": "version" } ] },
+          "valueCodeableConcept": { "coding": [ { "system": "/stages/figo/versions","code": "2018" } ] } },
+        {
+          "observation_type": { "coding": [ { "system": "/stages/components", "code": "overall-stage" } ] },
+          "valueCodeableConcept": { "coding": [
+            { "system": "/stages/gdc", "code": "Stage III" } , 
+            { "system": "/stages/figo/2018/terms", "code": "III" }
+            ] }
+        }
+      ]
+    }
+  }
+}

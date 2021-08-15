@@ -1,0 +1,50 @@
+[
+ {
+    "system":  method_type[coding.system="/stages/systems"]
+                    .coding.code,
+    "version": observations[observation_type.coding.system = "/stages/components" and observation_type.coding.code = "version"]
+                    .valueCodeableConcept.coding[system="/stages/figo/versions"]
+                    .code,
+    "stage":   observations[observation_type.coding.system = "/stages/components" and observation_type.coding.code = "overall-stage"]
+                    .valueCodeableConcept.coding[system="/stages/figo/2018/terms"]
+                    .code
+},
+{
+    "system":  method_type[coding.system="/stages/systems"]
+                    .coding.code
+                    & " " 
+                    & observations[observation_type.coding.system = "/stages/components" and observation_type.coding.code = "version"]
+                    .valueCodeableConcept.coding[system="/stages/figo/versions"]
+                    .code,
+    "stage":   observations[observation_type.coding.system = "/stages/components" and observation_type.coding.code = "overall-stage"]
+                    .valueCodeableConcept.coding[system="/stages/figo/2018/terms"]
+                    .code
+
+},
+
+
+{
+    "state":  method_type[coding.system="/stages/systems"]
+                    .coding.code
+                    & " " 
+                    & observations[observation_type.coding.system = "/stages/components" and observation_type.coding.code = "version"]
+                    .valueCodeableConcept.coding[system="/stages/figo/versions"]
+                    .code
+                    & " "
+                    & observations[observation_type.coding.system = "/stages/components" and observation_type.coding.code = "overall-stage"]
+                    .valueCodeableConcept.coding[system="/stages/figo/2018/terms"]
+                    .code
+},
+
+method_type[coding.system="/stages/systems"]
+                    .coding.code
+                    & " " 
+                    & observations[observation_type.coding.system = "/stages/components" and observation_type.coding.code = "version"]
+                    .valueCodeableConcept.coding[system="/stages/figo/versions"]
+                    .code
+                    & " "
+                    & observations[observation_type.coding.system = "/stages/components" and observation_type.coding.code = "overall-stage"]
+                    .valueCodeableConcept.coding[system="/stages/figo/2018/terms"]
+                    .code
+
+]
