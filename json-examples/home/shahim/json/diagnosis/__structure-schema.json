@@ -1,8 +1,32 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  
-  "$ref": "#/$defs/Diagnosis",
-
+  "allOf": [
+    {
+      "$comment": "First we validate the structure schema",
+      "$ref": "#/$defs/Diagnosis"
+    },
+    {
+      "if": {
+        "properties": {
+          "condition": {
+            "properties": {
+              "coding": {
+                "contains": {
+                  "properties": {
+                    "code": {
+                      "$ref": "#/$defs/vs-ccdh-conditions-stageable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {},
+      "else": false
+    }
+  ],
   "$defs": {
     "BodySite": {
       "additionalProperties": false,
@@ -76,6 +100,9 @@
       "additionalProperties": false,
       "description": "A collection of characteristics that describe an abnormal condition of the body as assessed at a point in time. May be used to capture information about neoplastic and non-neoplastic conditions.",
       "properties": {
+        "$schema": {
+          "type": "string"
+        },
         "condition": {
           "description": "Code that captures the condition being diagnosed (e.g. ICD-O, ICD-10, SNOMED, etc.)",
           "$ref": "#/$defs/CodeableConcept"
@@ -110,27 +137,12 @@
           },
           "type": "array"
         },
-        "prior_diagnosis": {
-          "$ref": "#/$defs/Diagnosis",
-          "description": "A reference to a prior cancer diagnosis.  In the case of relapse/recurrent disease, this attribute may be populated with a reference to the initial diagnosis."
-        },
         "stage": {
           "description": "The extent of a cancer in the body. Staging is usually based on the size of the tumor, whether lymph nodes contain cancer, and whether the cancer has spread from the original site to other parts of the body.",
           "items": {
             "$ref": "#/$defs/ObservationSet"
           },
           "type": "array"
-        },
-        "supporting_observation": {
-          "description": "One or more observations that capture information relevant to this condition or diagnosis.",
-          "items": {
-            "$ref": "#/$defs/Observation"
-          },
-          "type": "array"
-        },
-        "year_at_diagnosis": {
-          "description": "Numeric value to represent the year of an individual's diagnosis.",
-          "type": "integer"
         }
       },
       "required": [],
@@ -225,434 +237,107 @@
       "title": "ObservationSet",
       "type": "object"
     },
+    "vs-ccdh-conditions-stageable": {
+      "enum": [
+        "cancer",
+        "cancer3"
+      ]
+    },
     "vs-ccdh-staging-systems": {
       "enum": [
-        {
-          "system": "http://ccdh/staging/systems",
-          "code": "AJCC",
-          "label": "AJCC Staging System"
-        },
-        {
-          "system": "http://ccdh/staging/systems",
-          "code": "FIGO",
-          "label": "FIGO Staging System"
-        }
+        "AJCC",
+        "FIGO"
       ]
     },
     "vs-ccdh-staging-figo-versions": {
       "enum": [
-        {
-          "system": "http://ccdh/staging/figo/versions",
-          "code": "2018",
-          "label": "Version 2018"
-        },
-        {
-          "system": "http://ccdh/staging/systems",
-          "code": "pre2018",
-          "label": "Version pre2018"
-        }
+        "2018",
+        "pre2018"
       ]
     },
     "vs-ccdh-staging-figo-2018-terms": {
-      "$comment": "This of this as the code/terminology system for the FIGO 2018 terms",
       "enum": [
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "0",
-          "label": "Stage 0"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "I",
-          "label": "Stage I"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA",
-          "label": "Stage IA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA1",
-          "label": "Stage IA1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA2",
-          "label": "Stage IA2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB",
-          "label": "Stage IB"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB1",
-          "label": "Stage IB1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB2",
-          "label": "Stage IB2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB3",
-          "label": "Stage IB3"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IC",
-          "label": "Stage IC"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IC1",
-          "label": "Stage IC1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IC2",
-          "label": "Stage IC2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IC3",
-          "label": "Stage IC3"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "II",
-          "label": "Stage II"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIA",
-          "label": "Stage IIA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIA1",
-          "label": "Stage IIA1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIA2",
-          "label": "Stage IIA2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIB",
-          "label": "Stage IIB"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "III",
-          "label": "Stage III"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIA",
-          "label": "Stage IIIA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIA1",
-          "label": "Stage IIIA1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIA1i",
-          "label": "Stage IIIA1i"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIA1ii",
-          "label": "Stage IIIA1ii"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIA2",
-          "label": "Stage IIIA2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIB",
-          "label": "Stage IIIB"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIC",
-          "label": "Stage IIIC"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIICr",
-          "label": "Stage IIICr"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIICp",
-          "label": "Stage IIICp"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIC1",
-          "label": "Stage IIIC1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIC1r",
-          "label": "Stage IIIC1r"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIC1p",
-          "label": "Stage IIIC1p"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIC2",
-          "label": "Stage IIIC2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIC2r",
-          "label": "Stage IIIC2r"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IIIC2p",
-          "label": "Stage IIIC2p"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IV",
-          "label": "Stage IV"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IVA",
-          "label": "Stage IVA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IVB",
-          "label": "Stage IVB"
-        }
+        "0",
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB",
+        "IB1",
+        "IB2",
+        "IB3",
+        "IC",
+        "IC1",
+        "IC2",
+        "IC3"
       ]
     },
     "vs-ccdh-staging-figo-2018-ovarian": {
       "enum": [
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "I",
-          "label": "Stage I"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA",
-          "label": "Stage IA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB",
-          "label": "Stage IB"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IC",
-          "label": "Stage IC"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IC1",
-          "label": "Stage IC1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IC2",
-          "label": "Stage IC2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IC3",
-          "label": "Stage IC3"
-        }
+        "I",
+        "IA",
+        "IB",
+        "IC",
+        "IC1",
+        "IC2",
+        "IC3"
       ]
     },
     "vs-ccdh-staging-figo-2018-endometrial": {
       "enum": [
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "0",
-          "label": "Stage 0"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "I",
-          "label": "Stage I"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA",
-          "label": "Stage IA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB",
-          "label": "Stage IB"
-        }
+        "0",
+        "I",
+        "IA",
+        "IB"
       ]
     },
     "vs-ccdh-staging-figo-2018-cervical": {
       "enum": [
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "I",
-          "label": "Stage I"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA",
-          "label": "Stage IA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA1",
-          "label": "Stage IA1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA2",
-          "label": "Stage IA2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB",
-          "label": "Stage IB"
-        }
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB"
       ]
     },
     "vs-ccdh-staging-figo-pre2018-cervical": {
       "enum": [
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "0",
-          "label": "Stage 0"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "I",
-          "label": "Stage I"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA",
-          "label": "Stage IA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA1",
-          "label": "Stage IA1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA2",
-          "label": "Stage IA2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB",
-          "label": "Stage IB"
-        }
+        "0",
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB"
       ]
     },
     "vs-ccdh-staging-figo-2018-vaginal": {
       "enum": [
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "0",
-          "label": "Stage 0"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "I",
-          "label": "Stage I"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB1",
-          "label": "Stage IB1"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB2",
-          "label": "Stage IB2"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB3",
-          "label": "Stage IB3"
-        }
+        "0",
+        "I",
+        "IB1",
+        "IB2",
+        "IB3"
       ]
     },
     "vs-ccdh-staging-figo-2018-vulval": {
       "enum": [
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "I",
-          "label": "Stage I"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IA",
-          "label": "Stage IA"
-        },
-        {
-          "system": "http://ccdh/staging/figo/2018/terms",
-          "code": "IB",
-          "label": "Stage IB"
-        }
+        "I",
+        "IA",
+        "IB"
       ]
     },
     "vs-ccdh-body-sites-figo": {
       "enum": [
-        {
-          "system": "http://ccdh/body-sites/figo",
-          "code": "ovary",
-          "label": "Ovary body site"
-        },
-        {
-          "system": "http://ccdh/body-sites/figo",
-          "code": "endometrium",
-          "label": "Endometrium body site"
-        },
-        {
-          "system": "http://ccdh/body-sites/figo",
-          "code": "cervix",
-          "label": "Cervix body site"
-        },
-        {
-          "system": "http://ccdh/body-sites/figo",
-          "code": "vagina",
-          "label": "Vagina body site"
-        },
-        {
-          "system": "http://ccdh/body-sites/figo",
-          "code": "vulva",
-          "label": "Vulva body site"
-        }
+        "ovary",
+        "endometrium",
+        "cervix",
+        "vagina",
+        "vulva"
       ]
     },
     "vs-ccdh-staging-": {
       "enum": [
-        {
-          "system": "http://",
-          "code": "code value",
-          "label": "some label"
-        }
+        "code value"
       ]
     }
   }

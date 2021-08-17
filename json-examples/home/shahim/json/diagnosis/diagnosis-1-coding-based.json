@@ -1,0 +1,16 @@
+{
+  "$schema": "./__structure-schema.json",
+  "condition": {
+    "coding": [
+      {
+        "code": "other1"
+      },
+      {
+        "code": "cancer3"
+      },
+      {
+        "code": "other"
+      }
+    ]
+  }
+}

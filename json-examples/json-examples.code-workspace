@@ -23,6 +23,7 @@
 		],
 		"workbench.colorCustomizations": {
 			"editor.lineHighlightBackground": "#123333f8"
-		}
+		},
+		"json.trace.server": "verbose"
 	}
 }
