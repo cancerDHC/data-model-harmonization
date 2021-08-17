@@ -1,6 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/cancerDHC/data-model-harmonization/master/json-examples/home/shahim/json/diagnosis/schema/structure.json",
+
+  "$ref": "#$defs/Diagnosis",
+
   "$defs": {
     "BodySite": {
       "additionalProperties": false,
