@@ -6,20 +6,23 @@
 	],
 	"settings": {
 		"json.schemas": [
-
-
-
 			{
 				"fileMatch": [
 					"/ccdh-json-schema-v1.0.1/*.json",
 					"!/ccdh-json-schema-v1.0.1/_*.json"
 				],
 				"url": "./ccdh-json-schema-v1.0.1/__schema.json"
+			},
+			{
+				"fileMatch": [
+					"/home/shahim/json/diagnosis/*.json",
+					"!/home/shahim/json/diagnosis/_*.json"
+				],
+				"url": "./home/shahim/json/diagnosis/__schema.json"
 			}
-
 		],
 		"workbench.colorCustomizations": {
-		"editor.lineHighlightBackground": "#123333f8"
+			"editor.lineHighlightBackground": "#123333f8"
 		}
 	}
 }
