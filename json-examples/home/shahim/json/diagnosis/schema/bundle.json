@@ -20,7 +20,7 @@
           "if": {
             "properties": {
               "condition": {
-                "$ref": "http://ccdh/json/schema/is-condition-coding-stageable"
+                "$ref": "http://ccdh/json/schema/coding-is-stageable-condition"
               }
             }
           },
@@ -29,9 +29,9 @@
         }
       ]
     },
-    "is-condition-coding-stageable": {
+    "coding-is-stageable-condition": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/is-condition-coding-stageable",
+      "$id": "http://ccdh/json/schema/coding-is-stageable-condition",
       "properties": {
         "coding": {
           "contains": {
@@ -40,7 +40,7 @@
                 "const": "http://ccdh/vs/stageable-condition"
               },
               "code": {
-                "$ref": "http://ccdh/json/schema/codes-stageable-condition-enum"
+                "$ref": "http://ccdh/json/schema/code-is-stageable-condition"
               }
             },
             "required": [
@@ -49,6 +49,11 @@
           }
         }
       }
+    },
+    "code-is-stageable-condition": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/code-is-stageable-condition",
+      "$ref": "http://ccdh/json/schema/codes-stageable-condition-enum"
     },
     "codes-figo-body-site-enum": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
