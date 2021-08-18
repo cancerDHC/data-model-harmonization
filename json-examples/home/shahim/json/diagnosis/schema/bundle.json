@@ -11,11 +11,36 @@
     "validate-diagnosis-1-coding-based-example": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/validate-diagnosis-1-coding-based-example",
+      "$ref": "http://ccdh/json/schema/validate-diagnosis"
+    },
+    "validate-diagnosis": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/validate-diagnosis",
       "allOf": [
         {
-          "$comment": "First we validate with the structure schema",
+          "$comment": "First we validate with the Diagnosis structure, mostly based on the CCDH built Diagnosis schema.",
           "$ref": "http://ccdh/json/schema/structures#/$defs/Diagnosis"
         },
+        {
+          "$comment": "First we validate with the Diagnosis structure, mostly based on the CCDH built Diagnosis schema.",
+          "$ref": "http://ccdh/json/schema/validate-diagnosis-values"
+        },
+        {
+          "$comment": "Logical validation",
+          "$ref": "http://ccdh/json/schema/validate-diagnosis-logical"
+        }
+      ]
+    },
+    "validate-diagnosis-values": {
+      "$comment": "This does basic, per field, harmonized value presence validation. If a field is supposed to have a harmonized value, that should be checked here.",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/validate-diagnosis-values"
+    },
+    "validate-diagnosis-logical": {
+      "$comment": "This does logical validation, based on the full content of the instance. For now, it's only implementing FIGO staging validation for a hypothetical \"cancer\" condition, and per primary_site .",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/validate-diagnosis-logical",
+      "allOf": [
         {
           "if": {
             "properties": {
@@ -24,16 +49,33 @@
               }
             }
           },
-          "then": true,
+          "then": {
+            "$ref": "http://ccdh/json/schema/validate-diagnosis-staging"
+          },
           "else": false
         }
       ]
+    },
+    "validate-diagnosis-staging": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/validate-diagnosis-staging",
+      "properties": {
+        "primary_side": {},
+        "stage": {
+          "$ref": "http://ccdh/json/schema/validate-staging"
+        }
+      }
+    },
+    "validate-staging": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/validate-staging"
     },
     "coding-is-stageable-condition": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/coding-is-stageable-condition",
       "properties": {
         "coding": {
+          "maxContains": 1,
           "contains": {
             "properties": {
               "system": {
