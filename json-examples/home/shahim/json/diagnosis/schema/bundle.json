@@ -86,7 +86,8 @@
               }
             },
             "required": [
-              "system"
+              "system",
+              "code"
             ]
           }
         }
