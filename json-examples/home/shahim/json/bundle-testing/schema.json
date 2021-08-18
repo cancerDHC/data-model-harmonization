@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://example/bundle",
+  
+  "$ref": "http://example/Person",
+
+
+  "$defs": {
+    "Person": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://example/Person",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

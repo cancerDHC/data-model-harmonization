@@ -6,6 +6,7 @@
 	],
 	"settings": {
 		"json.schemas": [
+
 			{
 				"fileMatch": [
 					"/ccdh-json-schema-v1.0.1/*.json",
@@ -18,7 +19,7 @@
 					"/home/shahim/json/diagnosis/*.json",
 					"!/home/shahim/json/diagnosis/_*.json"
 				],
-				"url": "./home/shahim/json/diagnosis/__schema.json"
+				"url": "./home/shahim/json/diagnosis/schema/bundle.json"
 			}
 		],
 		"workbench.colorCustomizations": {

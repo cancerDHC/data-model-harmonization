@@ -1,0 +1,18 @@
+{
+  "condition": {
+    "coding": [
+      {
+        "system": "http://ccdh/vs/stageable-condition",
+        "code": "other1"
+      },
+      {
+        "system": "one",
+        "code": "cancer"
+      },
+      {
+        "system": "http://ccdh/vs/stageable-condition",
+        "code": "cancer"
+      }
+    ]
+  }
+}

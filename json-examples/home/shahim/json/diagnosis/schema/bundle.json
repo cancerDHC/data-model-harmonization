@@ -1,21 +1,506 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "http://ccdh/json/schema/bundle",
-
+  "$comment": "A schema bundle of all schemas, to help with using at: https://jschon.dev/ since IDEs don't give good validation results for complex schemas, or don't implement the specific version used here.",
+  "$ref": "http://ccdh/json/schema/validate-diagnosis-1-coding-based-example",
   "$defs": {
-    "diagnosis-1": {
+    "_template": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/diagnosis-1",
+      "$id": "http://ccdh/json/schema/"
+    },
+    "validate-diagnosis-1-coding-based-example": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/validate-diagnosis-1-coding-based-example",
       "allOf": [
         {
           "$comment": "First we validate with the structure schema",
-          "$ref": "http://ccdh/json/schema/structure#/$defs/Diagnosis"
+          "$ref": "http://ccdh/json/schema/structures#/$defs/Diagnosis"
+        },
+        {
+          "if": {
+            "properties": {
+              "condition": {
+                "$ref": "http://ccdh/json/schema/is-condition-coding-stageable"
+              }
+            }
+          },
+          "then": true,
+          "else": false
         }
       ]
     },
-    "structure": {
+    "is-condition-coding-stageable": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/structure",
+      "$id": "http://ccdh/json/schema/is-condition-coding-stageable",
+      "properties": {
+        "coding": {
+          "contains": {
+            "properties": {
+              "system": {
+                "const": "http://ccdh/vs/stageable-condition"
+              },
+              "code": {
+                "$ref": "http://ccdh/json/schema/codes-stageable-condition-enum"
+              }
+            },
+            "required": [
+              "system"
+            ]
+          }
+        }
+      }
+    },
+    "codes-figo-body-site-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-body-site-enum",
+      "enum": [
+        "I",
+        "IA",
+        "IB"
+      ]
+    },
+    "codes-figo-2018-stage-vulval-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-2018-stage-vulval-enum",
+      "enum": [
+        "I",
+        "IA",
+        "IB"
+      ]
+    },
+    "codes-figo-2018-stage-vaginal-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-2018-stage-vaginal-enum",
+      "enum": [
+        "0",
+        "I",
+        "IB1",
+        "IB2",
+        "IB3"
+      ]
+    },
+    "codes-figo-pre2018-stage-cervical-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-pre2018-stage-cervical-enum",
+      "enum": [
+        "0",
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB"
+      ]
+    },
+    "codes-figo-2018-stage-cervical-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-2018-stage-cervical-enum",
+      "enum": [
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB"
+      ]
+    },
+    "codes-figo-2018-stage-endometrial-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-2018-stage-endometrial-enum",
+      "enum": [
+        "0",
+        "I",
+        "IA",
+        "IB"
+      ]
+    },
+    "codes-figo-2018-stage-ovarian-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-2018-stage-ovarian-enum",
+      "enum": [
+        "I",
+        "IA",
+        "IB",
+        "IC",
+        "IC1",
+        "IC2",
+        "IC3"
+      ]
+    },
+    "codes-figo-2018-stage-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-2018-stage-enum",
+      "enum": [
+        "0",
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB",
+        "IB1",
+        "IB2",
+        "IB3",
+        "IC",
+        "IC1",
+        "IC2",
+        "IC3"
+      ]
+    },
+    "codes-figo-version-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-version-enum",
+      "enum": [
+        "2018",
+        "pre2018"
+      ]
+    },
+    "codes-staging-system-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-staging-system-enum",
+      "enum": [
+        "AJCC",
+        "FIGO"
+      ]
+    },
+    "codes-stageable-condition-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-stageable-condition-enum",
+      "enum": [
+        "cancer"
+      ]
+    },
+    "codings-figo-body-site-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-body-site-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-body-site",
+          "code": "ovary",
+          "label": "Ovary body site"
+        },
+        {
+          "system": "http://ccdh/vs/figo-body-site",
+          "code": "endometrium",
+          "label": "Endometrium body site"
+        },
+        {
+          "system": "http://ccdh/vs/figo-body-site",
+          "code": "cervix",
+          "label": "Cervix body site"
+        },
+        {
+          "system": "http://ccdh/vs/figo-body-site",
+          "code": "vagina",
+          "label": "Vagina body site"
+        },
+        {
+          "system": "http://ccdh/vs/figo-body-site",
+          "code": "vulva",
+          "label": "Vulva body site"
+        }
+      ]
+    },
+    "codings-figo-2018-stage-vulval-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-2018-stage-vulval-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-vulval",
+          "code": "I",
+          "label": "Stage I"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-vulval",
+          "code": "IA",
+          "label": "Stage IA"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-vulval",
+          "code": "IB",
+          "label": "Stage IB"
+        }
+      ]
+    },
+    "codings-figo-2018-stage-vaginal-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-2018-stage-vaginal-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-vaginal",
+          "code": "0",
+          "label": "Stage 0"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-vaginal",
+          "code": "I",
+          "label": "Stage I"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-vaginal",
+          "code": "IB1",
+          "label": "Stage IB1"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-vaginal",
+          "code": "IB2",
+          "label": "Stage IB2"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-vaginal",
+          "code": "IB3",
+          "label": "Stage IB3"
+        }
+      ]
+    },
+    "codings-figo-pre2018-stage-cervical-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-pre2018-stage-cervical-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-pre2018-stage-cervical",
+          "code": "0",
+          "label": "Stage 0"
+        },
+        {
+          "system": "http://ccdh/vs/figo-pre2018-stage-cervical",
+          "code": "I",
+          "label": "Stage I"
+        },
+        {
+          "system": "http://ccdh/vs/figo-pre2018-stage-cervical",
+          "code": "IA",
+          "label": "Stage IA"
+        },
+        {
+          "system": "http://ccdh/vs/figo-pre2018-stage-cervical",
+          "code": "IA1",
+          "label": "Stage IA1"
+        },
+        {
+          "system": "http://ccdh/vs/figo-pre2018-stage-cervical",
+          "code": "IA2",
+          "label": "Stage IA2"
+        },
+        {
+          "system": "http://ccdh/vs/figo-pre2018-stage-cervical",
+          "code": "IB",
+          "label": "Stage IB"
+        }
+      ]
+    },
+    "codings-figo-2018-stage-cervical-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-2018-stage-cervical-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-cervical",
+          "code": "I",
+          "label": "Stage I"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-cervical",
+          "code": "IA",
+          "label": "Stage IA"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-cervical",
+          "code": "IA1",
+          "label": "Stage IA1"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-cervical",
+          "code": "IA2",
+          "label": "Stage IA2"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-cervical",
+          "code": "IB",
+          "label": "Stage IB"
+        }
+      ]
+    },
+    "codings-figo-2018-stage-endometrial-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-2018-stage-endometrial-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-endometrial",
+          "code": "0",
+          "label": "Stage 0"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-endometrial",
+          "code": "I",
+          "label": "Stage I"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-endometrial",
+          "code": "IA",
+          "label": "Stage IA"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-endometrial",
+          "code": "IB",
+          "label": "Stage IB"
+        }
+      ]
+    },
+    "codings-figo-2018-stage-ovarian-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-2018-stage-ovarian-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-ovarian",
+          "code": "I",
+          "label": "Stage I"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-ovarian",
+          "code": "IA",
+          "label": "Stage IA"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-ovarian",
+          "code": "IB",
+          "label": "Stage IB"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-ovarian",
+          "code": "IC",
+          "label": "Stage IC"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-ovarian",
+          "code": "IC1",
+          "label": "Stage IC1"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-ovarian",
+          "code": "IC2",
+          "label": "Stage IC2"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage-ovarian",
+          "code": "IC3",
+          "label": "Stage IC3"
+        }
+      ]
+    },
+    "codings-figo-2018-stage-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-2018-stage-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "0",
+          "label": "Stage 0"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "I",
+          "label": "Stage I"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IA",
+          "label": "Stage IA"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IA1",
+          "label": "Stage IA1"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IA2",
+          "label": "Stage IA2"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IB",
+          "label": "Stage IB"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IB1",
+          "label": "Stage IB1"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IB2",
+          "label": "Stage IB2"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IB3",
+          "label": "Stage IB3"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IC",
+          "label": "Stage IC"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IC1",
+          "label": "Stage IC1"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IC2",
+          "label": "Stage IC2"
+        },
+        {
+          "system": "http://ccdh/vs/figo-2018-stage",
+          "code": "IC3",
+          "label": "Stage IC3"
+        }
+      ]
+    },
+    "codings-figo-version-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-figo-version-enumm",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/figo-version",
+          "code": "2018",
+          "label": "Version 2018"
+        },
+        {
+          "system": "http://ccdh/vs/figo-version",
+          "code": "pre2018",
+          "label": "Version pre2018"
+        }
+      ]
+    },
+    "codings-staging-system-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-staging-system-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/staging-system",
+          "code": "AJCC",
+          "label": "AJCC Staging System"
+        },
+        {
+          "system": "http://ccdh/vs/staging-system",
+          "code": "FIGO",
+          "label": "FIGO Staging System"
+        }
+      ]
+    },
+    "codings-stageable-condition-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codings-stageable-condition-enum",
+      "enum": [
+        {
+          "system": "http://ccdh/vs/stageable-condition",
+          "code": "cancer",
+          "label": "Cancer Condition"
+        }
+      ]
+    },
+    "structures": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/structures",
       "$defs": {
         "BodySite": {
           "additionalProperties": false,
