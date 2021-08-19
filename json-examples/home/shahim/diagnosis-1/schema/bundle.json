@@ -1,23 +1,49 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "http://ccdh/json/schema/bundle",
-  "$comment": "Wrap lines in your editor to be able to see full comments since line breaks are not possible here. This is a schema bundle of all schemas, to help with using at: https://jschon.dev/ since IDEs don't give good validation results for complex schemas, or don't implement the specific version used here.  The way this works is the following. Under $defs there are independent schema resources that are indexed by a key that matches the suffix of the schema $id. The key names don't have to match, but for the schema entries under $def the keys should be kept that way to simplify with navigation.  Also, the naming pattern is meant to be self descriptive.  'vld' is meant to mean 'validate-' followed by what's being validated. 'is-' is meant to be a boolean check on something and it's mainly used for 'if' statemments but might be useful in other places. 'codes-' are enums for values. 'structures' are structural definitions that were copied from the CCDH model build then simplified for this demo. Mainly, the structures needed for simplified Diagnoses examples to show the possible validations that JSON Schema can provide. The top level schema here, the one where this comment is placed, is empty and doesn't do anything beyond 'routing' to one of the schemas under $defs but it routes by $id rather than by #/$defs/...  So, find the schema you'd like to route to, or add your own schema that you want to start form, and then add or replace the '$ref' entry that is directly below this comment to point to the starting schema for your specific use case.  Then, copy this whole file's content and paste it in the left side at: https://jschon.dev and then paste your JSON example on the right side. Then run the validation to see the results. Make sure the option selected to the left of the 'Evaluate' button is the '2020-12' option, and the one to the right of the button is at least 'Basic' to see interesting results.",
-  "$ref": "http://ccdh/json/schema/validate-diagnosis-1-coding-based-example",
+  "$comment": "Wrap lines in your editor to be able to see full comments since line breaks are not possible here. This is a schema bundle of all schemas, to help with using at: https://jschon.dev/ since IDEs don't give good validation results for complex schemas, or don't implement the specific version used here.  The way this works is the following. Under $defs there are independent schema resources that are indexed by a key that matches the suffix of the schema $id. The key names don't have to match, but for the schema entries under $def the keys should be kept that way to simplify with navigation.  Also, the naming pattern is meant to be self descriptive.  'vld' is meant to mean 'validate-' followed by what's being validated. 'is-' is meant to be a boolean check on something and it's mainly used for 'if' statements but might be useful in other places. 'codes-' are enums for values. 'structures' are structural definitions that were copied from the CCDH model build then simplified for this demo. Mainly, the structures needed for simplified Diagnoses examples to show the possible validations that JSON Schema can provide. The top level schema here, the one where this comment is placed, is empty and doesn't do anything beyond 'routing' to one of the schemas under $defs but it routes by $id rather than by #/$defs/...  So, find the schema you'd like to route to, or add your own, and then add or replace the '$ref' entry that is directly below this comment to point to the starting schema for your specific use case.  Then, copy this whole file's content and paste it in the left side at: https://jschon.dev and then paste your JSON example on the right side. Then run the validation to see the results. Make sure the option selected to the left of the 'Evaluate' button is the '2020-12' option, and the one to the right of the button is at least 'Basic' to see interesting results.",
+  "$ref": "http://ccdh/json/schema/vld-diagnosis-examples-valid",
   "$defs": {
     "_template": {
       "$comment": "Ignore this entry. It's just a possibly useful template.",
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/"
     },
-    "vld-diagnosis-1-coding-based-example": {
+    "vld-diagnosis-examples-valid": {
+      "$comment": "This takes a json object and looks under 'Diagnosis' for a naming pattern to do testing of multiple diagnosis instances. The naming pattern for the keys in the top object has to be: 1. start with test- to try to run it, for those, if it ends with -valid, it's tested that the example is valid. If it ends with -invalid, it's tested to make sure it is invalid, i.e. it's validity is negated as you see below. To turn off an entry, add the off- prefix. Other entries that don't follow the above will be considered invalid by the 'structures.json' schema file, and here, to make sure editors don't accidentally not follow this pattern.",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/vld-diagnosis-examples-valid",
+      "type": "object",
+      "properties": {
+        "Diagnosis": {
+          "patternProperties": {
+            "^test-.*-valid$": {
+              "$ref": "http://ccdh/json/schema/vld-diagnosis-example"
+            },
+            "^test-.*-invalid$": {
+              "not": {
+                "$ref": "http://ccdh/json/schema/vld-diagnosis-example"
+              }
+            },
+            "^off-": {
+              "$comment": "To make sure we can detect naming errors, with the additionalProperties entry"
+            }
+          },
+          "additionalProperties": {
+            "not": {}
+          }
+        }
+      }
+    },
+    "vld-diagnosis-example": {
       "$comment": "The starting schema/validator for the diagnosis-1-coding-based-example-*.json files. It directly routs to the general Diagnosis validator.",
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/validate-diagnosis-1-coding-based-example",
-      "$ref": "http://ccdh/json/schema/validate-diagnosis"
+      "$id": "http://ccdh/json/schema/vld-diagnosis-example",
+      "$ref": "http://ccdh/json/schema/vld-diagnosis"
     },
     "vld-diagnosis": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/validate-diagnosis",
+      "$id": "http://ccdh/json/schema/vld-diagnosis",
       "allOf": [
         {
           "$comment": "First we validate with the Diagnosis structure, mostly based on the CCDH built Diagnosis schema. Notice that the '$ref' use here, unlike the others, has a fragment part to point to the Diagnosis schema withing that 'schema resource'.",
@@ -25,29 +51,29 @@
         },
         {
           "$comment": "Then we do general field value validation.",
-          "$ref": "http://ccdh/json/schema/validate-diagnosis-values"
+          "$ref": "http://ccdh/json/schema/vld-diagnosis-values"
         },
         {
           "$comment": "Logical validation that applies specific rule based validations for specific aspects of a diagnosis json object, staging entries for example.",
-          "$ref": "http://ccdh/json/schema/validate-diagnosis-logical"
+          "$ref": "http://ccdh/json/schema/vld-diagnosis-logical"
         }
       ]
     },
     "vld-diagnosis-values": {
       "$comment": "This does basic, per field, harmonized value validation. If a field is supposed to have a harmonized value, or any other sort of simple initial value validation is needed, that should be checked here. 'logical validation' should not need to repeat this sort of validation, or it can refactor it out once it is implemented. Be careful about changing validation here if it is already depended on in the 'logical validation'. However, it might be more robust if 'logical validation', at least for now, still asserts it's 'preconditions' before applying it's own 'conditions' to make sure overall validation results are not as volatile (per sub schema) as this overall content is modified.",
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/validate-diagnosis-values",
+      "$id": "http://ccdh/json/schema/vld-diagnosis-values",
       "allOf": [
         {
           "$comment": "This one does value validation for the path 'diagnosis.condition' and is named accordingly",
-          "$ref": "http://ccdh/json/schema/validate-diagnosis.condition-values"
+          "$ref": "http://ccdh/json/schema/vld-diagnosis.condition-values"
         }
       ]
     },
     "vld-diagnosis.condition-values": {
       "$comment": "This validates the path diagnosis.condition. The path part 'diagnosis' is implied and is the root of the JOSN object being validated.",
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/validate-diagnosis.condition-values",
+      "$id": "http://ccdh/json/schema/vld-diagnosis.condition-values",
       "properties": {
         "condition": {
           "$comment": "The validatin approach here is that 'condition' is a single CodeableConcept (otherwise, we'd iterate here over the array of CCs) and we'll pass it on to one or more schemas that are dedicated to checking that the CC (and therefore the 'condition' field) has a harmonized value for conditions. In this specific implementation, the harmonized values for 'condition' are split/overlap between to is-* sub schemas dedicated for conditions that are stageable or non-stageable. This is just a choice I makde because it is useful to have those two sub schemas for later 'logical validation'. The point is that these sub schemas should be as small and reusable as possible. In JSON schema, you can think of all these sub schemas as boolean functions that apply their logic and return true/false. The input to these functions is the 'current' position in the JOSN object based on any previous traversal done by the 'properties' keyword.",
@@ -65,7 +91,7 @@
     "vld-diagnosis-logical": {
       "$comment": "This does logical validation, based on the full content of the instance. For now, it's only implementing FIGO staging validation for a hypothetical \"cancer\" condition, and per primary_site value, to make sure that a 'cancer' condition for a specific FIGO 'site' is staged correctly based on FIGO rules for how a cancer at a specific FIGO site should be staged. Or, if it is not a 'cancer' condition, no staging data is allowed.",
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/validate-diagnosis-logical",
+      "$id": "http://ccdh/json/schema/vld-diagnosis-logical",
       "allOf": [
         {
           "if": {
@@ -76,23 +102,14 @@
             }
           },
           "then": {
-            "$ref": "http://ccdh/json/schema/validate-diagnosis-staging"
+            "$ref": "http://ccdh/json/schema/vld-diagnosis-staging"
           },
           "else": {
             "$comment": "Else 'stage' is either null or not present.",
             "properties": {
-              "anyOf": [
-                {
-                  "stage": {
-                    "type": [
-                      "null"
-                    ]
-                  }
-                },
-                {
-                  "stage": false
-                }
-              ]
+              "stage": {
+                "not": {}
+              }
             }
           }
         }
@@ -100,17 +117,17 @@
     },
     "vld-diagnosis-staging": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/validate-diagnosis-staging",
+      "$id": "http://ccdh/json/schema/vld-diagnosis-staging",
       "properties": {
         "primary_side": {},
         "stage": {
-          "$ref": "http://ccdh/json/schema/validate-staging"
+          "$ref": "http://ccdh/json/schema/vld-staging"
         }
       }
     },
     "vld-staging": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/validate-staging"
+      "$id": "http://ccdh/json/schema/vld-staging"
     },
     "is-stageable-condition-coding": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -377,6 +394,12 @@
           "additionalProperties": false,
           "description": "A collection of characteristics that describe an abnormal condition of the body as assessed at a point in time. May be used to capture information about neoplastic and non-neoplastic conditions.",
           "properties": {
+            "vld-notes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
             "$schema": {
               "type": "string"
             },
@@ -558,7 +581,9 @@
         }
       ]
     },
-    "===========": "The below is not used yet, ignore",
+    "=================================================": {
+      "The below is not used yet": "Ignore"
+    },
     "codings-figo-2018-stage-vulval-enum": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/codings-figo-2018-stage-vulval-enum",

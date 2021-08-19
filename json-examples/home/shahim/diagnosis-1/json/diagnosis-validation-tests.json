@@ -1,0 +1,65 @@
+{
+  "Diagnosis": {
+    "test-empty-valid": {
+      "vld-notes": [
+        "An empty diagnosis instance is valid right now.",
+        "Some other note."
+      ]
+    },
+    "test-condition=foo-invalid": {
+      "condition": {
+        "coding": [
+          {
+            "system": "http://ccdh/cs/condition",
+            "code": "foo"
+          }
+        ]
+      }
+    },
+    "test-condition=cancer-valid": {
+      "condition": {
+        "coding": [
+          {
+            "system": "http://ccdh/cs/condition",
+            "code": "cancer"
+          }
+        ]
+      }
+    },
+    "test-condition=foo,cancer-valid": {
+      "condition": {
+        "coding": [
+          {
+            "system": "http://ccdh/cs/condition",
+            "code": "foo"
+          },
+          {
+            "system": "http://ccdh/cs/condition",
+            "code": "cancer"
+          }
+        ]
+      }
+    },
+    "test-condition=benign-stage=[]-invalid": {
+      "vld-notes": [
+        "If benign, there should be no 'stage' value, an empty array in this case."
+      ],
+      "condition": {
+        "coding": [
+          {
+            "code": "other1"
+          },
+          {
+            "system": "one",
+            "code": "cancer"
+          },
+          {
+            "system": "http://ccdh/cs/condition",
+            "code": "benign"
+          }
+        ]
+      },
+      "stage": []
+    }
+  }
+}

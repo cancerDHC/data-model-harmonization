@@ -2,8 +2,25 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "http://ccdh/json/schema/structures",
   "$comment": "This is just a copy from the bundle.json file to help with auto completion in VSC and Intellij. Both of those IDEs can't handle the bundling approach. Make sure you edit in bundle.json and then copy and replace here. Documentation is also only up to date in bundle.json ",
-
-  "$ref": "#/$defs/Diagnosis",
+  "type": "object",
+  "properties": {
+    "Diagnosis": {
+      "patternProperties": {
+        "^test-.*-valid$": {
+          "$ref": "#/$defs/Diagnosis"
+        },
+        "^test-.*-invalid$": {
+          "$ref": "#/$defs/Diagnosis"
+        },
+        "^off-": {
+          "$comment": "To make sure we can detect naming errors, with the additionalProperties entry"
+        }
+      },
+      "additionalProperties": {
+        "not": {}
+      }
+    }
+  },
   "$defs": {
     "BodySite": {
       "additionalProperties": false,
@@ -77,6 +94,12 @@
       "additionalProperties": false,
       "description": "A collection of characteristics that describe an abnormal condition of the body as assessed at a point in time. May be used to capture information about neoplastic and non-neoplastic conditions.",
       "properties": {
+        "vld-notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "$schema": {
           "type": "string"
         },
