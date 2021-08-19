@@ -6,12 +6,23 @@
 	],
 	"settings": {
 		"json.schemas": [
+
+
+
+
 			{
 				"fileMatch": [
 					"/ccdh-json-schema-v1.0.1/*.json",
 					"!/ccdh-json-schema-v1.0.1/_*.json"
 				],
 				"url": "./ccdh-json-schema-v1.0.1/__schema.json"
+			},
+			{
+				"fileMatch": [
+					"/home/shahim/diagnosis-1/json/*.json",
+					"!/home/shahim/diagnosis-1/json/_*.json"
+				],
+				"url": "./home/shahim/diagnosis-1/schema/structures.json"
 			}
 		],
 		"workbench.colorCustomizations": {
