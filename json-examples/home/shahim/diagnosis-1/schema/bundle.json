@@ -77,17 +77,21 @@
       "properties": {
         "condition": {
           "$comment": "The validatin approach here is that 'condition' is a single CodeableConcept (otherwise, we'd iterate here over the array of CCs) and we'll pass it on to one or more schemas that are dedicated to checking that the CC (and therefore the 'condition' field) has a harmonized value for conditions. In this specific implementation, the harmonized values for 'condition' are split/overlap between to is-* sub schemas dedicated for conditions that are stageable or non-stageable. This is just a choice I makde because it is useful to have those two sub schemas for later 'logical validation'. The point is that these sub schemas should be as small and reusable as possible. In JSON schema, you can think of all these sub schemas as boolean functions that apply their logic and return true/false. The input to these functions is the 'current' position in the JOSN object based on any previous traversal done by the 'properties' keyword.",
-          "anyOf": [
-            {
-              "$ref": "http://ccdh/json/schema/is-stageable-condition-coding"
-            },
-            {
-              "$ref": "http://ccdh/json/schema/is-non-stageable-condition-coding"
-            }
-          ]
+          "$ref": "http://ccdh/json/schema/is-condition-coding"
         }
       }
     },
+    "vld-diagnosis.stage-values": {
+      "$comment": "//TODO:",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/vld-diagnosis.stage.method_type-values",
+      "maxContains": 1,
+      "contains": {
+        "$ref": "http://ccdh/json/schema/is-staging-system-coding"
+      }
+    },
+
+
     "vld-diagnosis-logical": {
       "$comment": "This does logical validation, based on the full content of the instance. For now, it's only implementing FIGO staging validation for a hypothetical \"cancer\" condition, and per primary_site value, to make sure that a 'cancer' condition for a specific FIGO 'site' is staged correctly based on FIGO rules for how a cancer at a specific FIGO site should be staged. Or, if it is not a 'cancer' condition, no staging data is allowed.",
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -105,7 +109,7 @@
             "$ref": "http://ccdh/json/schema/vld-diagnosis-staging"
           },
           "else": {
-            "$comment": "Else 'stage' is either null or not present.",
+            "$comment": "Else 'stage' must not be present in the diagnosis instance.",
             "properties": {
               "stage": {
                 "not": {}
@@ -118,16 +122,43 @@
     "vld-diagnosis-staging": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/vld-diagnosis-staging",
+      "allOf": [
+        {
+          "$comment": "First we check if staging system is valid.",
+          "if": {
+          },
+          "then": true,
+          "else": false
+        }
+      ]
+    },
+    "is-staging-system-coding": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/is-staging-system-coding",
       "properties": {
-        "primary_side": {},
-        "stage": {
-          "$ref": "http://ccdh/json/schema/vld-staging"
+        "coding": {
+          "maxContains": 1,
+          "contains": {
+            "required": [
+              "system",
+              "code"
+            ],
+            "properties": {
+              "system": {
+                "const": "http://ccdh/cs/staging-system"
+              },
+              "code": {
+                "$ref": "http://ccdh/json/schema/is-staging-system-code"
+              }
+            }
+          }
         }
       }
     },
-    "vld-staging": {
+    "is-staging-system-code": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/vld-staging"
+      "$id": "http://ccdh/json/schema/is-staging-system-code",
+      "$ref": "http://ccdh/json/schema/codes-staging-system-enum"
     },
     "is-stageable-condition-coding": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -152,9 +183,9 @@
         }
       }
     },
-    "is-non-stageable-condition-coding": {
+    "is-condition-coding": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/is-non-stageable-condition-coding",
+      "$id": "http://ccdh/json/schema/is-condition-coding",
       "properties": {
         "coding": {
           "maxContains": 1,
@@ -164,7 +195,7 @@
                 "const": "http://ccdh/cs/condition"
               },
               "code": {
-                "$ref": "http://ccdh/json/schema/is-non-stageable-condition-code"
+                "$ref": "http://ccdh/json/schema/is-condition-code"
               }
             },
             "required": [
@@ -180,27 +211,29 @@
       "$id": "http://ccdh/json/schema/is-stageable-condition-code",
       "$ref": "http://ccdh/json/schema/codes-stageable-condition-enum"
     },
-    "is-non-stageable-condition-code": {
+    "is-condition-code": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/is-non-stageable-condition-code",
-      "$ref": "http://ccdh/json/schema/codes-non-stageable-condition-enum"
+      "$id": "http://ccdh/json/schema/is-condition-code",
+      "$ref": "http://ccdh/json/schema/codes-condition-enum"
+    },
+    "codes-body-site-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-body-site-enum",
+      "$comment": "system is: http://ccdh/cs/body-site",
+      "enum": [
+        "lung"
+      ]
     },
     "codes-figo-body-site-enum": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/codes-figo-body-site-enum",
+      "$comment": "system is: http://ccdh/cs/body-site",
       "enum": [
         "ovary",
         "endometrium",
         "cervix",
         "vagina",
         "vulva"
-      ]
-    },
-    "codes-body-site-enum": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/codes-body-site-enum",
-      "enum": [
-        "lung"
       ]
     },
     "codes-figo-2018-stage-vulval-enum": {
@@ -304,6 +337,16 @@
         "FIGO"
       ]
     },
+    "codes-staging-system-component-enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-staging-system-component-enum",
+      "enum": [
+        "overall",
+        "T",
+        "N",
+        "M"
+      ]
+    },
     "codes-stageable-condition-enum": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/codes-stageable-condition-enum",
@@ -311,9 +354,9 @@
         "cancer"
       ]
     },
-    "codes-non-stageable-condition-enum": {
+    "codes-condition-enum": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/codes-non-stageable-condition-enum",
+      "$id": "http://ccdh/json/schema/codes-condition-enum",
       "enum": [
         "benign"
       ]
@@ -539,6 +582,9 @@
         }
       }
     },
+    "=================================================": {
+      "The below is not used yet": "Ignore"
+    },
     "codings-body-site-enum": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/codings-body-site-enum",
@@ -581,9 +627,7 @@
         }
       ]
     },
-    "=================================================": {
-      "The below is not used yet": "Ignore"
-    },
+
     "codings-figo-2018-stage-vulval-enum": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/codings-figo-2018-stage-vulval-enum",
