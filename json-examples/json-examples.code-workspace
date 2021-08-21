@@ -10,6 +10,8 @@
 
 
 
+
+
 			{
 				"fileMatch": [
 					"/ccdh-json-schema-v1.0.1/*.json",
@@ -22,7 +24,14 @@
 					"/home/shahim/diagnosis-1/json/*.json",
 					"!/home/shahim/diagnosis-1/json/_*.json"
 				],
-				"url": "./home/shahim/diagnosis-1/schema/structures.json"
+				"url": "./home/shahim/diagnosis-1/schema/bundle.json"
+			},
+			{
+				"fileMatch": [
+					"/home/shahim/testing-env-v1/json/*.json",
+					"!/home/shahim/testing-env-v1/json/_*.json"
+				],
+				"url": "./home/shahim/testing-env-v1/schema/schema-testing-env-1.json"
 			}
 		],
 		"workbench.colorCustomizations": {

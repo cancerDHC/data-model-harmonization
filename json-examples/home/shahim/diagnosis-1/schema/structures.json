@@ -19,6 +19,30 @@
       "additionalProperties": {
         "not": {}
       }
+    },
+    "_title": {
+      "$comment": "A title for the example.",
+      "type": "string"
+    },
+    "_description": {
+      "$comment": "An array of strings to allow reading friendly multi line descriptions for the example.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "enum": ["structure", "values", "rules" ]
+      }
+    },
+
+    "_type": {
+      "type": "string"
+    },
+    "_instance": {
+      "type": "object"
     }
   },
   "$defs": {
