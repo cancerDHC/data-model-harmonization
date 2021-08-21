@@ -1,0 +1,15 @@
+{
+  "entry.1": {
+    "Title": "",
+    "Notes": [
+      "Note one",
+      "Note two."
+    ],
+    "Links": {
+      "GitHub issues": [
+        ""
+      ]
+    },
+    "Structure name": "ccdh.Diagnosis"
+  }
+}
