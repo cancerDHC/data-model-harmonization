@@ -1,0 +1,23 @@
+{
+  "someName": {
+    "Title": "",
+    "Description": [],
+    "Type": "Diagnosis",
+    "Instance": {
+      "identifier": [
+        {
+          "system": "",
+          "value": ""
+        }
+      ],
+      "condition": {
+        "coding": [
+          {
+            "code": "",
+            "system": ""
+          }
+        ]
+      }
+    }
+  }
+}

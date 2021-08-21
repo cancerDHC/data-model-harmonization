@@ -1,0 +1,25 @@
+﻿{
+  "entry.1": {
+    "Title": "",
+    "Description": "",
+    "Notes": [
+      "Note one",
+      "Note two."
+    ],
+    "Links": {
+      "GitHub issues": [
+        ""
+      ]
+    },
+    "Structures": [
+      "ccdh.v101cc.Diagnosis",
+      "ccdh.v101.Diagnosis"
+    ],
+    "Ignore": false,
+    "Rules": [],
+    "Instance": {
+      
+    }
+   
+  }
+}

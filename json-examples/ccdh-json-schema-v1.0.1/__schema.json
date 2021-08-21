@@ -24,7 +24,7 @@
           "$comment":"Pick the entity type to get validation and autocomplete support under the ccdh-.*/_object key",
           "type": "string"
         },
-        "_object": "object"
+        "_instance": "object"
       },
       "allOf": [ 
         { "if": { "properties": { "_type": { "const": "AlcoholExposureObservation" } } }, "then": { "properties": { "_instance": { "$ref": "__ccdh.json#/definitions/AlcoholExposureObservation" } } } },
@@ -92,7 +92,7 @@
           "$comment":"Pick the entity type to get validation and autocomplete support under the ccdh-.*/_object key",
           "type": "string"
         },
-        "_object": "object"
+        "_instance": "object"
       },
       "allOf": [ 
         { "if": { "properties": { "_type": { "const": "AlcoholExposureObservation" } } }, "then": { "properties": { "_instance": { "$ref": "__ccdhx.json#/definitions/AlcoholExposureObservation" } } } },

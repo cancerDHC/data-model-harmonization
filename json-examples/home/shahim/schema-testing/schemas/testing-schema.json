@@ -46,36 +46,97 @@
                   }
                 }
               },
-              "Structure name": {
-                "type": "string",
-                "$ref": "#/$defs/model.ccdh.structure-names-enum"
+              "Structures": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "$ref": "#/$defs/model.ccdh.structures-enum"
+                }
+              },
+              "Rules": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "$ref": "#/$defs/model.ccdh.rules-enum"
+                }
+              },
+              "Ignore": {
+                "type": "boolean"
+              },
+              "Instance": {
+                "type": "object"
+              },
+              "Meta": {
+                "type": "object"
               }
             },
             "required": [
-              "Title"
-            ]
+              "Title",
+              "Description"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "$comment": "This does the mapping from structures to their schemas",
+            "if": {
+              "properties": {
+                "Structures": {
+                  "type": "array",
+                  "contains": {
+                    "pattern": "^ccdh.v101cc.Diagnosis(_off)?$"
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "Instance": {
+                  "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis"
+                }
+              }
+            },
+            "else": false
           }
         ]
       }
     },
-    "model.ccdh.structure-names-enum": {
+    "model.ccdh.structures-enum": {
       "$comment": "Template",
-      "enum": [
-        "ccdh.Diagnosis"
+      "anyOf": [
+        {
+          "$ref": "#/$defs/model.ccdh.v101.structures-enum"
+        },
+        {
+          "$ref": "#/$defs/model.ccdh.v101cc.structures-enum"
+        },
+        {
+          "pattern": "(^off_|_fails$)"
+        }
       ]
     },
-    "model.ccdh.rule-names-enum": {
+    "model.ccdh.rules-enum": {
       "$comment": "Template",
-      "$defs": {
-      }
+      "anyOf": [
+        {
+          "$ref": "#/$defs/model.ccdh.v101.rules-enum"
+        },
+        {
+          "$ref": "#/$defs/model.ccdh.v101cc.rules-enum"
+        },
+        {
+          "pattern": "(^off_|_fails$)"
+        }
+      ]
     },
-    "model.ccdh.v101.structure-names-enum": {
+    "model.ccdh.v101.structures-enum": {
       "$comment": "Template",
       "enum": [
         "ccdh.v101.Diagnosis"
       ]
     },
-    "model.ccdh.v101.rule-names-enum": {
+    "model.ccdh.v101.rules-enum": {
       "$comment": "Template",
       "$defs": {
       }
@@ -1066,7 +1127,7 @@
               "description": "The 'logical' identifier of the entity within the system of record.  The simple value of this attribute stands for an identifier of this data object within the system, it can be used as a reference from other objects within the same system (i.e. primary and foreign keys), and it should be unique per type of object. The same data object copied to a different system will likely have a different \"id\" in the new system since \"id\" values are system specific and do not represent persistent business identifiers. Business identifiers are assigned outside the information system and are captured in the \"identifier\" field. The \"id\" field is more likely to be a serially or randomly generated value that is assigned to the data object as it is created in a system.",
               "type": "string"
             },
-            "method_type": {
+            "method_types": {
               "description": "A type of method used in generating each of the Observations bundled in the set.",
               "items": {
                 "type": "string"
@@ -2093,19 +2154,19 @@
         }
       }
     },
-    "model.ccdh.v101cc.structure-names-enum": {
+    "model.ccdh.v101cc.structures-enum": {
       "$comment": "Template",
       "enum": [
         "ccdh.v101cc.Diagnosis"
       ]
     },
-    "model.ccdh.v101cc.rule-names-enum": {
+    "model.ccdh.v101cc.rules-enum": {
       "$comment": "Template",
-      "$defs": {
-      }
+      "enum": [
+        "Shahim's.rule from v101.cc"
+      ]
     },
     "model.ccdh.v101cc": {
-      "$comment": "",
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/model.ccdh.v101cc",
       "$defs": {
