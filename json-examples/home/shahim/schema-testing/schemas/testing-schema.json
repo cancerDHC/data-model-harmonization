@@ -5624,7 +5624,7 @@
         }
       }
     },
-    
+
     "test.schema-to-instance-mapping": {
       "type": "object",
       "allOf": [
@@ -5712,8 +5712,6 @@
         { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint" } } } },
         { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.TobaccoExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/TobaccoExposureObservation" } } } },
         { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Treatment" } } } },
-
-
 
 
         { "if": { "properties": { "Schema": { "const": "ccdh.v101core.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/BiologicProduct" } } } },
