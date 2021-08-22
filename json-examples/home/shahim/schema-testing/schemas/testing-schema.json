@@ -3,10 +3,6 @@
   "$id": "http://ccdh/json/schema/testing",
   "$ref": "#/$defs/test-edit",
   "$defs": {
-    "template": {
-      "$comment": "Template",
-      "$defs": {}
-    },
     "test-edit": {
       "$comment": "Test editing schema",
       "type": "object",
@@ -109,45 +105,7 @@
         }
       }
     },
-    "test-run": {
-      "$comment": "Test running schema",
-      "allOf": [
-        {
-          "$ref": "#/$defs/test-edit"
-        }
-      ]
-    },
-    "test.schema-names.enum": {
-      "$comment": "Template",
-      "anyOf": [
-        {
-          "enum": [
-            "Plain JSON"
-          ]
-        },
-        {
-          "$ref": "#/$defs/model.ccdh.v101.schema-names.enum"
-        },
-        {
-          "$ref": "#/$defs/model.ccdh.v101cc.schema-names.enum"
-        },
-        {
-          "$ref": "#/$defs/model.ccdh.v101core.schema-names.enum"
-        }
-      ]
-    },
-    "test.rule-names.enum": {
-      "$comment": "Template",
-      "anyOf": [
-        {
-          "$ref": "#/$defs/model.ccdh.v101.rule-names.enum"
-        },
-        {
-          "$ref": "#/$defs/model.ccdh.v101cc.rule-names.enum"
-        }
-      ]
-    },
-
+    "============================ CCDH v101": "",
     "model.ccdh.v101.schema-names.enum": {
       "$comment": "Template",
       "enum": [
@@ -195,8 +153,10 @@
       ]
     },
     "model.ccdh.v101.rule-names.enum": {
-      "$comment": "Template",
-      "$defs": {}
+      "$comment": "",
+      "enum": [
+        "Shahim's.rule from v101"
+      ]
     },
     "model.ccdh.v101": {
       "$comment": "",
@@ -2209,6 +2169,7 @@
         }
       }
     },
+    "============================ CCDH v101cc": "",
     "model.ccdh.v101cc.schema-names.enum": {
       "$comment": "Template",
       "enum": [
@@ -2258,11 +2219,10 @@
     "model.ccdh.v101cc.rule-names.enum": {
       "$comment": "Template",
       "enum": [
-        "Shahim's.rule from v101.cc"
+        "Shahim's.rule from v101cc"
       ]
     },
     "model.ccdh.v101cc": {
-
       "$defs": {
         "AlcoholExposureObservation": {
           "additionalProperties": false,
@@ -4272,7 +4232,7 @@
         }
       }
     },
-
+    "============================ CCDH v101core": "",
     "model.ccdh.v101core.schema-names.enum": {
       "$comment": "Template",
       "enum": [
@@ -4304,9 +4264,13 @@
         "ccdh.v101core.Treatment"
       ]
     },
-
+    "model.ccdh.v101core.rule-names.enum": {
+      "$comment": "",
+      "enum": [
+        "Shahim's.rule from v101core"
+      ]
+    },
     "model.ccdh.v101core": {
-
       "$defs": {
         "BiologicProduct": {
           "additionalProperties": false,
@@ -4372,7 +4336,6 @@
           "title": "BodySite",
           "type": "object"
         },
-
         "CodeableConcept": {
           "additionalProperties": false,
           "description": "A representation of a concept that may be defined by or mapped to one or more codes in code systems (terminologies, ontologies, dictionaries, code sets, etc) - but may also be defined by the provision of text.",
@@ -4523,8 +4486,6 @@
           "title": "Diagnosis",
           "type": "object"
         },
-
-
         "Document": {
           "additionalProperties": false,
           "description": "A collection of information intented to be understood together as a whole, and codified in human-readable form.",
@@ -4572,9 +4533,6 @@
           "title": "Entity",
           "type": "object"
         },
-
-
-
         "Exposure": {
           "additionalProperties": false,
           "description": "Contact between an agent and a target. A state of contact or close proximity to a medicinal product, chemical, pathogen, radioisotope or other substance.",
@@ -4622,8 +4580,6 @@
           "title": "Exposure",
           "type": "object"
         },
-
-
         "Identifier": {
           "additionalProperties": false,
           "description": "An Identifier is associated with a unique object or entity within a given system.",
@@ -5315,8 +5271,6 @@
           "title": "SpecimenProcessingActivity",
           "type": "object"
         },
-
-
         "SpecimenStorageActivity": {
           "additionalProperties": false,
           "description": "An activity in which a specimen is stored or maintained in a particular location, container, or state. Unlike 'processing' activities, storage does not alter the \nintrinsic physical nature of a specimen.",
@@ -5624,6 +5578,48 @@
           "type": "object"
         }
       }
+    },
+    "============================ Implementation. IGNORE BELOW": "",
+    "test-run": {
+      "$comment": "Test running schema",
+      "allOf": [
+        {
+          "$ref": "#/$defs/test-edit"
+        }
+      ]
+    },
+    "test.schema-names.enum": {
+      "$comment": "Template",
+      "anyOf": [
+        {
+          "enum": [
+            "Plain JSON"
+          ]
+        },
+        {
+          "$ref": "#/$defs/model.ccdh.v101.schema-names.enum"
+        },
+        {
+          "$ref": "#/$defs/model.ccdh.v101cc.schema-names.enum"
+        },
+        {
+          "$ref": "#/$defs/model.ccdh.v101core.schema-names.enum"
+        }
+      ]
+    },
+    "test.rule-names.enum": {
+      "$comment": "Template",
+      "anyOf": [
+        {
+          "$ref": "#/$defs/model.ccdh.v101.rule-names.enum"
+        },
+        {
+          "$ref": "#/$defs/model.ccdh.v101cc.rule-names.enum"
+        },
+        {
+          "$ref": "#/$defs/model.ccdh.v101core.rule-names.enum"
+        }
+      ]
     },
 
     "test.schema-to-instance-mapping": {
