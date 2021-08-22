@@ -1,15 +1,11 @@
 {
   "something": {
-    "Schema": "ccdh.v101cc.Diagnosis",
-    "Description": [""],
-    "Title": "",
+    "Title": "Title",
+    "Description": ["description"],
+    "Schema": "ccdh.v101cc.ObservationSet",
     "Instance": {
-      "age_at_diagnosis": {
-        "unit": {
-          "text": "some unit"
-        },
-        "valueCodeableConcept": {}
-      }
+      "id": "",
+      "category": {}
     }
   }
 }
