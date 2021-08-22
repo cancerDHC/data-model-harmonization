@@ -4,14 +4,9 @@
     "Description": [
       "description"
     ],
-    "Schema": "ccdh.v101core.Exposure",
+    "Schema": "ccdh.v101core.BodySite",
     "Instance": {
-      "id": "",
-      "alcohol_exposure": [
-        {
-          "observation_type": {}
-        }
-      ]
+     "site": {}
     }
   }
 }
