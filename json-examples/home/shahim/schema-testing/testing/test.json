@@ -1,11 +1,17 @@
 {
   "something": {
     "Title": "Title",
-    "Description": ["description"],
-    "Schema": "ccdh.v101cc.ObservationSet",
+    "Description": [
+      "description"
+    ],
+    "Schema": "ccdh.v101core.Exposure",
     "Instance": {
       "id": "",
-      "category": {}
+      "alcohol_exposure": [
+        {
+          "observation_type": {}
+        }
+      ]
     }
   }
 }
