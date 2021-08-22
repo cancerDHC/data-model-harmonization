@@ -11,92 +11,102 @@
       "$comment": "Test editing schema",
       "type": "object",
       "additionalProperties": {
-        "allOf": [
-          {
-            "$comment": "This first schema validates the testing entry",
-            "type": "object",
-            "properties": {
-              "Title": {
-                "type": "string"
-              },
-              "Description": {
-                "type": "array",
-                "items": {
+        "if": {
+          "properties": {
+            "Ignore": {
+              "type": "boolean",
+              "const": false
+            }
+          }
+        },
+        "then": {
+          "allOf": [
+            {
+              "$comment": "This first schema validates the testing entry",
+              "type": "object",
+              "properties": {
+                "Title": {
                   "type": "string"
-                }
-              },
-              "Links": {
-                "type": "object",
-                "properties": {
-                  "GitHub issues": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "Web links": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
+                },
+                "Description": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "Links": {
+                  "type": "object",
+                  "properties": {
+                    "GitHub issues": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "Web links": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   }
-                }
-              },
-              "Schema": {
-                "type": "string",
-                "$ref": "#/$defs/test.schema-names.enum"
-              },
-              "Test structures": {
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
+                },
+                "Schema": {
                   "type": "string",
-                  "anyOf": [
-                    {
-                      "$ref": "#/$defs/test.schema-names.enum"
-                    },
-                    {
-                      "pattern": "(^off_|_fails$)"
-                    }
-                  ]
+                  "$ref": "#/$defs/test.schema-names.enum"
+                },
+                "Test structures": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "anyOf": [
+                      {
+                        "$ref": "#/$defs/test.schema-names.enum"
+                      },
+                      {
+                        "pattern": "(^off_|_fails$)"
+                      }
+                    ]
+                  }
+                },
+                "Test rules": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "anyOf": [
+                      {
+                        "$ref": "#/$defs/test.rule-names.enum"
+                      },
+                      {
+                        "pattern": "(^off_|_fails$)"
+                      }
+                    ]
+                  }
+                },
+                "Instance": {
+                  "type": "object"
+                },
+                "Meta": {
+                  "type": "object"
+                },
+                "Ignore": {
+                  "type": "boolean"
                 }
               },
-              "Test rules": {
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
-                  "type": "string",
-                  "anyOf": [
-                    {
-                      "$ref": "#/$defs/test.rule-names.enum"
-                    },
-                    {
-                      "pattern": "(^off_|_fails$)"
-                    }
-                  ]
-                }
-              },
-              "Ignore": {
-                "type": "boolean"
-              },
-              "Instance": {
-                "type": "object"
-              },
-              "Meta": {
-                "type": "object"
-              }
+              "additionalProperties": false,
+              "required": [
+                "Title",
+                "Description",
+                "Schema"
+              ]
             },
-            "additionalProperties": false,
-            "required": [
-              "Title",
-              "Description",
-              "Schema"
-            ]
-          },
-          {
-            "$ref": "#/$defs/test.schema-to-instance-mapping"
-          }
-        ]
+            {
+              "$ref": "#/$defs/test.schema-to-instance-mapping"
+            }
+          ]
+        }
       }
     },
     "test-run": {
@@ -110,6 +120,11 @@
     "test.schema-names.enum": {
       "$comment": "Template",
       "anyOf": [
+        {
+          "enum": [
+            "Plain JSON"
+          ]
+        },
         {
           "$ref": "#/$defs/model.ccdh.v101.schema-names.enum"
         },

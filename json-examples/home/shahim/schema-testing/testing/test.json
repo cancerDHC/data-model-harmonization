@@ -2,11 +2,14 @@
   "something": {
     "Title": "Title",
     "Description": [
-      "description"
+      "Main paragraph.",
+      "Another paragraph."
     ],
-    "Schema": "ccdh.v101core.BodySite",
+    "Schema": "Plain JSON",
     "Instance": {
-     "site": {}
-    }
+      
+    },
+    "Ignore": false
+
   }
 }
