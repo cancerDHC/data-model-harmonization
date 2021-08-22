@@ -1,29 +1,25 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "http://ccdh/json/schema/testing",
-  "$ref": "#/$defs/testing-v1",
+  "$ref": "#/$defs/test-edit",
   "$defs": {
     "template": {
       "$comment": "Template",
-      "$defs": {
-      }
+      "$defs": {}
     },
-    "testing-v1": {
-      "$comment": "Ignore this entry. It's just a possibly useful template.",
+    "test-edit": {
+      "$comment": "Test editing schema",
       "type": "object",
       "additionalProperties": {
-        "type": "object",
         "allOf": [
           {
             "$comment": "This first schema validates the testing entry",
+            "type": "object",
             "properties": {
               "Title": {
                 "type": "string"
               },
               "Description": {
-                "type": "string"
-              },
-              "Notes": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -46,20 +42,38 @@
                   }
                 }
               },
-              "Structures": {
+              "Schema": {
+                "type": "string",
+                "$ref": "#/$defs/test.schema-names.enum"
+              },
+              "Test structures": {
                 "type": "array",
                 "uniqueItems": true,
                 "items": {
                   "type": "string",
-                  "$ref": "#/$defs/model.ccdh.structures-enum"
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/test.schema-names.enum"
+                    },
+                    {
+                      "pattern": "(^off_|_fails$)"
+                    }
+                  ]
                 }
               },
-              "Rules": {
+              "Test rules": {
                 "type": "array",
                 "uniqueItems": true,
                 "items": {
                   "type": "string",
-                  "$ref": "#/$defs/model.ccdh.rules-enum"
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/test.rule-names.enum"
+                    },
+                    {
+                      "pattern": "(^off_|_fails$)"
+                    }
+                  ]
                 }
               },
               "Ignore": {
@@ -72,79 +86,62 @@
                 "type": "object"
               }
             },
+            "additionalProperties": false,
             "required": [
               "Title",
-              "Description"
-            ],
-            "additionalProperties": false
+              "Description",
+              "Schema"
+            ]
           },
           {
-            "$comment": "This does the mapping from structures to their schemas",
-            "if": {
-              "properties": {
-                "Structures": {
-                  "type": "array",
-                  "contains": {
-                    "pattern": "^ccdh.v101cc.Diagnosis(_off)?$"
-                  }
-                }
-              }
-            },
-            "then": {
-              "properties": {
-                "Instance": {
-                  "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis"
-                }
-              }
-            },
-            "else": false
+            "$ref": "#/$defs/test.schema-to-instance-mapping"
           }
         ]
       }
     },
-    "model.ccdh.structures-enum": {
-      "$comment": "Template",
-      "anyOf": [
+    "test-run": {
+      "$comment": "Test running schema",
+      "allOf": [
         {
-          "$ref": "#/$defs/model.ccdh.v101.structures-enum"
-        },
-        {
-          "$ref": "#/$defs/model.ccdh.v101cc.structures-enum"
-        },
-        {
-          "pattern": "(^off_|_fails$)"
+          "$ref": "#/$defs/test-edit"
         }
       ]
     },
-    "model.ccdh.rules-enum": {
+    "test.schema-names.enum": {
       "$comment": "Template",
       "anyOf": [
         {
-          "$ref": "#/$defs/model.ccdh.v101.rules-enum"
+          "$ref": "#/$defs/model.ccdh.v101.schema-names.enum"
         },
         {
-          "$ref": "#/$defs/model.ccdh.v101cc.rules-enum"
-        },
-        {
-          "pattern": "(^off_|_fails$)"
+          "$ref": "#/$defs/model.ccdh.v101cc.schema-names.enum"
         }
       ]
     },
-    "model.ccdh.v101.structures-enum": {
+    "test.rule-names.enum": {
+      "$comment": "Template",
+      "anyOf": [
+        {
+          "$ref": "#/$defs/model.ccdh.v101.rule-names.enum"
+        },
+        {
+          "$ref": "#/$defs/model.ccdh.v101cc.rule-names.enum"
+        }
+      ]
+    },
+
+    "model.ccdh.v101.schema-names.enum": {
       "$comment": "Template",
       "enum": [
         "ccdh.v101.Diagnosis"
       ]
     },
-    "model.ccdh.v101.rules-enum": {
+    "model.ccdh.v101.rule-names.enum": {
       "$comment": "Template",
-      "$defs": {
-      }
+      "$defs": {}
     },
     "model.ccdh.v101": {
       "$comment": "",
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/model.ccdh.v101",
       "$defs": {
         "AlcoholExposureObservation": {
           "additionalProperties": false,
@@ -155,7 +152,7 @@
               "type": "string"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -171,11 +168,11 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
@@ -215,7 +212,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
@@ -266,7 +263,7 @@
               "type": "string"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -282,7 +279,7 @@
               "type": "string"
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
@@ -308,7 +305,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -326,16 +323,16 @@
             "observations": {
               "description": "A set of one or more more atomic observations about the cancer grade that classifies the cancer (e.g. Poorly differentiated, differentiated, etc.)",
               "items": {
-                "$ref": "#/$defs/CancerGradeObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/CancerGradeObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -352,7 +349,7 @@
               "type": "string"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -368,11 +365,11 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
@@ -380,7 +377,7 @@
               "type": "string"
             },
             "valueEntity": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The value of an observation"
             }
           },
@@ -402,7 +399,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -420,16 +417,16 @@
             "observations": {
               "description": "A set of one or more more atomic observations about the cancer stage",
               "items": {
-                "$ref": "#/$defs/CancerStageObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/CancerStageObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -444,7 +441,7 @@
             "coding": {
               "description": "A reference to a code defined by a terminology system",
               "items": {
-                "$ref": "#/$defs/Coding"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Coding"
               },
               "type": "array"
             },
@@ -494,7 +491,7 @@
           "description": "A collection of characteristics that describe an abnormal condition of the body as assessed at a point in time. May be used to capture information about neoplastic and non-neoplastic conditions.",
           "properties": {
             "age_at_diagnosis": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The age in days of the individual at the time of diagnosis"
             },
             "condition": {
@@ -502,7 +499,7 @@
               "type": "string"
             },
             "dimensional_measure": {
-              "$ref": "#/$defs/DimensionalObservationSet",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/DimensionalObservationSet",
               "description": "A set of one or more observations about the current physical dimensions of an object (e.g. length, width, area)."
             },
             "disease_status": {
@@ -512,7 +509,7 @@
             "grade": {
               "description": "The degree of abnormality of cancer cells, a measure of differentiation, the extent to which cancer cells are similar in appearance and function to healthy cells of the same tissue type. The degree of differentiation often relates to the clinical behavior of the particular tumor. Based on the microscopic findings, tumor grade is commonly described by one of four degrees of severity. Histopathologic grade of a tumor may be used to plan treatment and estimate the future course, outcome, and overall prognosis of disease. Certain types of cancers, such as soft tissue sarcoma, primary brain tumors, lymphomas, and breast have special grading systems.",
               "items": {
-                "$ref": "#/$defs/CancerGradeObservationSet"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/CancerGradeObservationSet"
               },
               "type": "array"
             },
@@ -523,14 +520,14 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
             "metastatic_site": {
               "description": "The anatomical location(s) of metastatic disease",
               "items": {
-                "$ref": "#/$defs/BodySite"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/BodySite"
               },
               "type": "array"
             },
@@ -545,36 +542,36 @@
             "primary_site": {
               "description": "The anatomical location of the primary condition",
               "items": {
-                "$ref": "#/$defs/BodySite"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/BodySite"
               },
               "type": "array"
             },
             "prior_diagnosis": {
-              "$ref": "#/$defs/Diagnosis",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Diagnosis",
               "description": "A reference to a prior cancer diagnosis.  In the case of relapse/recurrent disease, this attribute may be populated with a reference to the initial diagnosis."
             },
             "related_specimen": {
               "description": "The specimen from which this diagnosis is made",
               "items": {
-                "$ref": "#/$defs/Specimen"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Specimen"
               },
               "type": "array"
             },
             "stage": {
               "description": "The extent of a cancer in the body. Staging is usually based on the size of the tumor, whether lymph nodes contain cancer, and whether the cancer has spread from the original site to other parts of the body.",
               "items": {
-                "$ref": "#/$defs/CancerStageObservationSet"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/CancerStageObservationSet"
               },
               "type": "array"
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The subject of this diagnosis."
             },
             "supporting_observation": {
               "description": "One or more observations that capture information relevant to this condition or diagnosis.",
               "items": {
-                "$ref": "#/$defs/Observation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Observation"
               },
               "type": "array"
             },
@@ -598,7 +595,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -618,15 +615,15 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -648,7 +645,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -666,16 +663,16 @@
             "observations": {
               "description": "A set of one or more more atomic observations that are conceptually or logically related - e.g. two components of some compound measurement (e.g. the systolic and diastolic components of a blood pressure measurement), or a panel of related measurements run and interpreted together on the same subject/specimen (e.g. a blood panel, or separate dimensional measurements of a specimen).",
               "items": {
-                "$ref": "#/$defs/DimensionalObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/DimensionalObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -696,7 +693,7 @@
               "type": "string"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The entity that the report is primarily about"
             },
             "id": {
@@ -706,7 +703,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
@@ -739,7 +736,7 @@
               "type": "string"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -755,11 +752,11 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
@@ -783,7 +780,7 @@
               "type": "string"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -799,11 +796,11 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
@@ -827,7 +824,7 @@
               "type": "string"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -843,15 +840,15 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -869,14 +866,14 @@
             "alcohol_exposure": {
               "description": "Observations about an individual's exposure to alcohol.",
               "items": {
-                "$ref": "#/$defs/AlcoholExposureObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/AlcoholExposureObservation"
               },
               "type": "array"
             },
             "environmental_exposure": {
               "description": "Observations about an individual's exposure to environmental substances that may impact clinical outcomes.",
               "items": {
-                "$ref": "#/$defs/EnvironmentalExposureObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/EnvironmentalExposureObservation"
               },
               "type": "array"
             },
@@ -887,18 +884,18 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "A reference to the Subject that is the subject of this Exposure"
             },
             "tobacco_exposure": {
               "description": "Observations about an individual's exposure to tobacco.",
               "items": {
-                "$ref": "#/$defs/TobaccoExposureObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/TobaccoExposureObservation"
               },
               "type": "array"
             }
@@ -920,7 +917,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -940,15 +937,15 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -970,7 +967,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -988,16 +985,16 @@
             "observations": {
               "description": "A set of one or more more atomic observations that are conceptually or logically related - e.g. two components of some compound measurement (e.g. the systolic and diastolic components of a blood pressure measurement), or a panel of related measurements run and interpreted together on the same subject/specimen (e.g. a blood panel, or separate dimensional measurements of a specimen).",
               "items": {
-                "$ref": "#/$defs/HistologicalCompositionObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/HistologicalCompositionObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -1042,7 +1039,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -1062,11 +1059,11 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueBoolean": {
@@ -1086,7 +1083,7 @@
               "type": "string"
             },
             "valueEntity": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The value of an observation"
             },
             "valueInteger": {
@@ -1094,7 +1091,7 @@
               "type": "string"
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             },
             "valueString": {
@@ -1119,7 +1116,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -1137,16 +1134,16 @@
             "observations": {
               "description": "A set of one or more more atomic observations that are conceptually or logically related - e.g. two components of some compound measurement (e.g. the systolic and diastolic components of a blood pressure measurement), or a panel of related measurements run and interpreted together on the same subject/specimen (e.g. a blood panel, or separate dimensional measurements of a specimen).",
               "items": {
-                "$ref": "#/$defs/Observation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Observation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -1172,7 +1169,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
@@ -1219,16 +1216,16 @@
             "associated_timepoint": {
               "description": "A collection of timepoint observations that are relevant to research projects (e.g. date of IACUC approval, date of IRB approval, date of embargo end, etc.)",
               "items": {
-                "$ref": "#/$defs/TimePoint"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint"
               },
               "type": "array"
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the research project ended."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the research project began."
             },
             "description": {
@@ -1246,7 +1243,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
@@ -1261,14 +1258,14 @@
             "part_of": {
               "description": "A reference to a parent ResearchProject (e.g. a link to the overarching CPTAC ResearchProject from a substudy of CPTAC)",
               "items": {
-                "$ref": "#/$defs/ResearchProject"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/ResearchProject"
               },
               "type": "array"
             },
             "primary_anatomic_site": {
               "description": "The text term used to describe the general location of the malignant disease, as categorized by the World Health Organization's (WHO) International Classification of Diseases for Oncology (ICD-O).  In the context of ResearchProject, this attribute captures the anatomic sites of research interest.",
               "items": {
-                "$ref": "#/$defs/BodySite"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/BodySite"
               },
               "type": "array"
             },
@@ -1302,17 +1299,17 @@
           "description": "A research subject is the entity of interest in a research study, typically a human being or an animal, but can also be a device, group of humans or animals, \nor a tissue sample. Human research subjects are usually not traceable to a particular person to protect the subject\u2019s privacy.",
           "properties": {
             "age_at_enrollment": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The age in days when the Subject enrolled on the ResearchProject"
             },
             "associated_subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "A reference to the Subject that is this ResearchSubject"
             },
             "comorbid_diagnosis": {
               "description": "One or more diagnosis instance that are comorbid with the primary_diagnosis that qualified a subject for inclusion on a ResearchProject",
               "items": {
-                "$ref": "#/$defs/Diagnosis"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Diagnosis"
               },
               "type": "array"
             },
@@ -1327,7 +1324,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
@@ -1336,17 +1333,17 @@
               "type": "string"
             },
             "member_of_research_project": {
-              "$ref": "#/$defs/ResearchProject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/ResearchProject",
               "description": "A reference to the Study(s) of which this ResearchSubject is a member"
             },
             "originating_site": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The Organization at which a subject was enrolled on a ResearchProject."
             },
             "primary_diagnosis": {
               "description": "The diagnosis instance that qualified a subject for inclusion on a ResearchProject",
               "items": {
-                "$ref": "#/$defs/Diagnosis"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Diagnosis"
               },
               "type": "array"
             },
@@ -1355,7 +1352,7 @@
               "type": "string"
             },
             "primary_diagnosis_site": {
-              "$ref": "#/$defs/BodySite",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/BodySite",
               "description": "The text term used to describe the primary site of disease, as categorized by the World Health Organization's (WHO) International Classification of Diseases for Oncology (ICD-O). This categorization groups cases into general categories.  This attribute represents the primary site of disease that qualified the subject for inclusion on the ResearchProject."
             }
           },
@@ -1375,7 +1372,7 @@
               "type": "string"
             },
             "associated_project": {
-              "$ref": "#/$defs/ResearchProject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/ResearchProject",
               "description": "The Project associated with the specimen."
             },
             "cellular_composition_type": {
@@ -1383,15 +1380,15 @@
               "type": "string"
             },
             "contained_in": {
-              "$ref": "#/$defs/SpecimenContainer",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenContainer",
               "description": "A physical container in which a specimen is presently held or attached -  as storage for future use,  a substrate for growth (e.g. a cell culture dish), or a vessel to enable analysis (e.g. a microscope slide or 96-well plate)"
             },
             "creation_activity": {
-              "$ref": "#/$defs/SpecimenCreationActivity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenCreationActivity",
               "description": "The activity through which a specimen was created, by removing material from an biological subject, or deriving material from an existing specimen."
             },
             "data_provider": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization (e.g.a laboratory, processing center, or research site) that provided data associated with a specimen."
             },
             "degree_of_dysplasia": {
@@ -1401,7 +1398,7 @@
             "derived_product": {
               "description": "A 'living' biologically active product that was derived from the specimen (e.g. a cell culture, tissue culture, or organoid)",
               "items": {
-                "$ref": "#/$defs/BiologicProduct"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/BiologicProduct"
               },
               "type": "array"
             },
@@ -1410,11 +1407,11 @@
               "type": "string"
             },
             "dimensional_measures": {
-              "$ref": "#/$defs/DimensionalObservationSet",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/DimensionalObservationSet",
               "description": "A set of one or more observations about the current physical dimensions of an object (e.g. length, width, area)."
             },
             "distance_from_paired_specimen": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The observed distance in the body of the specimen from a 'paired specimen' at the time of collection. (e.g. the distance between the in vivo location of a tumor tissue specimen and its paired normal specimen)"
             },
             "dysplasia_fraction": {
@@ -1428,7 +1425,7 @@
             "histological_composition_measures": {
               "description": "A set of one or more observations that quantify the relative or absolute composition of a specimen at cellular level - e.g. how many cells in the specimen are of a given type, or exhibit a particular cellular phenotype.",
               "items": {
-                "$ref": "#/$defs/HistologicalCompositionObservationSet"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/HistologicalCompositionObservationSet"
               },
               "type": "array"
             },
@@ -1439,7 +1436,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
@@ -1458,7 +1455,7 @@
             "parent_specimen": {
               "description": "An existing specimen from which the specimen of interest was directly derived (i.e its immediate parent specimen).",
               "items": {
-                "$ref": "#/$defs/Specimen"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Specimen"
               },
               "type": "array"
             },
@@ -1469,28 +1466,28 @@
             "processing_activity": {
               "description": "An activity that modifies the physical structure, composition, or state of a specimen.",
               "items": {
-                "$ref": "#/$defs/SpecimenProcessingActivity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenProcessingActivity"
               },
               "type": "array"
             },
             "quality_measure": {
               "description": "An observation about characteristics of a specimen that are indicative of its quality or suitability for use.",
               "items": {
-                "$ref": "#/$defs/SpecimenQualityObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenQualityObservation"
               },
               "type": "array"
             },
             "quantity_measure": {
               "description": "An observation related to the present quantity of a specimen - e.g. its weight, volume, or analyte concentration.",
               "items": {
-                "$ref": "#/$defs/SpecimenQuantityObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenQuantityObservation"
               },
               "type": "array"
             },
             "related_document": {
               "description": "A reference to an external document that is about or related to the specimen (e.g. a publication related to the study it is a part of, pathology report containing additional details about it, protocol describing how it was collected)",
               "items": {
-                "$ref": "#/$defs/Document"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Document"
               },
               "type": "array"
             },
@@ -1503,7 +1500,7 @@
               "type": "string"
             },
             "source_subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "A specific Subject from which the specimen was directly or indirectly derived."
             },
             "specific_tissue_morphology": {
@@ -1517,14 +1514,14 @@
             "storage_activity": {
               "description": "An activity that results in the storage or maintenance of a specimen in a particular location, container, or state.",
               "items": {
-                "$ref": "#/$defs/SpecimenStorageActivity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenStorageActivity"
               },
               "type": "array"
             },
             "transport_activity": {
               "description": "An activity through which the specimen is transported between locations.",
               "items": {
-                "$ref": "#/$defs/SpecimenTransportActivity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenTransportActivity"
               },
               "type": "array"
             },
@@ -1544,7 +1541,7 @@
             "additive": {
               "description": "A material substance added to the container (typically to support the primary contained object - e.g. culture media to support cell growth)",
               "items": {
-                "$ref": "#/$defs/Substance"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Substance"
               },
               "type": "array"
             },
@@ -1563,12 +1560,12 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
             "parent_container": {
-              "$ref": "#/$defs/SpecimenContainer",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenContainer",
               "description": "A larger container of which this container is a part (e.g. the complete 96-well plate of which a single well is a part)"
             }
           },
@@ -1587,7 +1584,7 @@
             "additive": {
               "description": "A type of material or reagent used applied as input when creating a specimen.",
               "items": {
-                "$ref": "#/$defs/Substance"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Substance"
               },
               "type": "array"
             },
@@ -1596,15 +1593,15 @@
               "type": "string"
             },
             "collection_site": {
-              "$ref": "#/$defs/BodySite",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/BodySite",
               "description": "The anatomic site from which a specimen was collected."
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the activity ended (in this case, a specimen creation event)."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a specimen creation event)."
             },
             "derivation_method_type": {
@@ -1614,23 +1611,23 @@
             "execution_condition_observation": {
               "description": "Information describing the environmental conditions in which an activity, or a specific part of an activity, was performed.",
               "items": {
-                "$ref": "#/$defs/ExecutionConditionObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionConditionObservation"
               },
               "type": "array"
             },
             "execution_time_observation": {
               "description": "Information describing how long certain parts on an activity took to complete.",
               "items": {
-                "$ref": "#/$defs/ExecutionTimeObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionTimeObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the activity."
             },
             "quantity_collected": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The quantity of material in the specimen as originally collected from its original source material (prior to downstream portioning or processing)"
             },
             "specimen_order": {
@@ -1653,36 +1650,36 @@
             "additive": {
               "description": "A type of material or reagent used as input when processing the specimen",
               "items": {
-                "$ref": "#/$defs/Substance"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Substance"
               },
               "type": "array"
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a specimen processing event)."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a specimen processing event)."
             },
             "duration": {
               "description": "The length of time over which the activity was performed.",
               "items": {
-                "$ref": "#/$defs/Quantity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity"
               },
               "type": "array"
             },
             "execution_condition_observation": {
               "description": "Information describing the environmental conditions in which an activity, or a specific part of an activity, was performed.",
               "items": {
-                "$ref": "#/$defs/ExecutionConditionObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionConditionObservation"
               },
               "type": "array"
             },
             "execution_time_observation": {
               "description": "Information describing how long certain parts on an activity took to complete.",
               "items": {
-                "$ref": "#/$defs/ExecutionTimeObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionTimeObservation"
               },
               "type": "array"
             },
@@ -1691,7 +1688,7 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the activity."
             }
           },
@@ -1710,7 +1707,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -1730,15 +1727,15 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -1760,7 +1757,7 @@
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Entity"
               },
               "type": "array"
             },
@@ -1780,15 +1777,15 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -1806,20 +1803,20 @@
             "container": {
               "description": "A container in which the specimen is held or affixed during its storage.",
               "items": {
-                "$ref": "#/$defs/SpecimenContainer"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenContainer"
               },
               "type": "array"
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the activity ended (in this case, a storage event)."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a storage event)."
             },
             "duration": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The length of time over which the activity was performed."
             },
             "method_type": {
@@ -1827,7 +1824,7 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the activity."
             }
           },
@@ -1840,11 +1837,11 @@
           "description": "An activity through which a specimen is transported between locations or organizations.",
           "properties": {
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the activity ended (in this case, a transport event)."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a transport event)."
             },
             "duration": {
@@ -1857,20 +1854,20 @@
             "execution_condition_observation": {
               "description": "Information describing the environmental conditions in which an activity, or a specific part of an activity, was performed.",
               "items": {
-                "$ref": "#/$defs/ExecutionConditionObservation"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionConditionObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the activity."
             },
             "transport_destination": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "An organization (facility, site, lab, etc) to which the specimen is delivered as a result of the activity."
             },
             "transport_origin": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "An organization (facility, site, lab, etc) from which the specimen was transported as a result of the activity."
             }
           },
@@ -1883,7 +1880,7 @@
           "description": "Demographics and other administrative information about an individual or animal receiving care or other health-related services.",
           "properties": {
             "age_at_death": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The age of an individual at the time of death, expressed in days since birth"
             },
             "breed": {
@@ -1905,7 +1902,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
@@ -1955,7 +1952,7 @@
               "type": "array"
             },
             "substance_quantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "The quantity of substance this instance stands for."
             },
             "substance_type": {
@@ -1972,11 +1969,11 @@
           "description": "A period of time between a start and end time point.",
           "properties": {
             "periodEnd_end": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "When a period of time ended."
             },
             "periodStart_start": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "When a period of time started."
             }
           },
@@ -2004,11 +2001,11 @@
               "type": "string"
             },
             "indexTimePoint": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "Another TimePoint from which this point is offset."
             },
             "offsetFromIndex": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity",
               "description": "A quantity of time that, together with the index date or event, can be used to derive a specific timepoint."
             }
           },
@@ -2025,7 +2022,7 @@
               "type": "string"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -2041,11 +2038,11 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
@@ -2070,16 +2067,16 @@
             "concurrent_treatment": {
               "description": "Treatment instance(s) that are concurrent with this treatment.",
               "items": {
-                "$ref": "#/$defs/Treatment"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Treatment"
               },
               "type": "array"
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The timepoint at which the treatment ended."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint",
               "description": "The timepoint at which the treatment started."
             },
             "id": {
@@ -2089,7 +2086,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier"
               },
               "type": "array"
             },
@@ -2102,15 +2099,15 @@
               "type": "string"
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Subject",
               "description": "The subject (person, animal, model system) to which the treatment was administered."
             },
             "therapeutic_agent": {
-              "$ref": "#/$defs/Substance",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/Substance",
               "description": "One or more therapeutic agents that are administered as part of this treatment."
             },
             "treatment_anatomic_site": {
-              "$ref": "#/$defs/BodySite",
+              "$ref": "#/$defs/model.ccdh.v101/$defs/BodySite",
               "description": "The anatomical site that the treatment targets."
             },
             "treatment_effect": {
@@ -2127,7 +2124,7 @@
             "treatment_for_diagnosis": {
               "description": "The diagnosis for which this treatment is intended.",
               "items": {
-                "$ref": "#/$defs/Diagnosis"
+                "$ref": "#/$defs/model.ccdh.v101/$defs/Diagnosis"
               },
               "type": "array"
             },
@@ -2154,21 +2151,20 @@
         }
       }
     },
-    "model.ccdh.v101cc.structures-enum": {
+    "model.ccdh.v101cc.schema-names.enum": {
       "$comment": "Template",
       "enum": [
         "ccdh.v101cc.Diagnosis"
       ]
     },
-    "model.ccdh.v101cc.rules-enum": {
+    "model.ccdh.v101cc.rule-names.enum": {
       "$comment": "Template",
       "enum": [
         "Shahim's.rule from v101.cc"
       ]
     },
     "model.ccdh.v101cc": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/model.ccdh.v101cc",
+
       "$defs": {
         "AlcoholExposureObservation": {
           "additionalProperties": false,
@@ -2176,10 +2172,10 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -2188,23 +2184,23 @@
             },
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "observation_type": {
               "description": "The specific type of alcohol exposure observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
               "description": "The result of the observation, encoded as a CodeableConcept.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "valueInteger": {
               "description": "The result of the observation, encoded as an integer.",
@@ -2239,7 +2235,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
@@ -2252,7 +2248,7 @@
             },
             "product_type": {
               "description": "The high level type of model system (e.g. cell line, cell culture, tissue culture, organoid)",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             }
           },
           "required": [],
@@ -2266,13 +2262,13 @@
             "qualifier": {
               "description": "A qualifier that further refines or specifies the location of the body site (e.g. to indicate laterality, upper v. lower, containment, etc).",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "site": {
               "description": "A term describing any site in the body.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             }
           },
           "required": [
@@ -2287,10 +2283,10 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -2299,19 +2295,19 @@
             },
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "observation_type": {
               "description": "The cancer grade classification system being used to classify the cancer (e.g. INPC, Gleason, etc.)",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
               "description": "The value from the grade classification system that classifies the cancer (e.g. Poorly differentiated, differentiated, etc.)",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             }
           },
           "required": [
@@ -2327,12 +2323,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation set described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -2343,23 +2339,23 @@
             "method_type": {
               "description": "The cancer grade classification system being used to classify the cancer (e.g. INPC, Gleason, etc.)",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observations": {
               "description": "A set of one or more more atomic observations about the cancer grade that classifies the cancer (e.g. Poorly differentiated, differentiated, etc.)",
               "items": {
-                "$ref": "#/$defs/CancerGradeObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerGradeObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -2373,10 +2369,10 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -2385,26 +2381,26 @@
             },
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "observation_type": {
               "description": "The type of cancer staging component being represented (e.g. 'Clinical Metastasis (M)')",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
               "description": "The value for a cancer staging component being represented (e.g. 'M1'), encoded as a CodeableConcept.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "valueEntity": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The value of an observation"
             }
           },
@@ -2421,12 +2417,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation set described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -2437,23 +2433,23 @@
             "method_type": {
               "description": "A type of method used in generating each of the Observations bundled in the set, in this case, the particular staging system being used to classify the cancer.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observations": {
               "description": "A set of one or more more atomic observations about the cancer stage",
               "items": {
-                "$ref": "#/$defs/CancerStageObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerStageObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -2468,7 +2464,7 @@
             "coding": {
               "description": "A reference to a code defined by a terminology system",
               "items": {
-                "$ref": "#/$defs/Coding"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Coding"
               },
               "type": "array"
             },
@@ -2518,25 +2514,25 @@
           "description": "A collection of characteristics that describe an abnormal condition of the body as assessed at a point in time. May be used to capture information about neoplastic and non-neoplastic conditions.",
           "properties": {
             "age_at_diagnosis": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The age in days of the individual at the time of diagnosis"
             },
             "condition": {
               "description": "Code that captures the condition being diagnosed (e.g. ICD-O, ICD-10, SNOMED, etc.)",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "dimensional_measure": {
-              "$ref": "#/$defs/DimensionalObservationSet",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/DimensionalObservationSet",
               "description": "A set of one or more observations about the current physical dimensions of an object (e.g. length, width, area)."
             },
             "disease_status": {
               "description": "A term that refers to the nature and/or clinical outcome of a disease (e.g., primary disease, metastatic disease, recurrent disease, etc.)",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "grade": {
               "description": "The degree of abnormality of cancer cells, a measure of differentiation, the extent to which cancer cells are similar in appearance and function to healthy cells of the same tissue type. The degree of differentiation often relates to the clinical behavior of the particular tumor. Based on the microscopic findings, tumor grade is commonly described by one of four degrees of severity. Histopathologic grade of a tumor may be used to plan treatment and estimate the future course, outcome, and overall prognosis of disease. Certain types of cancers, such as soft tissue sarcoma, primary brain tumors, lymphomas, and breast have special grading systems.",
               "items": {
-                "$ref": "#/$defs/CancerGradeObservationSet"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerGradeObservationSet"
               },
               "type": "array"
             },
@@ -2547,58 +2543,58 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
             "metastatic_site": {
               "description": "The anatomical location(s) of metastatic disease",
               "items": {
-                "$ref": "#/$defs/BodySite"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/BodySite"
               },
               "type": "array"
             },
             "method_of_diagnosis": {
               "description": "The method used to confirm the patients malignant diagnosis",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "morphology": {
               "description": "Code that represents the histology of the disease using the third edition of the International Classification of Diseases for Oncology, published in 2000, used principally in tumor and cancer registries for coding the site (topography) and the histology (morphology) of neoplasms.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "primary_site": {
               "description": "The anatomical location of the primary condition",
               "items": {
-                "$ref": "#/$defs/BodySite"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/BodySite"
               },
               "type": "array"
             },
             "prior_diagnosis": {
-              "$ref": "#/$defs/Diagnosis",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis",
               "description": "A reference to a prior cancer diagnosis.  In the case of relapse/recurrent disease, this attribute may be populated with a reference to the initial diagnosis."
             },
             "related_specimen": {
               "description": "The specimen from which this diagnosis is made",
               "items": {
-                "$ref": "#/$defs/Specimen"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Specimen"
               },
               "type": "array"
             },
             "stage": {
               "description": "The extent of a cancer in the body. Staging is usually based on the size of the tumor, whether lymph nodes contain cancer, and whether the cancer has spread from the original site to other parts of the body.",
               "items": {
-                "$ref": "#/$defs/CancerStageObservationSet"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerStageObservationSet"
               },
               "type": "array"
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The subject of this diagnosis."
             },
             "supporting_observation": {
               "description": "One or more observations that capture information relevant to this condition or diagnosis.",
               "items": {
-                "$ref": "#/$defs/Observation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Observation"
               },
               "type": "array"
             },
@@ -2617,12 +2613,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -2633,24 +2629,24 @@
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observation_type": {
               "description": "The specific type of observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -2667,12 +2663,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation set described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -2683,23 +2679,23 @@
             "method_type": {
               "description": "A type of method used in generating each of the Observations bundled in the set.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observations": {
               "description": "A set of one or more more atomic observations that are conceptually or logically related - e.g. two components of some compound measurement (e.g. the systolic and diastolic components of a blood pressure measurement), or a panel of related measurements run and interpreted together on the same subject/specimen (e.g. a blood panel, or separate dimensional measurements of a specimen).",
               "items": {
-                "$ref": "#/$defs/DimensionalObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/DimensionalObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -2717,10 +2713,10 @@
             },
             "document_type": {
               "description": "The high-level type of the document (e.g.  'publication', 'pathology report')",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The entity that the report is primarily about"
             },
             "id": {
@@ -2730,7 +2726,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
@@ -2760,10 +2756,10 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -2772,23 +2768,23 @@
             },
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "observation_type": {
               "description": "The specific type of environmental exposure observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
               "description": "The result of the observation, encoded as a CodeableConcept.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             }
           },
           "required": [
@@ -2804,10 +2800,10 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -2816,23 +2812,23 @@
             },
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "observation_type": {
               "description": "The specific type of environmental exposure observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
               "description": "The result of the observation, encoded as a CodeableConcept.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             }
           },
           "required": [
@@ -2848,10 +2844,10 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -2860,22 +2856,22 @@
             },
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "observation_type": {
               "description": "The specific type of environmental exposure observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -2893,14 +2889,14 @@
             "alcohol_exposure": {
               "description": "Observations about an individual's exposure to alcohol.",
               "items": {
-                "$ref": "#/$defs/AlcoholExposureObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/AlcoholExposureObservation"
               },
               "type": "array"
             },
             "environmental_exposure": {
               "description": "Observations about an individual's exposure to environmental substances that may impact clinical outcomes.",
               "items": {
-                "$ref": "#/$defs/EnvironmentalExposureObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/EnvironmentalExposureObservation"
               },
               "type": "array"
             },
@@ -2911,18 +2907,18 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "A reference to the Subject that is the subject of this Exposure"
             },
             "tobacco_exposure": {
               "description": "Observations about an individual's exposure to tobacco.",
               "items": {
-                "$ref": "#/$defs/TobaccoExposureObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/TobaccoExposureObservation"
               },
               "type": "array"
             }
@@ -2939,12 +2935,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -2955,24 +2951,24 @@
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observation_type": {
               "description": "The specific type of observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -2989,12 +2985,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation set described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -3005,23 +3001,23 @@
             "method_type": {
               "description": "A type of method used in generating each of the Observations bundled in the set.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observations": {
               "description": "A set of one or more more atomic observations that are conceptually or logically related - e.g. two components of some compound measurement (e.g. the systolic and diastolic components of a blood pressure measurement), or a panel of related measurements run and interpreted together on the same subject/specimen (e.g. a blood panel, or separate dimensional measurements of a specimen).",
               "items": {
-                "$ref": "#/$defs/HistologicalCompositionObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/HistologicalCompositionObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -3042,7 +3038,7 @@
             },
             "type": {
               "description": "A code that defines the type of the identifier.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "value": {
               "description": "The value of the identifier, as defined by the system.",
@@ -3061,12 +3057,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -3077,20 +3073,20 @@
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observation_type": {
               "description": "The specific type of observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueBoolean": {
@@ -3099,7 +3095,7 @@
             },
             "valueCodeableConcept": {
               "description": "The result of the observation, encoded as a CodeableConcept.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "valueDateTime": {
               "description": "The result of the observation, encoded as a dateTime.",
@@ -3110,7 +3106,7 @@
               "type": "string"
             },
             "valueEntity": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The value of an observation"
             },
             "valueInteger": {
@@ -3118,7 +3114,7 @@
               "type": "string"
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             },
             "valueString": {
@@ -3138,12 +3134,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation set described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -3154,23 +3150,23 @@
             "method_type": {
               "description": "A type of method used in generating each of the Observations bundled in the set.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observations": {
               "description": "A set of one or more more atomic observations that are conceptually or logically related - e.g. two components of some compound measurement (e.g. the systolic and diastolic components of a blood pressure measurement), or a panel of related measurements run and interpreted together on the same subject/specimen (e.g. a blood panel, or separate dimensional measurements of a specimen).",
               "items": {
-                "$ref": "#/$defs/Observation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Observation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             }
           },
@@ -3196,7 +3192,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
@@ -3221,11 +3217,11 @@
           "properties": {
             "unit": {
               "description": "A coded or free text (in the .text field) representation of the unit.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "valueCodeableConcept": {
               "description": "A coded value representing a quantity (e.g. \"Adjacent (< or = 2cm)\")",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "valueDecimal": {
               "description": "An amount, in the given units (if specified)",
@@ -3243,16 +3239,16 @@
             "associated_timepoint": {
               "description": "A collection of timepoint observations that are relevant to research projects (e.g. date of IACUC approval, date of IRB approval, date of embargo end, etc.)",
               "items": {
-                "$ref": "#/$defs/TimePoint"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint"
               },
               "type": "array"
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the research project ended."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the research project began."
             },
             "description": {
@@ -3270,7 +3266,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
@@ -3285,20 +3281,20 @@
             "part_of": {
               "description": "A reference to a parent ResearchProject (e.g. a link to the overarching CPTAC ResearchProject from a substudy of CPTAC)",
               "items": {
-                "$ref": "#/$defs/ResearchProject"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/ResearchProject"
               },
               "type": "array"
             },
             "primary_anatomic_site": {
               "description": "The text term used to describe the general location of the malignant disease, as categorized by the World Health Organization's (WHO) International Classification of Diseases for Oncology (ICD-O).  In the context of ResearchProject, this attribute captures the anatomic sites of research interest.",
               "items": {
-                "$ref": "#/$defs/BodySite"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/BodySite"
               },
               "type": "array"
             },
             "research_project_type": {
               "description": "The 'type' of ResearchProject represented (e.g. a broad-based Program like 'CPTAC' or a more focused Project like 'CPTAC PDAC Discovery Study')",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "sponsor": {
               "description": "An entity that is responsible for the initiation, management, and/or financing of a research project.",
@@ -3326,17 +3322,17 @@
           "description": "A research subject is the entity of interest in a research study, typically a human being or an animal, but can also be a device, group of humans or animals, \nor a tissue sample. Human research subjects are usually not traceable to a particular person to protect the subject\u2019s privacy.",
           "properties": {
             "age_at_enrollment": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The age in days when the Subject enrolled on the ResearchProject"
             },
             "associated_subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "A reference to the Subject that is this ResearchSubject"
             },
             "comorbid_diagnosis": {
               "description": "One or more diagnosis instance that are comorbid with the primary_diagnosis that qualified a subject for inclusion on a ResearchProject",
               "items": {
-                "$ref": "#/$defs/Diagnosis"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis"
               },
               "type": "array"
             },
@@ -3351,35 +3347,35 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
             "index_timepoint": {
               "description": "The text term used to describe the reference or anchor date used for date obfuscation, where a single date is obscured by creating one or more date ranges in relation to this date.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "member_of_research_project": {
-              "$ref": "#/$defs/ResearchProject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/ResearchProject",
               "description": "A reference to the Study(s) of which this ResearchSubject is a member"
             },
             "originating_site": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The Organization at which a subject was enrolled on a ResearchProject."
             },
             "primary_diagnosis": {
               "description": "The diagnosis instance that qualified a subject for inclusion on a ResearchProject",
               "items": {
-                "$ref": "#/$defs/Diagnosis"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis"
               },
               "type": "array"
             },
             "primary_diagnosis_condition": {
               "description": "The text term used to describe the type of malignant disease, as categorized by the World Health Organization's (WHO) International Classification of Diseases for Oncology (ICD-O).   This attribute represents the disease that qualified the subject for inclusion on the ResearchProject",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "primary_diagnosis_site": {
-              "$ref": "#/$defs/BodySite",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/BodySite",
               "description": "The text term used to describe the primary site of disease, as categorized by the World Health Organization's (WHO) International Classification of Diseases for Oncology (ICD-O). This categorization groups cases into general categories.  This attribute represents the primary site of disease that qualified the subject for inclusion on the ResearchProject."
             }
           },
@@ -3396,36 +3392,36 @@
           "properties": {
             "analyte_type": {
               "description": "For specimens of type 'analyte' (or an 'aliquot' derived from an analyte), this is the category of chemcial the analyte of interest represents (e.g. DNA, RNA)",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "associated_project": {
-              "$ref": "#/$defs/ResearchProject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/ResearchProject",
               "description": "The Project associated with the specimen."
             },
             "cellular_composition_type": {
               "description": "A term describing the type of cell or cellular material comprising a specimen.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "contained_in": {
-              "$ref": "#/$defs/SpecimenContainer",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenContainer",
               "description": "A physical container in which a specimen is presently held or attached -  as storage for future use,  a substrate for growth (e.g. a cell culture dish), or a vessel to enable analysis (e.g. a microscope slide or 96-well plate)"
             },
             "creation_activity": {
-              "$ref": "#/$defs/SpecimenCreationActivity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenCreationActivity",
               "description": "The activity through which a specimen was created, by removing material from an biological subject, or deriving material from an existing specimen."
             },
             "data_provider": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization (e.g.a laboratory, processing center, or research site) that provided data associated with a specimen."
             },
             "degree_of_dysplasia": {
               "description": "A term describing the nature/extent of abnormal cells  that are not cancer, as observed upon microscopic assessment of a specimen. Records the degree of dysplasia for the cyst or lesion under consideration.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "derived_product": {
               "description": "A 'living' biologically active product that was derived from the specimen (e.g. a cell culture, tissue culture, or organoid)",
               "items": {
-                "$ref": "#/$defs/BiologicProduct"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/BiologicProduct"
               },
               "type": "array"
             },
@@ -3434,11 +3430,11 @@
               "type": "string"
             },
             "dimensional_measures": {
-              "$ref": "#/$defs/DimensionalObservationSet",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/DimensionalObservationSet",
               "description": "A set of one or more observations about the current physical dimensions of an object (e.g. length, width, area)."
             },
             "distance_from_paired_specimen": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The observed distance in the body of the specimen from a 'paired specimen' at the time of collection. (e.g. the distance between the in vivo location of a tumor tissue specimen and its paired normal specimen)"
             },
             "dysplasia_fraction": {
@@ -3447,12 +3443,12 @@
             },
             "general_tissue_morphology": {
               "description": "The high-level kind of tissue collected when generating a specimen, based on its disease status or proximity to tumor tissue (e.g. is it normal, abnormal, tumor, tumor-adjacent).",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "histological_composition_measures": {
               "description": "A set of one or more observations that quantify the relative or absolute composition of a specimen at cellular level - e.g. how many cells in the specimen are of a given type, or exhibit a particular cellular phenotype.",
               "items": {
-                "$ref": "#/$defs/HistologicalCompositionObservationSet"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/HistologicalCompositionObservationSet"
               },
               "type": "array"
             },
@@ -3463,17 +3459,17 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
             "morphlogy_assessment_method": {
               "description": "The general method used to assess a specimens specific tissue morphology",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "morphology_assessor_role": {
               "description": "A term describing the role of the person who histologically assessed the specific tissue morphology of a specimen",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "morphology_pathologically_confirmed": {
               "description": "A flag indicating whether the histologic assessment of specific morphology was confirmed by pathologist review.",
@@ -3482,79 +3478,79 @@
             "parent_specimen": {
               "description": "An existing specimen from which the specimen of interest was directly derived (i.e its immediate parent specimen).",
               "items": {
-                "$ref": "#/$defs/Specimen"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Specimen"
               },
               "type": "array"
             },
             "preinvasive_tissue_morphology": {
               "description": "A term describing the specific pathology exhibited by pre-invasive tissue comprising a specimen.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "processing_activity": {
               "description": "An activity that modifies the physical structure, composition, or state of a specimen.",
               "items": {
-                "$ref": "#/$defs/SpecimenProcessingActivity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenProcessingActivity"
               },
               "type": "array"
             },
             "quality_measure": {
               "description": "An observation about characteristics of a specimen that are indicative of its quality or suitability for use.",
               "items": {
-                "$ref": "#/$defs/SpecimenQualityObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenQualityObservation"
               },
               "type": "array"
             },
             "quantity_measure": {
               "description": "An observation related to the present quantity of a specimen - e.g. its weight, volume, or analyte concentration.",
               "items": {
-                "$ref": "#/$defs/SpecimenQuantityObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenQuantityObservation"
               },
               "type": "array"
             },
             "related_document": {
               "description": "A reference to an external document that is about or related to the specimen (e.g. a publication related to the study it is a part of, pathology report containing additional details about it, protocol describing how it was collected)",
               "items": {
-                "$ref": "#/$defs/Document"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Document"
               },
               "type": "array"
             },
             "section_location": {
               "description": "The location in a parent specimen from which a section/portion was excised (e.g. top, middle, bottom)",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "source_material_type": {
               "description": "The general kind of material from which the specimen was derived.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "source_subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "A specific Subject from which the specimen was directly or indirectly derived."
             },
             "specific_tissue_morphology": {
               "description": "A term describing the specific pathology exhibited by the tissue comprising a specimen.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "specimen_type": {
               "description": "The high-level type of the specimen, based on its derivation provenance (i.e. how far removed it is from the original sample extracted from a source).",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "storage_activity": {
               "description": "An activity that results in the storage or maintenance of a specimen in a particular location, container, or state.",
               "items": {
-                "$ref": "#/$defs/SpecimenStorageActivity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenStorageActivity"
               },
               "type": "array"
             },
             "transport_activity": {
               "description": "An activity through which the specimen is transported between locations.",
               "items": {
-                "$ref": "#/$defs/SpecimenTransportActivity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenTransportActivity"
               },
               "type": "array"
             },
             "tumor_status_at_collection": {
               "description": "The status of the tumor at the time the specimen was collected (e.g. if it was primary, recurrent, metastatic, etc).",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             }
           },
           "required": [],
@@ -3568,7 +3564,7 @@
             "additive": {
               "description": "A material substance added to the container (typically to support the primary contained object - e.g. culture media to support cell growth)",
               "items": {
-                "$ref": "#/$defs/Substance"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Substance"
               },
               "type": "array"
             },
@@ -3578,7 +3574,7 @@
             },
             "container_type": {
               "description": "The kind of the container.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "id": {
               "description": "The 'logical' identifier of the entity within the system of record.  The simple value of this attribute stands for an identifier of this data object within the system, it can be used as a reference from other objects within the same system (i.e. primary and foreign keys), and it should be unique per type of object. The same data object copied to a different system will likely have a different \"id\" in the new system since \"id\" values are system specific and do not represent persistent business identifiers. Business identifiers are assigned outside the information system and are captured in the \"identifier\" field. The \"id\" field is more likely to be a serially or randomly generated value that is assigned to the data object as it is created in a system.",
@@ -3587,12 +3583,12 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
             "parent_container": {
-              "$ref": "#/$defs/SpecimenContainer",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenContainer",
               "description": "A larger container of which this container is a part (e.g. the complete 96-well plate of which a single well is a part)"
             }
           },
@@ -3606,55 +3602,55 @@
           "properties": {
             "activity_type": {
               "description": "The high-level type of creation activity.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "additive": {
               "description": "A type of material or reagent used applied as input when creating a specimen.",
               "items": {
-                "$ref": "#/$defs/Substance"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Substance"
               },
               "type": "array"
             },
             "collection_method_type": {
               "description": "The type of method applied in collecting a sample from its original source.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "collection_site": {
-              "$ref": "#/$defs/BodySite",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/BodySite",
               "description": "The anatomic site from which a specimen was collected."
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the activity ended (in this case, a specimen creation event)."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a specimen creation event)."
             },
             "derivation_method_type": {
               "description": "The type of method applied to derive a new specimen from an existing one.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "execution_condition_observation": {
               "description": "Information describing the environmental conditions in which an activity, or a specific part of an activity, was performed.",
               "items": {
-                "$ref": "#/$defs/ExecutionConditionObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionConditionObservation"
               },
               "type": "array"
             },
             "execution_time_observation": {
               "description": "Information describing how long certain parts on an activity took to complete.",
               "items": {
-                "$ref": "#/$defs/ExecutionTimeObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionTimeObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the activity."
             },
             "quantity_collected": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The quantity of material in the specimen as originally collected from its original source material (prior to downstream portioning or processing)"
             },
             "specimen_order": {
@@ -3677,36 +3673,36 @@
             "additive": {
               "description": "A type of material or reagent used as input when processing the specimen",
               "items": {
-                "$ref": "#/$defs/Substance"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Substance"
               },
               "type": "array"
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a specimen processing event)."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a specimen processing event)."
             },
             "duration": {
               "description": "The length of time over which the activity was performed.",
               "items": {
-                "$ref": "#/$defs/Quantity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity"
               },
               "type": "array"
             },
             "execution_condition_observation": {
               "description": "Information describing the environmental conditions in which an activity, or a specific part of an activity, was performed.",
               "items": {
-                "$ref": "#/$defs/ExecutionConditionObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionConditionObservation"
               },
               "type": "array"
             },
             "execution_time_observation": {
               "description": "Information describing how long certain parts on an activity took to complete.",
               "items": {
-                "$ref": "#/$defs/ExecutionTimeObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionTimeObservation"
               },
               "type": "array"
             },
@@ -3715,7 +3711,7 @@
               "type": "string"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the activity."
             }
           },
@@ -3729,12 +3725,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -3745,24 +3741,24 @@
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observation_type": {
               "description": "The specific type of observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -3779,12 +3775,12 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
               "description": "The entity or entities directly observed/measured in generating an observation result.",
               "items": {
-                "$ref": "#/$defs/Entity"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity"
               },
               "type": "array"
             },
@@ -3795,24 +3791,24 @@
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "observation_type": {
               "description": "The specific type of observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueQuantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The result of the observation, encoded as a free-text Quantity."
             }
           },
@@ -3830,28 +3826,28 @@
             "container": {
               "description": "A container in which the specimen is held or affixed during its storage.",
               "items": {
-                "$ref": "#/$defs/SpecimenContainer"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenContainer"
               },
               "type": "array"
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the activity ended (in this case, a storage event)."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a storage event)."
             },
             "duration": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The length of time over which the activity was performed."
             },
             "method_type": {
               "description": "A specific type of method or procedure performed to store the specimen",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the activity."
             }
           },
@@ -3864,11 +3860,11 @@
           "description": "An activity through which a specimen is transported between locations or organizations.",
           "properties": {
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the activity ended (in this case, a transport event)."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The date when the activity began (in this case, a transport event)."
             },
             "duration": {
@@ -3881,20 +3877,20 @@
             "execution_condition_observation": {
               "description": "Information describing the environmental conditions in which an activity, or a specific part of an activity, was performed.",
               "items": {
-                "$ref": "#/$defs/ExecutionConditionObservation"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionConditionObservation"
               },
               "type": "array"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the activity."
             },
             "transport_destination": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "An organization (facility, site, lab, etc) to which the specimen is delivered as a result of the activity."
             },
             "transport_origin": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "An organization (facility, site, lab, etc) from which the specimen was transported as a result of the activity."
             }
           },
@@ -3907,20 +3903,20 @@
           "description": "Demographics and other administrative information about an individual or animal receiving care or other health-related services.",
           "properties": {
             "age_at_death": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The age of an individual at the time of death, expressed in days since birth"
             },
             "breed": {
               "description": "A label given to a group of animals homogeneous in appearance and other characteristics that distinguish it from other animals of the same species.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "cause_of_death": {
               "description": "Coded value indicating the circumstance or condition that results in the death of the subject.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "ethnicity": {
               "description": "An individual's self-described social and cultural grouping, specifically whether an individual describes themselves as Hispanic or Latino. The provided values are based on the categories defined by the U.S. Office of Management and Business and used by the U.S. Census Bureau",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "id": {
               "description": "The 'logical' identifier of the entity within the system of record.  The simple value of this attribute stands for an identifier of this data object within the system, it can be used as a reference from other objects within the same system (i.e. primary and foreign keys), and it should be unique per type of object. The same data object copied to a different system will likely have a different \"id\" in the new system since \"id\" values are system specific and do not represent persistent business identifiers. Business identifiers are assigned outside the information system and are captured in the \"identifier\" field. The \"id\" field is more likely to be a serially or randomly generated value that is assigned to the data object as it is created in a system.",
@@ -3929,28 +3925,28 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
             "race": {
               "description": "An arbitrary classification of a taxonomic group that is a division of a species. It usually arises as a consequence of geographical isolation within a species and is characterized by shared heredity, physical attributes and behavior, and in the case of humans, by common history, nationality, or geographic distribution. The provided values are based on the categories defined by the U.S. Office of Management and Business and used by the U.S. Census Bureau.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "sex": {
               "description": "The biologic character or quality that distinguishes male and female from one another as expressed by analysis of the person's gonadal, morphologic (internal and external), chromosomal, and hormonal characteristics.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "species": {
               "description": "The scientific binomial name for the species of the subject (e.g. Homo sapiens, Mus musculus, etc.)",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "vital_status": {
               "description": "Coded value indicating the state or condition of being living or deceased; also includes the case where the vital status is unknown.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "year_of_birth": {
               "description": "Numeric value to represent the calendar year in which an individual was born.",
@@ -3974,17 +3970,17 @@
             "role": {
               "description": "A role played by the substance in a particular application (e.g. the role of a lysis buffer when applied in a specimen creation activity, or the role of fixative when applied in specimen processing)",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "substance_quantity": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "The quantity of substance this instance stands for."
             },
             "substance_type": {
               "description": "The specific type of the substance - at as granular a level as possible. May be a specific chemical compound, or the name of a formulation/preparation made up of many compounds.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             }
           },
           "required": [],
@@ -3996,11 +3992,11 @@
           "description": "A period of time between a start and end time point.",
           "properties": {
             "periodEnd_end": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "When a period of time ended."
             },
             "periodStart_start": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "When a period of time started."
             }
           },
@@ -4019,7 +4015,7 @@
             "eventType": {
               "description": "An event that occurred at the point in time specified by this TimePoint.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
@@ -4028,11 +4024,11 @@
               "type": "string"
             },
             "indexTimePoint": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "Another TimePoint from which this point is offset."
             },
             "offsetFromIndex": {
-              "$ref": "#/$defs/Quantity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity",
               "description": "A quantity of time that, together with the index date or event, can be used to derive a specific timepoint."
             }
           },
@@ -4046,10 +4042,10 @@
           "properties": {
             "category": {
               "description": "The general category of observation described",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "focus": {
-              "$ref": "#/$defs/Entity",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity",
               "description": "The entity or entities directly observed/measured in generating an observation result."
             },
             "id": {
@@ -4058,23 +4054,23 @@
             },
             "method_type": {
               "description": "A type of method used in generating the Observation result.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "observation_type": {
               "description": "The specific type of tobacco exposure observation made - i.e. the feature or characteristic that was observed, measured, estimated, etc..",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "performed_by": {
-              "$ref": "#/$defs/Organization",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization",
               "description": "The organization or group that performed the observation activity."
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The patient that the observation is about (if not the direct focus).  e.g. observations are often made on specimens derived from a patient, or other entities related to a patient, that ultimately tell us something about the patient of interest."
             },
             "valueCodeableConcept": {
               "description": "The result of the observation, encoded as a CodeableConcept.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "valueInteger": {
               "description": "The result of the observation, encoded as an integer.",
@@ -4094,16 +4090,16 @@
             "concurrent_treatment": {
               "description": "Treatment instance(s) that are concurrent with this treatment.",
               "items": {
-                "$ref": "#/$defs/Treatment"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Treatment"
               },
               "type": "array"
             },
             "date_ended": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The timepoint at which the treatment ended."
             },
             "date_started": {
-              "$ref": "#/$defs/TimePoint",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint",
               "description": "The timepoint at which the treatment started."
             },
             "id": {
@@ -4113,7 +4109,7 @@
             "identifier": {
               "description": "A 'business' identifier or accession number for the entity, typically as provided by an external system or authority, that are globally unique and persist across implementing systems. Also, since these identifiers are created outside the information system through a specific business process, the Identifier type has additional attributes to capture this additional metadata so the actual identifier values are qualified by the context that created those values. This additional context allows \"identifier\" instances to be transmitted as business data across systems while still being able to trace them back to the system of origin.",
               "items": {
-                "$ref": "#/$defs/Identifier"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier"
               },
               "type": "array"
             },
@@ -4123,53 +4119,53 @@
             },
             "regimen": {
               "description": "The regimen or line of therapy",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "subject": {
-              "$ref": "#/$defs/Subject",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject",
               "description": "The subject (person, animal, model system) to which the treatment was administered."
             },
             "therapeutic_agent": {
-              "$ref": "#/$defs/Substance",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/Substance",
               "description": "One or more therapeutic agents that are administered as part of this treatment."
             },
             "treatment_anatomic_site": {
-              "$ref": "#/$defs/BodySite",
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/BodySite",
               "description": "The anatomical site that the treatment targets."
             },
             "treatment_effect": {
               "description": "The effect of a treatment on the diagnosis or tumor.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "treatment_end_reason": {
               "description": "The reason the treatment ended.",
               "items": {
-                "$ref": "#/$defs/CodeableConcept"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
               },
               "type": "array"
             },
             "treatment_for_diagnosis": {
               "description": "The diagnosis for which this treatment is intended.",
               "items": {
-                "$ref": "#/$defs/Diagnosis"
+                "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis"
               },
               "type": "array"
             },
             "treatment_frequency": {
               "description": "The frequency of using the substance described by this instance.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "treatment_intent": {
               "description": "The medical intent of the treatment.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "treatment_outcome": {
               "description": "The final outcome of the treatment.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             },
             "treatment_type": {
               "description": "The type of treatment administered, which may include medication/therapeutics or other procedures.",
-              "$ref": "#/$defs/CodeableConcept"
+              "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept"
             }
           },
           "required": [],
@@ -4177,6 +4173,13 @@
           "type": "object"
         }
       }
+    },
+    "test.schema-to-instance-mapping": {
+      "type": "object",
+      "allOf": [
+        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis" } } } },
+        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Diagnosis" } } } }
+      ]
     }
   }
 }

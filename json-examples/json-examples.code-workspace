@@ -6,6 +6,7 @@
 	],
 	"settings": {
 		"json.schemas": [
+
 			{
 				"fileMatch": [
 					"/ccdh-json-schema-v1.0.1/*.json",
@@ -19,7 +20,16 @@
 					"!/home/shahim/diagnosis-1/json/_*.json"
 				],
 				"url": "./home/shahim/diagnosis-1/schema/bundle.json"
+			}
+			,
+			{
+				"fileMatch": [
+					"/home/shahim/schema-testing/testing/*.json",
+					"!/home/shahim/schema-testing/testing/_*.json"
+				],
+				"url": "./home/shahim/schema-testing/schemas/testing-schema.json"
 			},
+			
 			{
 				"fileMatch": [
 					"/home/shahim/schema-testing/model.ccdh.v101/*.json",
