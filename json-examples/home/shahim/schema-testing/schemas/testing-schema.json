@@ -56,14 +56,7 @@
                   "uniqueItems": true,
                   "items": {
                     "type": "string",
-                    "anyOf": [
-                      {
-                        "$ref": "#/$defs/test.schema-names.enum"
-                      },
-                      {
-                        "pattern": "(^off_|_fails$)"
-                      }
-                    ]
+                    "$ref": "#/$defs/test.schema-names.enum"
                   }
                 },
                 "Test rules": {
@@ -71,14 +64,7 @@
                   "uniqueItems": true,
                   "items": {
                     "type": "string",
-                    "anyOf": [
-                      {
-                        "$ref": "#/$defs/test.rule-names.enum"
-                      },
-                      {
-                        "pattern": "(^off_|_fails$)"
-                      }
-                    ]
+                    "$ref": "#/$defs/test.rule-names.enum"
                   }
                 },
                 "Instance": {
@@ -92,9 +78,7 @@
                 }
               },
               "required": [
-                "Title",
-                "Description",
-                "Schema"
+                "Title"
               ],
               "patternProperties": {
                 "^off_": {
