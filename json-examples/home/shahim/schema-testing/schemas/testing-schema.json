@@ -5815,30 +5815,7 @@
 
       "allOf": [
 
-        {
-          "if": {
-            "required": [
-              "rule.ccdh.v101core.Diagnosis.validate"
-            ]
-          },
-          "then": {
-            "if": {
-              "properties": {
-                "rule.ccdh.v101core.Diagnosis.validate": {
-                  "const": true
-                }
-              }
-            },
-            "then": {
-              "$ref": "#/$defs/rule.ccdh.v101core.Diagnosis.validate"
-            },
-            "else": {
-              "not": {
-                "$ref": "#/$defs/rule.ccdh.v101core.Diagnosis.validate"
-              }
-            }
-          }
-        }
+        {"if": {"required": ["rule.ccdh.v101core.Diagnosis.validate"]}, "then": {"if": {"properties": {"rule.ccdh.v101core.Diagnosis.validate": {"const": true}}}, "then": {"$ref": "#/$defs/rule.ccdh.v101core.Diagnosis.validate"}, "else": {"not": {"$ref": "#/$defs/rule.ccdh.v101core.Diagnosis.validate"}}}}
       ]
     },
 
