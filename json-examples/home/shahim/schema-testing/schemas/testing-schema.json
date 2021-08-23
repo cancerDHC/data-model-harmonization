@@ -146,13 +146,13 @@
       ]
     },
 
-    "__________RULES": "",
+    "__________RULES": {},
 
     "rule.ccdh.v101core.Diagnosis.validate": {
 
     },
 
-    "__________CODES": "",
+    "__________CODES": {},
     "code.body-site.enum": {
       "$comment": "system is: http://ccdh/cs/body-site",
       "enum": [
@@ -283,7 +283,7 @@
         "benign"
       ]
     },
-    "__________CCDH v101": "",
+    "__________CCDH v101": {},
     "model.ccdh.v101.schema-names.enum": {
       "$comment": "Template",
       "enum": [
@@ -2347,7 +2347,7 @@
         }
       }
     },
-    "__________CCDH v101cc": "",
+    "__________CCDH v101cc": {},
     "model.ccdh.v101cc.schema-names.enum": {
       "$comment": "Template",
       "enum": [
@@ -4409,7 +4409,7 @@
         }
       }
     },
-    "__________CCDH v101core": "",
+    "__________CCDH v101core": {},
     "model.ccdh.v101core.schema-names.enum": {
       "$comment": "Template",
       "enum": [
@@ -5756,7 +5756,7 @@
         }
       }
     },
-    "__________PROTO MODEL": "",
+    "__________PROTO MODEL": {},
     "model.proto.schema-names.enum": {
       "$comment": "Template",
       "enum": [
@@ -5768,12 +5768,11 @@
       ]
     },
     "model.proto": {
-      "$defs": {
-      }
+
     },
 
 
-    "__________IMPLEMENTATION": "",
+    "__________IMPLEMENTATION": {},
     "test.schema-names.enum": {
       "$comment": "Template",
       "anyOf": [
@@ -5824,16 +5823,16 @@
         "Test rules": {},
         "Instance": {},
         "Meta": {},
-        "Ignore": {},
-        "allOf": [
-          {"if": {"properties": {"required": ["rule.ccdh.v101core.Diagnosis.validate"]}}, "then": {"if": {"properites": {"rule.ccdh.v101core.Diagnosis.validate": {"const": true}}}, "then": {"$ref": "#/$defs/rule.ccdh.v101core.Diagnosis.validate"}, "else": {"not": {"$ref": "#/$defs/rule.ccdh.v101core.Diagnosis.validate"}}}}
-        ]
+        "Ignore": {}
       },
+      "allOf": [
+        {"if": {"properties": {"required": ["rule.ccdh.v101core.Diagnosis.validate"]}}, "then": {"if": {"properites": {"rule.ccdh.v101core.Diagnosis.validate": {"const": true}}}, "then": {"$ref": "#/$defs/rule.ccdh.v101core.Diagnosis.validate"}, "else": {"not": {"$ref": "#/$defs/rule.ccdh.v101core.Diagnosis.validate"}}}}
+      ],
       "additionalProperties": false
     },
 
 
-    "__________MAPPINGS": "",
+    "__________MAPPINGS": {},
     "test.schema-to-instance-mapping": {
       "type": "object",
       "allOf": [
