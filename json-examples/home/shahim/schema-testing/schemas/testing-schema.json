@@ -91,12 +91,49 @@
                   "type": "boolean"
                 }
               },
-              "additionalProperties": false,
               "required": [
                 "Title",
                 "Description",
                 "Schema"
-              ]
+              ],
+              "patternProperties": {
+                "^off_": {
+                  "type": "boolean"
+                },
+                "^rule.": {
+                  "type": "boolean"
+                },
+                "^model.": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false,
+              "propertyNames": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "Title",
+                      "Description",
+                      "Links",
+                      "Schema",
+                      "Test structures",
+                      "Test rules",
+                      "Instance",
+                      "Meta",
+                      "Ignore"
+                    ]
+                  },
+                  {
+                    "pattern": "^off_"
+                  },
+                  {
+                    "$ref": "#/$defs/test.schema-names.enum"
+                  },
+                  {
+                    "$ref": "#/$defs/test.rule-names.enum"
+                  }
+                ]
+              }
             },
             {
               "$ref": "#/$defs/test.schema-to-instance-mapping"
@@ -105,57 +142,228 @@
         }
       }
     },
-    "============================ CCDH v101": "",
+
+    "test-run": {
+      "$comment": "Test running schema",
+      "allOf": [
+        {
+          "$ref": "#/$defs/test-edit"
+        },
+        {
+          "additionalProperties": {
+            "if": {
+              "properties": {
+                "Ignore": {
+                  "type": "boolean",
+                  "const": false
+                }
+              }
+            },
+            "then": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/test.structures"
+                },
+                {
+                  "$ref": "#/$defs/test.rules"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+
+
+    "======== Test rule definitions": {},
+
+    "rule.ccdh.v101core.Diagnosis.validate": {
+      "$comment": "",
+      "not": false
+    },
+
+    "======== Codes": {},
+    "code.body-site.enum": {
+      "$comment": "system is: http://ccdh/cs/body-site",
+      "enum": [
+        "lung"
+      ]
+    },
+    "code.figo-body-site.enum": {
+      "enum": [
+        "ovary",
+        "endometrium",
+        "cervix",
+        "vagina",
+        "vulva"
+      ]
+    },
+    "code.figo-2018-stage-vulval.enum": {
+      "enum": [
+        "I",
+        "IA",
+        "IB"
+      ]
+    },
+    "code.figo-2018-stage-vaginal.enum": {
+      "enum": [
+        "0",
+        "I",
+        "IB1",
+        "IB2",
+        "IB3"
+      ]
+    },
+    "code.figo-pre2018-stage-cervical.enum": {
+      "enum": [
+        "0",
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB"
+      ]
+    },
+    "code.figo-2018-stage-cervical.enum": {
+      "enum": [
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB"
+      ]
+    },
+    "code.figo-2018-stage-endometrial.enum": {
+      "enum": [
+        "0",
+        "I",
+        "IA",
+        "IB"
+      ]
+    },
+    "code.figo-2018-stage-ovarian.enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-2018-stage-ovarian-enum",
+      "enum": [
+        "I",
+        "IA",
+        "IB",
+        "IC",
+        "IC1",
+        "IC2",
+        "IC3"
+      ]
+    },
+    "code.figo-2018-stage.enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-2018-stage-enum",
+      "enum": [
+        "0",
+        "I",
+        "IA",
+        "IA1",
+        "IA2",
+        "IB",
+        "IB1",
+        "IB2",
+        "IB3",
+        "IC",
+        "IC1",
+        "IC2",
+        "IC3"
+      ]
+    },
+    "code.figo-version.enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-figo-version-enum",
+      "enum": [
+        "2018",
+        "pre2018"
+      ]
+    },
+    "code.staging-system.enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-staging-system-enum",
+      "enum": [
+        "AJCC",
+        "FIGO"
+      ]
+    },
+    "code.staging-system-component.enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-staging-system-component-enum",
+      "enum": [
+        "overall",
+        "T",
+        "N",
+        "M"
+      ]
+    },
+    "code.stageable-condition.enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-stageable-condition-enum",
+      "enum": [
+        "cancer"
+      ]
+    },
+    "code.condition.enum": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "http://ccdh/json/schema/codes-condition-enum",
+      "enum": [
+        "benign"
+      ]
+    },
+    "======== CCDH v101": {},
     "model.ccdh.v101.schema-names.enum": {
       "$comment": "Template",
       "enum": [
-        "ccdh.v101.AlcoholExposureObservation",
-        "ccdh.v101.BiologicProduct",
-        "ccdh.v101.BodySite",
-        "ccdh.v101.CancerGradeObservation",
-        "ccdh.v101.CancerGradeObservationSet",
-        "ccdh.v101.CancerStageObservation",
-        "ccdh.v101.CancerStageObservationSet",
-        "ccdh.v101.CodeableConcept",
-        "ccdh.v101.Coding",
-        "ccdh.v101.Diagnosis",
-        "ccdh.v101.DimensionalObservation",
-        "ccdh.v101.DimensionalObservationSet",
-        "ccdh.v101.Document",
-        "ccdh.v101.Entity",
-        "ccdh.v101.EnvironmentalExposureObservation",
-        "ccdh.v101.ExecutionConditionObservation",
-        "ccdh.v101.ExecutionTimeObservation",
-        "ccdh.v101.Exposure",
-        "ccdh.v101.HistologicalCompositionObservation",
-        "ccdh.v101.HistologicalCompositionObservationSet",
-        "ccdh.v101.Identifier",
-        "ccdh.v101.Observation",
-        "ccdh.v101.ObservationSet",
-        "ccdh.v101.Organization",
-        "ccdh.v101.Quantity",
-        "ccdh.v101.ResearchProject",
-        "ccdh.v101.ResearchSubject",
-        "ccdh.v101.Specimen",
-        "ccdh.v101.SpecimenContainer",
-        "ccdh.v101.SpecimenCreationActivity",
-        "ccdh.v101.SpecimenProcessingActivity",
-        "ccdh.v101.SpecimenQualityObservation",
-        "ccdh.v101.SpecimenQuantityObservation",
-        "ccdh.v101.SpecimenStorageActivity",
-        "ccdh.v101.SpecimenTransportActivity",
-        "ccdh.v101.Subject",
-        "ccdh.v101.Substance",
-        "ccdh.v101.TimePeriod",
-        "ccdh.v101.TimePoint",
-        "ccdh.v101.TobaccoExposureObservation",
-        "ccdh.v101.Treatment"
+        "model.ccdh.v101.AlcoholExposureObservation",
+        "model.ccdh.v101.BiologicProduct",
+        "model.ccdh.v101.BodySite",
+        "model.ccdh.v101.CancerGradeObservation",
+        "model.ccdh.v101.CancerGradeObservationSet",
+        "model.ccdh.v101.CancerStageObservation",
+        "model.ccdh.v101.CancerStageObservationSet",
+        "model.ccdh.v101.CodeableConcept",
+        "model.ccdh.v101.Coding",
+        "model.ccdh.v101.Diagnosis",
+        "model.ccdh.v101.DimensionalObservation",
+        "model.ccdh.v101.DimensionalObservationSet",
+        "model.ccdh.v101.Document",
+        "model.ccdh.v101.Entity",
+        "model.ccdh.v101.EnvironmentalExposureObservation",
+        "model.ccdh.v101.ExecutionConditionObservation",
+        "model.ccdh.v101.ExecutionTimeObservation",
+        "model.ccdh.v101.Exposure",
+        "model.ccdh.v101.HistologicalCompositionObservation",
+        "model.ccdh.v101.HistologicalCompositionObservationSet",
+        "model.ccdh.v101.Identifier",
+        "model.ccdh.v101.Observation",
+        "model.ccdh.v101.ObservationSet",
+        "model.ccdh.v101.Organization",
+        "model.ccdh.v101.Quantity",
+        "model.ccdh.v101.ResearchProject",
+        "model.ccdh.v101.ResearchSubject",
+        "model.ccdh.v101.Specimen",
+        "model.ccdh.v101.SpecimenContainer",
+        "model.ccdh.v101.SpecimenCreationActivity",
+        "model.ccdh.v101.SpecimenProcessingActivity",
+        "model.ccdh.v101.SpecimenQualityObservation",
+        "model.ccdh.v101.SpecimenQuantityObservation",
+        "model.ccdh.v101.SpecimenStorageActivity",
+        "model.ccdh.v101.SpecimenTransportActivity",
+        "model.ccdh.v101.Subject",
+        "model.ccdh.v101.Substance",
+        "model.ccdh.v101.TimePeriod",
+        "model.ccdh.v101.TimePoint",
+        "model.ccdh.v101.TobaccoExposureObservation",
+        "model.ccdh.v101.Treatment"
       ]
     },
     "model.ccdh.v101.rule-names.enum": {
       "$comment": "",
       "enum": [
-        "Shahim's.rule from v101"
+
       ]
     },
     "model.ccdh.v101": {
@@ -2169,57 +2377,56 @@
         }
       }
     },
-    "============================ CCDH v101cc": "",
+    "======== CCDH v101cc": {},
     "model.ccdh.v101cc.schema-names.enum": {
       "$comment": "Template",
       "enum": [
-        "ccdh.v101cc.AlcoholExposureObservation",
-        "ccdh.v101cc.BiologicProduct",
-        "ccdh.v101cc.BodySite",
-        "ccdh.v101cc.CancerGradeObservation",
-        "ccdh.v101cc.CancerGradeObservationSet",
-        "ccdh.v101cc.CancerStageObservation",
-        "ccdh.v101cc.CancerStageObservationSet",
-        "ccdh.v101cc.CodeableConcept",
-        "ccdh.v101cc.Coding",
-        "ccdh.v101cc.Diagnosis",
-        "ccdh.v101cc.DimensionalObservation",
-        "ccdh.v101cc.DimensionalObservationSet",
-        "ccdh.v101cc.Document",
-        "ccdh.v101cc.Entity",
-        "ccdh.v101cc.EnvironmentalExposureObservation",
-        "ccdh.v101cc.ExecutionConditionObservation",
-        "ccdh.v101cc.ExecutionTimeObservation",
-        "ccdh.v101cc.Exposure",
-        "ccdh.v101cc.HistologicalCompositionObservation",
-        "ccdh.v101cc.HistologicalCompositionObservationSet",
-        "ccdh.v101cc.Identifier",
-        "ccdh.v101cc.Observation",
-        "ccdh.v101cc.ObservationSet",
-        "ccdh.v101cc.Organization",
-        "ccdh.v101cc.Quantity",
-        "ccdh.v101cc.ResearchProject",
-        "ccdh.v101cc.ResearchSubject",
-        "ccdh.v101cc.Specimen",
-        "ccdh.v101cc.SpecimenContainer",
-        "ccdh.v101cc.SpecimenCreationActivity",
-        "ccdh.v101cc.SpecimenProcessingActivity",
-        "ccdh.v101cc.SpecimenQualityObservation",
-        "ccdh.v101cc.SpecimenQuantityObservation",
-        "ccdh.v101cc.SpecimenStorageActivity",
-        "ccdh.v101cc.SpecimenTransportActivity",
-        "ccdh.v101cc.Subject",
-        "ccdh.v101cc.Substance",
-        "ccdh.v101cc.TimePeriod",
-        "ccdh.v101cc.TimePoint",
-        "ccdh.v101cc.TobaccoExposureObservation",
-        "ccdh.v101cc.Treatment"
+        "model.ccdh.v101cc.AlcoholExposureObservation",
+        "model.ccdh.v101cc.BiologicProduct",
+        "model.ccdh.v101cc.BodySite",
+        "model.ccdh.v101cc.CancerGradeObservation",
+        "model.ccdh.v101cc.CancerGradeObservationSet",
+        "model.ccdh.v101cc.CancerStageObservation",
+        "model.ccdh.v101cc.CancerStageObservationSet",
+        "model.ccdh.v101cc.CodeableConcept",
+        "model.ccdh.v101cc.Coding",
+        "model.ccdh.v101cc.Diagnosis",
+        "model.ccdh.v101cc.DimensionalObservation",
+        "model.ccdh.v101cc.DimensionalObservationSet",
+        "model.ccdh.v101cc.Document",
+        "model.ccdh.v101cc.Entity",
+        "model.ccdh.v101cc.EnvironmentalExposureObservation",
+        "model.ccdh.v101cc.ExecutionConditionObservation",
+        "model.ccdh.v101cc.ExecutionTimeObservation",
+        "model.ccdh.v101cc.Exposure",
+        "model.ccdh.v101cc.HistologicalCompositionObservation",
+        "model.ccdh.v101cc.HistologicalCompositionObservationSet",
+        "model.ccdh.v101cc.Identifier",
+        "model.ccdh.v101cc.Observation",
+        "model.ccdh.v101cc.ObservationSet",
+        "model.ccdh.v101cc.Organization",
+        "model.ccdh.v101cc.Quantity",
+        "model.ccdh.v101cc.ResearchProject",
+        "model.ccdh.v101cc.ResearchSubject",
+        "model.ccdh.v101cc.Specimen",
+        "model.ccdh.v101cc.SpecimenContainer",
+        "model.ccdh.v101cc.SpecimenCreationActivity",
+        "model.ccdh.v101cc.SpecimenProcessingActivity",
+        "model.ccdh.v101cc.SpecimenQualityObservation",
+        "model.ccdh.v101cc.SpecimenQuantityObservation",
+        "model.ccdh.v101cc.SpecimenStorageActivity",
+        "model.ccdh.v101cc.SpecimenTransportActivity",
+        "model.ccdh.v101cc.Subject",
+        "model.ccdh.v101cc.Substance",
+        "model.ccdh.v101cc.TimePeriod",
+        "model.ccdh.v101cc.TimePoint",
+        "model.ccdh.v101cc.TobaccoExposureObservation",
+        "model.ccdh.v101cc.Treatment"
       ]
     },
     "model.ccdh.v101cc.rule-names.enum": {
       "$comment": "Template",
       "enum": [
-        "Shahim's.rule from v101cc"
       ]
     },
     "model.ccdh.v101cc": {
@@ -4232,42 +4439,41 @@
         }
       }
     },
-    "============================ CCDH v101core": "",
+    "======== CCDH v101core": {},
     "model.ccdh.v101core.schema-names.enum": {
       "$comment": "Template",
       "enum": [
-        "ccdh.v101core.BiologicProduct",
-        "ccdh.v101core.BodySite",
-        "ccdh.v101core.CodeableConcept",
-        "ccdh.v101core.Coding",
-        "ccdh.v101core.Diagnosis",
-        "ccdh.v101core.Document",
-        "ccdh.v101core.Entity",
-        "ccdh.v101core.Exposure",
-        "ccdh.v101core.Identifier",
-        "ccdh.v101core.Observation",
-        "ccdh.v101core.ObservationSet",
-        "ccdh.v101core.Organization",
-        "ccdh.v101core.Quantity",
-        "ccdh.v101core.ResearchProject",
-        "ccdh.v101core.ResearchSubject",
-        "ccdh.v101core.Specimen",
-        "ccdh.v101core.SpecimenContainer",
-        "ccdh.v101core.SpecimenCreationActivity",
-        "ccdh.v101core.SpecimenProcessingActivity",
-        "ccdh.v101core.SpecimenStorageActivity",
-        "ccdh.v101core.SpecimenTransportActivity",
-        "ccdh.v101core.Subject",
-        "ccdh.v101core.Substance",
-        "ccdh.v101core.TimePeriod",
-        "ccdh.v101core.TimePoint",
-        "ccdh.v101core.Treatment"
+        "model.ccdh.v101core.BiologicProduct",
+        "model.ccdh.v101core.BodySite",
+        "model.ccdh.v101core.CodeableConcept",
+        "model.ccdh.v101core.Coding",
+        "model.ccdh.v101core.Diagnosis",
+        "model.ccdh.v101core.Document",
+        "model.ccdh.v101core.Entity",
+        "model.ccdh.v101core.Exposure",
+        "model.ccdh.v101core.Identifier",
+        "model.ccdh.v101core.Observation",
+        "model.ccdh.v101core.ObservationSet",
+        "model.ccdh.v101core.Organization",
+        "model.ccdh.v101core.Quantity",
+        "model.ccdh.v101core.ResearchProject",
+        "model.ccdh.v101core.ResearchSubject",
+        "model.ccdh.v101core.Specimen",
+        "model.ccdh.v101core.SpecimenContainer",
+        "model.ccdh.v101core.SpecimenCreationActivity",
+        "model.ccdh.v101core.SpecimenProcessingActivity",
+        "model.ccdh.v101core.SpecimenStorageActivity",
+        "model.ccdh.v101core.SpecimenTransportActivity",
+        "model.ccdh.v101core.Subject",
+        "model.ccdh.v101core.Substance",
+        "model.ccdh.v101core.TimePeriod",
+        "model.ccdh.v101core.TimePoint",
+        "model.ccdh.v101core.Treatment"
       ]
     },
     "model.ccdh.v101core.rule-names.enum": {
       "$comment": "",
-      "enum": [
-        "Shahim's.rule from v101core"
+      "enum": ["rule.ccdh.v101core.Diagnosis.validate"
       ]
     },
     "model.ccdh.v101core": {
@@ -5579,15 +5785,9 @@
         }
       }
     },
-    "============================ Implementation. IGNORE BELOW": "",
-    "test-run": {
-      "$comment": "Test running schema",
-      "allOf": [
-        {
-          "$ref": "#/$defs/test-edit"
-        }
-      ]
-    },
+
+
+    "======== Implementation. Schemas": {},
     "test.schema-names.enum": {
       "$comment": "Template",
       "anyOf": [
@@ -5607,6 +5807,41 @@
         }
       ]
     },
+
+    "======== Implementation. Test structures": {},
+    "test.structures": {
+
+    },
+
+    "======== Implementation. Test rules": {},
+    "test.rules": {
+      "if": {
+        "properties": {
+          "Test rules": {
+            "pattern": "^off_"
+          }
+        }
+      },
+      "then": true,
+      "else": {
+        "if": {
+          "properties": {
+            "Test rules": {
+              "pattern": "_fails$"
+            }
+          }
+        },
+        "then": {
+          "not": {
+            "$ref": "#/$defs/test.rules-mapping"
+          }
+        },
+        "else": {
+          "$ref": "#/$defs/test.rules-mapping"
+        }
+      }
+    },
+
     "test.rule-names.enum": {
       "$comment": "Template",
       "anyOf": [
@@ -5622,122 +5857,138 @@
       ]
     },
 
+    "======== Implementation. DETAILS, IGNORE Below": {},
     "test.schema-to-instance-mapping": {
       "type": "object",
       "allOf": [
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.AlcoholExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/AlcoholExposureObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/BiologicProduct" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.BodySite" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/BodySite" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.CancerGradeObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CancerGradeObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.CancerGradeObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CancerGradeObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.CancerStageObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CancerStageObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.CancerStageObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CancerStageObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.CodeableConcept" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CodeableConcept" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Coding" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Coding" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Diagnosis" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.DimensionalObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/DimensionalObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.DimensionalObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/DimensionalObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Document" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Document" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Entity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Entity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.EnvironmentalExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/EnvironmentalExposureObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.ExecutionConditionObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionConditionObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.ExecutionTimeObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionTimeObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Exposure" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Exposure" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.HistologicalCompositionObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/HistologicalCompositionObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.HistologicalCompositionObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/HistologicalCompositionObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Identifier" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Observation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Observation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.ObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Organization" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Organization" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Quantity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.ResearchProject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ResearchProject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.ResearchSubject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ResearchSubject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Specimen" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Specimen" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.SpecimenContainer" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenContainer" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.SpecimenCreationActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenCreationActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.SpecimenProcessingActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenProcessingActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.SpecimenQualityObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenQualityObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.SpecimenQuantityObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenQuantityObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.SpecimenStorageActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenStorageActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.SpecimenTransportActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenTransportActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Subject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Subject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Substance" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Substance" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.TimePeriod" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/TimePeriod" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.TobaccoExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/TobaccoExposureObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Treatment" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.AlcoholExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/AlcoholExposureObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/BiologicProduct" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.BodySite" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/BodySite" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.CancerGradeObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CancerGradeObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.CancerGradeObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CancerGradeObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.CancerStageObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CancerStageObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.CancerStageObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CancerStageObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.CodeableConcept" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/CodeableConcept" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Coding" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Coding" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Diagnosis" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.DimensionalObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/DimensionalObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.DimensionalObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/DimensionalObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Document" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Document" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Entity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Entity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.EnvironmentalExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/EnvironmentalExposureObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.ExecutionConditionObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionConditionObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.ExecutionTimeObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ExecutionTimeObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Exposure" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Exposure" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.HistologicalCompositionObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/HistologicalCompositionObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.HistologicalCompositionObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/HistologicalCompositionObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Identifier" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Identifier" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Observation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Observation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.ObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Organization" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Organization" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Quantity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Quantity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.ResearchProject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ResearchProject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.ResearchSubject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/ResearchSubject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Specimen" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Specimen" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.SpecimenContainer" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenContainer" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.SpecimenCreationActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenCreationActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.SpecimenProcessingActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenProcessingActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.SpecimenQualityObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenQualityObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.SpecimenQuantityObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenQuantityObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.SpecimenStorageActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenStorageActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.SpecimenTransportActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/SpecimenTransportActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Subject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Subject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Substance" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Substance" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.TimePeriod" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/TimePeriod" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/TimePoint" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.TobaccoExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/TobaccoExposureObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101/$defs/Treatment" } } } },
 
 
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.AlcoholExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/AlcoholExposureObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/BiologicProduct" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.BodySite" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/BodySite" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.CancerGradeObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerGradeObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.CancerGradeObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerGradeObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.CancerStageObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerStageObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.CancerStageObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerStageObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.CodeableConcept" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Coding" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Coding" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.DimensionalObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/DimensionalObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.DimensionalObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/DimensionalObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Document" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Document" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Entity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.EnvironmentalExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/EnvironmentalExposureObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.ExecutionConditionObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionConditionObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.ExecutionTimeObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionTimeObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Exposure" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Exposure" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.HistologicalCompositionObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/HistologicalCompositionObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.HistologicalCompositionObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/HistologicalCompositionObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Identifier" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Observation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Observation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.ObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Organization" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Quantity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.ResearchProject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ResearchProject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.ResearchSubject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ResearchSubject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Specimen" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Specimen" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.SpecimenContainer" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenContainer" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.SpecimenCreationActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenCreationActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.SpecimenProcessingActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenProcessingActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.SpecimenQualityObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenQualityObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.SpecimenQuantityObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenQuantityObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.SpecimenStorageActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenStorageActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.SpecimenTransportActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenTransportActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Subject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Substance" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Substance" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.TimePeriod" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePeriod" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.TobaccoExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/TobaccoExposureObservation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101cc.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Treatment" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.AlcoholExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/AlcoholExposureObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/BiologicProduct" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.BodySite" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/BodySite" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.CancerGradeObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerGradeObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.CancerGradeObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerGradeObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.CancerStageObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerStageObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.CancerStageObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CancerStageObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.CodeableConcept" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/CodeableConcept" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Coding" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Coding" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Diagnosis" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.DimensionalObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/DimensionalObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.DimensionalObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/DimensionalObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Document" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Document" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Entity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Entity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.EnvironmentalExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/EnvironmentalExposureObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.ExecutionConditionObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionConditionObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.ExecutionTimeObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ExecutionTimeObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Exposure" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Exposure" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.HistologicalCompositionObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/HistologicalCompositionObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.HistologicalCompositionObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/HistologicalCompositionObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Identifier" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Identifier" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Observation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Observation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.ObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Organization" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Organization" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Quantity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Quantity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.ResearchProject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ResearchProject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.ResearchSubject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/ResearchSubject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Specimen" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Specimen" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.SpecimenContainer" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenContainer" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.SpecimenCreationActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenCreationActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.SpecimenProcessingActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenProcessingActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.SpecimenQualityObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenQualityObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.SpecimenQuantityObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenQuantityObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.SpecimenStorageActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenStorageActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.SpecimenTransportActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/SpecimenTransportActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Subject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Subject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Substance" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Substance" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.TimePeriod" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePeriod" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/TimePoint" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.TobaccoExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/TobaccoExposureObservation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101cc.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101cc/$defs/Treatment" } } } },
 
 
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/BiologicProduct" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.BodySite" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/BodySite" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.CodeableConcept" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/CodeableConcept" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Coding" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Coding" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Diagnosis" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Document" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Document" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Entity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Entity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Exposure" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Exposure" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Identifier" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Identifier" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Observation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Observation" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.ObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/ObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Organization" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Organization" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Quantity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Quantity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.ResearchProject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/ResearchProject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.ResearchSubject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/ResearchSubject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Specimen" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Specimen" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.SpecimenContainer" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenContainer" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.SpecimenCreationActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenCreationActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.SpecimenProcessingActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenProcessingActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.SpecimenStorageActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenStorageActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.SpecimenTransportActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenTransportActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Subject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Subject" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Substance" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Substance" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.TimePeriod" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/TimePeriod" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/TimePoint" } } } },
-        { "if": { "properties": { "Schema": { "const": "ccdh.v101core.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Treatment" } } } }
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/BiologicProduct" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.BodySite" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/BodySite" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.CodeableConcept" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/CodeableConcept" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Coding" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Coding" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Diagnosis" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Document" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Document" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Entity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Entity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Exposure" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Exposure" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Identifier" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Identifier" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Observation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Observation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.ObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/ObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Organization" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Organization" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Quantity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Quantity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.ResearchProject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/ResearchProject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.ResearchSubject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/ResearchSubject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Specimen" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Specimen" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.SpecimenContainer" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenContainer" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.SpecimenCreationActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenCreationActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.SpecimenProcessingActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenProcessingActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.SpecimenStorageActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenStorageActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.SpecimenTransportActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/SpecimenTransportActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Subject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Subject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Substance" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Substance" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.TimePeriod" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/TimePeriod" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/TimePoint" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v101core.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v101core/$defs/Treatment" } } } }
+      ]
+    },
+    "test.rules-mapping": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "Test rules": {
+                "pattern": ""
+              }
+            }
+          },
+          "then": {}
+        }
       ]
     }
+
   }
 }

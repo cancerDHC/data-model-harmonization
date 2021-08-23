@@ -2,14 +2,18 @@
   "something": {
     "Title": "Title",
     "Description": [
-      "Main paragraph.",
-      "Another paragraph."
+      "description"
     ],
-    "Schema": "Plain JSON",
+    "Schema": "model.ccdh.v101cc.BodySite",
+    "Test structures": [
+      "model.ccdh.v101.AlcoholExposureObservation"
+    ],
+    "Test rules": ["rule.ccdh.v101core.Diagnosis.validate"],
     "Instance": {
-      
+      "site": {},
+      "qualifier": []
     },
-    "Ignore": false
-
+    "Ignore": false,
+    "model.ccdh.v101.AlcoholExposureObservation": true
   }
 }
