@@ -4,18 +4,15 @@
     "Description": [
       "description"
     ],
-    "Schema": "model.ccdh.v101cc.BodySite",
+    "Schema": "model.ccdh.v101core.Diagnosis",
     "Test structures": [
       "model.ccdh.v101.AlcoholExposureObservation"
     ],
     "Test rules": ["rule.ccdh.v101core.Diagnosis.validate"],
     "Instance": {
-      "site": {},
-      "qualifier": []
+
     },
     "Ignore": false,
-    "model.ccdh.v101.AlcoholExposureObservation": true,
     "rule.ccdh.v101core.Diagnosis.validate": true
-
   }
 }
