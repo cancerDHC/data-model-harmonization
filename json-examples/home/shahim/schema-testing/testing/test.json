@@ -4,15 +4,11 @@
     "Description": [
       "description"
     ],
-    "Schema": "model.ccdh.v032core.Diagnosis",
-    "Test structures": [
-
-    ],
-    "Test rules": [
-
-    ],
+    "Schema": "model.ccdh.v032.Diagnosis",
+    "Test structures": [],
+    "Test rules": [],
     "Instance": {
-
+      "condition": "Acute lymphoblastic leukemia, precursor cell type"
     },
     "Ignore": false,
     "rule.ccdh.v032core.Diagnosis.validate": true
