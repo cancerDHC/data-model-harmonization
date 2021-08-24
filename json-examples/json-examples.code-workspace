@@ -7,6 +7,7 @@
 	"settings": {
 		"json.schemas": [
 
+
 			{
 				"fileMatch": [
 					"/ccdh-json-schema-v1.0.1/*.json",
@@ -28,21 +29,6 @@
 					"!/home/shahim/schema-testing/testing/_*.json"
 				],
 				"url": "./home/shahim/schema-testing/schemas/testing-schema.json"
-			},
-			
-			{
-				"fileMatch": [
-					"/home/shahim/schema-testing/model.ccdh.v101/*.json",
-					"!/home/shahim/schema-testing/model.ccdh.v101/_*.json"
-				],
-				"url": "./home/shahim/schema-testing/schemas/model.ccdh.v101-schema.json"
-			},
-			{
-				"fileMatch": [
-					"/home/shahim/schema-testing/model.ccdh.v101cc/*.json",
-					"!/home/shahim/schema-testing/model.ccdh.v101cc/_*.json"
-				],
-				"url": "./home/shahim/schema-testing/schemas/model.ccdh.v101cc-schema.json"
 			}
 		],
 		"workbench.colorCustomizations": {
