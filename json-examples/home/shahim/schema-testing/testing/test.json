@@ -6,15 +6,13 @@
     ],
     "Schema": "model.ccdh.v032core.Diagnosis",
     "Test structures": [
-      "model.ccdh.v032cc.AlcoholExposureObservation"
+
     ],
     "Test rules": [
-      "rule.ccdh.v032core.Diagnosis.validate"
+
     ],
     "Instance": {
-      "condition": {
-        "coding": []
-      }
+      "grade": []
     },
     "Ignore": false,
     "rule.ccdh.v032core.Diagnosis.validate": true
