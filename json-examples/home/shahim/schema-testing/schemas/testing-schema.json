@@ -16494,6 +16494,192 @@
         }
       }
     },
+    "model.ccdh.v032core.ext": {
+      "$defs": {
+        "BiologicProduct": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/BiologicProduct"
+            }
+          ]
+        },
+        "BodySite": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/BodySite"
+            }
+          ]
+        },
+        "CodeableConcept": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/CodeableConcept"
+            }
+          ]
+        },
+        "Coding": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Coding"
+            }
+          ]
+        },
+        "Diagnosis": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Diagnosis"
+            }
+          ]
+        },
+        "Document": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Document"
+            }
+          ]
+        },
+        "Entity": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Entity"
+            }
+          ]
+        },
+        "Exposure": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Exposure"
+            }
+          ]
+        },
+        "Identifier": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Identifier"
+            }
+          ]
+        },
+        "Observation": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Observation"
+            }
+          ]
+        },
+        "ObservationSet": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/ObservationSet"
+            }
+          ]
+        },
+        "Organization": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Organization"
+            }
+          ]
+        },
+        "Quantity": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Quantity"
+            }
+          ]
+        },
+        "ResearchProject": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/ResearchProject"
+            }
+          ]
+        },
+        "ResearchSubject": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/ResearchSubject"
+            }
+          ]
+        },
+        "Specimen": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Specimen"
+            }
+          ]
+        },
+        "SpecimenContainer": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenContainer"
+            }
+          ]
+        },
+        "SpecimenCreationActivity": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenCreationActivity"
+            }
+          ]
+        },
+        "SpecimenProcessingActivity": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenProcessingActivity"
+            }
+          ]
+        },
+        "SpecimenStorageActivity": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenStorageActivity"
+            }
+          ]
+        },
+        "SpecimenTransportActivity": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenTransportActivity"
+            }
+          ]
+        },
+        "Subject": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Subject"
+            }
+          ]
+        },
+        "Substance": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Substance"
+            }
+          ]
+        },
+        "TimePeriod": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/TimePeriod"
+            }
+          ]
+        },
+        "TimePoint": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/TimePoint"
+            }
+          ]
+        },
+        "Treatment": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/model.ccdh.v032core/$defs/Treatment"
+            }
+          ]
+        }
+      }
+    },
     "__________PROTO MODEL": {},
     "model.proto.schema-names.enum": {
       "$comment": "Template",
@@ -16642,32 +16828,32 @@
         { "if": { "properties": { "Schema": { "const": "model.ccdh.v032cc.TobaccoExposureObservation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032cc/$defs/TobaccoExposureObservation" } } } },
         { "if": { "properties": { "Schema": { "const": "model.ccdh.v032cc.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032cc/$defs/Treatment" } } } },
 
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/BiologicProduct" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.BodySite" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/BodySite" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.CodeableConcept" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/CodeableConcept" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Coding" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Coding" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Diagnosis" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Document" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Document" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Entity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Entity" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Exposure" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Exposure" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Identifier" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Identifier" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Observation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Observation" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.ObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/ObservationSet" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Organization" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Organization" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Quantity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Quantity" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.ResearchProject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/ResearchProject" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.ResearchSubject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/ResearchSubject" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Specimen" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Specimen" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenContainer" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenContainer" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenCreationActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenCreationActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenProcessingActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenProcessingActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenStorageActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenStorageActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenTransportActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/SpecimenTransportActivity" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Subject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Subject" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Substance" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Substance" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.TimePeriod" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/TimePeriod" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/TimePoint" } } } },
-        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core/$defs/Treatment" } } } }
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.BiologicProduct" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/BiologicProduct" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.BodySite" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/BodySite" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.CodeableConcept" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/CodeableConcept" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Coding" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Coding" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Diagnosis" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Diagnosis" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Document" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Document" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Entity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Entity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Exposure" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Exposure" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Identifier" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Identifier" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Observation" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Observation" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.ObservationSet" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/ObservationSet" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Organization" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Organization" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Quantity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Quantity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.ResearchProject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/ResearchProject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.ResearchSubject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/ResearchSubject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Specimen" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Specimen" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenContainer" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/SpecimenContainer" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenCreationActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/SpecimenCreationActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenProcessingActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/SpecimenProcessingActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenStorageActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/SpecimenStorageActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.SpecimenTransportActivity" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/SpecimenTransportActivity" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Subject" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Subject" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Substance" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Substance" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.TimePeriod" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/TimePeriod" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.TimePoint" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/TimePoint" } } } },
+        { "if": { "properties": { "Schema": { "const": "model.ccdh.v032core.Treatment" } } }, "then": { "properties": { "Instance": { "$ref": "#/$defs/model.ccdh.v032core.ext/$defs/Treatment" } } } }
       ]
     }
   }

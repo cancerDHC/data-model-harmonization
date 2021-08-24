@@ -12,7 +12,7 @@
 
     ],
     "Instance": {
-      "grade": []
+
     },
     "Ignore": false,
     "rule.ccdh.v032core.Diagnosis.validate": true
