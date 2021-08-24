@@ -7,20 +7,19 @@
     "Schema": "ccdh.0713core.Diagnosis",
     "Test structures": [],
     "Test rules": [
-      "ccdh.0713core.Diagnosis.fields"
+"Diag.condition.coding.ContCodeOnlyCoding.ccdh.0713core"
     ],
     "Instance": {
       "condition": {
         "coding": [
           {
-            "system": "EnumCRDCHDiagnosisCondition",
-            "code": "Choroid plexus papilloma, anaplastic"
+            "code": "Von Recklinghausen disease"
           }
         ]
       }
     },
     
     "Ignore": false,
-    "ccdh.0713core.Diagnosis.fields": true
+    "Diag.condition.coding.ContCodeOnlyCoding.ccdh.0713core": true
   }
 }
