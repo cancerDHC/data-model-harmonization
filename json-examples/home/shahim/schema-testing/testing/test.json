@@ -7,12 +7,13 @@
     "Schema": "ccdh.0713core.Diagnosis",
     "Test structures": [],
     "Test rules": [
-"Diag.condition.coding.ContCodeOnlyCoding.ccdh.0713core"
+"Diag.condition.coding.ContCode&SystemCoding.ccdh.0713core"
     ],
     "Instance": {
       "condition": {
         "coding": [
           {
+            "system": "EnumCRDCHDiagnosisCondition",
             "code": "Von Recklinghausen disease"
           }
         ]
@@ -20,6 +21,6 @@
     },
     
     "Ignore": false,
-    "Diag.condition.coding.ContCodeOnlyCoding.ccdh.0713core": true
+    "Diag.condition.coding.ContCode&SystemCoding.ccdh.0713core": true
   }
 }
