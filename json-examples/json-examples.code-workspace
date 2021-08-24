@@ -47,6 +47,7 @@
 		],
 		"workbench.colorCustomizations": {
 			"editor.lineHighlightBackground": "#123333f8"
-		}
+		},
+		"json.maxItemsComputed": 100000
 	}
 }
