@@ -11,6 +11,6 @@
       "condition": "Acute lymphoblastic leukemia, precursor cell type"
     },
     "Ignore": false,
-    "rule.ccdh.v032core.Diagnosis.validate": true
+    
   }
 }

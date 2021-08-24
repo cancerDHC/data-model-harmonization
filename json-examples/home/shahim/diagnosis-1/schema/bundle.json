@@ -4,63 +4,8 @@
   "$comment": "Wrap lines in your editor to be able to see full comments since line breaks are not possible here. This is a schema bundle of all schemas, to help with using at: https://jschon.dev/ since IDEs don't give good validation results for complex schemas, or don't implement the specific version used here.  The way this works is the following. Under $defs there are independent schema resources that are indexed by a key that matches the suffix of the schema $id. The key names don't have to match, but for the schema entries under $def the keys should be kept that way to simplify with navigation.  Also, the naming pattern is meant to be self descriptive.  'vld' is meant to mean 'validate-' followed by what's being validated. 'is-' is meant to be a boolean check on something and it's mainly used for 'if' statements but might be useful in other places. 'codes-' are enums for values. 'structures' are structural definitions that were copied from the CCDH model build then simplified for this demo. Mainly, the structures needed for simplified Diagnoses examples to show the possible validations that JSON Schema can provide. The top level schema here, the one where this comment is placed, is empty and doesn't do anything beyond 'routing' to one of the schemas under $defs but it routes by $id rather than by #/$defs/...  So, find the schema you'd like to route to, or add your own, and then add or replace the '$ref' entry that is directly below this comment to point to the starting schema for your specific use case.  Then, copy this whole file's content and paste it in the left side at: https://jschon.dev and then paste your JSON example on the right side. Then run the validation to see the results. Make sure the option selected to the left of the 'Evaluate' button is the '2020-12' option, and the one to the right of the button is at least 'Basic' to see interesting results.",
   "$ref": "#/$defs/testing-env-v1",
   "$defs": {
-    "_template": {
-      "$comment": "Ignore this entry. It's just a possibly useful template.",
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/"
-    },
-    "testing-env-v1": {
-      "$comment": "Ignore this entry. It's just a possibly useful template.",
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/testing-env-v1",
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "Title": {
-            "type": "string"
-          },
-          "Description": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "title"
-        ]
-      }
-    },
-    "vld-diagnosis-examples-valid": {
-      "$comment": "This takes a json object and looks under 'Diagnosis' for a naming pattern to do testing of multiple diagnosis instances. The naming pattern for the keys in the top object has to be: 1. start with test- to try to run it, for those, if it ends with -valid, it's tested that the example is valid. If it ends with -invalid, it's tested to make sure it is invalid, i.e. it's validity is negated as you see below. To turn off an entry, add the off- prefix. Other entries that don't follow the above will be considered invalid by the 'structures.json' schema file, and here, to make sure editors don't accidentally not follow this pattern.",
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/vld-diagnosis-examples-valid",
-      "type": "object",
-      "properties": {
-        "Diagnosis": {
-          "patternProperties": {
-            "^test-.*-valid$": {
-              "$ref": "http://ccdh/json/schema/vld-diagnosis-example"
-            },
-            "^test-.*-invalid$": {
-              "not": {
-                "$ref": "http://ccdh/json/schema/vld-diagnosis-example"
-              }
-            },
-            "^off-": {
-              "$comment": "To make sure we can detect naming errors, with the additionalProperties entry"
-            }
-          },
-          "additionalProperties": {
-            "not": {}
-          }
-        }
-      }
-    },
-    "vld-diagnosis-example": {
-      "$comment": "The starting schema/validator for the diagnosis-1-coding-based-example-*.json files. It directly routs to the general Diagnosis validator.",
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "http://ccdh/json/schema/vld-diagnosis-example",
-      "$ref": "http://ccdh/json/schema/vld-diagnosis"
-    },
+
+
     "vld-diagnosis": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "$id": "http://ccdh/json/schema/vld-diagnosis",
