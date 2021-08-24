@@ -4,13 +4,16 @@
     "Description": [
       "description"
     ],
-    "Schema": "model.ccdh.v032.Diagnosis",
+    "Schema": "ccdh.0713core.Diagnosis",
     "Test structures": [],
     "Test rules": [],
     "Instance": {
-      "condition": "Acute lymphoblastic leukemia, precursor cell type"
+      "condition": {
+        "coding": [
+
+        ]
+      }
     },
-    "Ignore": false,
-    
+    "Ignore": false
   }
 }
