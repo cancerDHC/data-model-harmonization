@@ -6,15 +6,20 @@
     ],
     "Schema": "ccdh.0713core.Diagnosis",
     "Test structures": [],
-    "Test rules": [],
+    "Test rules": [
+      "ccdh.0713core.Diagnosis.fields"
+    ],
     "Instance": {
       "condition": {
         "coding": [
-
+          {
+            "system": "EnumCRDCHDiagnosisCondition",
+            "code": "Choroid plexus papilloma, anaplastic"
+          }
         ]
       }
     },
     "Ignore": false,
-    "tmp": "cervix"
+    "ccdh.0713core.Diagnosis.fields": true
   }
 }
