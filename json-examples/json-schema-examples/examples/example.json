@@ -1,5 +1,5 @@
 {
-  "something": {
+  "any-random-but-unique-string-here-but-making-id-descriptive-helps-with-browsing-in-an-ide": {
     "Title": "An example of a Diagnosis 'Example' based on the 'core' model.",
     "Description": [
       "The 'core' model means the model with CC and without the profiling entities.",
@@ -26,5 +26,15 @@
         ]
       }
     }
+  },
+  "a second example": {
+    "Title": "Some title. The Title and Schema fields are required.",
+    "Description": [
+      "The Example object is intentionally left empty to see if your VSC IDE will give you an error saying: 'observation_type' is missing.",
+      "Try ctrl-space to get support with completing the Observation Example with the required 'observation_type' entry.",
+      "Select View -> Word Wrap to wrap long text line, or Alt+Z"
+    ],
+    "Schema": "ccdh.0713core.Observation",
+    "Example": {}
   }
 }
