@@ -8,6 +8,7 @@
 		"json.schemas": [
 
 
+
 			{
 				"fileMatch": [
 					"/ccdh-json-schema-v1.0.1/*.json",
@@ -25,10 +26,9 @@
 			,
 			{
 				"fileMatch": [
-					"/home/shahim/schema-testing/testing/*.json",
-					"!/home/shahim/schema-testing/testing/_*.json"
+					"/json-schema-examples/examples/*.json"
 				],
-				"url": "./home/shahim/schema-testing/schemas/testing-schema.json"
+				"url": "./json-schema-examples/schemas/examples-schema.json"
 			}
 		],
 		"workbench.colorCustomizations": {

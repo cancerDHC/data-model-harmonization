@@ -3,6 +3,24 @@
   <component name="JsonSchemaMappingsProjectConfiguration">
     <state>
       <map>
+        <entry key="./json-scema-examples/schemas">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="./json-scema-examples/schemas" />
+              <option name="relativePathToSchema" value="json-schema-examples/schemas/examples-schema.json" />
+              <option name="schemaVersion" value="JSON Schema version 7" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="json-schema-examples/examples" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
         <entry key="home/shahim/diagnosis-1/json/*.json">
           <value>
             <SchemaInfo>
@@ -14,42 +32,6 @@
                   <Item>
                     <option name="directory" value="true" />
                     <option name="path" value="home/shahim/diagnosis-1/json" />
-                    <option name="mappingKind" value="Directory" />
-                  </Item>
-                </list>
-              </option>
-            </SchemaInfo>
-          </value>
-        </entry>
-        <entry key="home/shahim/schema-testing">
-          <value>
-            <SchemaInfo>
-              <option name="name" value="home/shahim/schema-testing" />
-              <option name="relativePathToSchema" value="home/shahim/schema-testing/schemas/testing-schema.json" />
-              <option name="schemaVersion" value="JSON Schema version 7" />
-              <option name="patterns">
-                <list>
-                  <Item>
-                    <option name="directory" value="true" />
-                    <option name="path" value="home/shahim/schema-testing/testing" />
-                    <option name="mappingKind" value="Directory" />
-                  </Item>
-                </list>
-              </option>
-            </SchemaInfo>
-          </value>
-        </entry>
-        <entry key="home/shahim/schema-testing/model.ccdh.v101">
-          <value>
-            <SchemaInfo>
-              <option name="name" value="home/shahim/schema-testing/model.ccdh.v101" />
-              <option name="relativePathToSchema" value="home/shahim/schema-testing/schemas/model.ccdh.v101-schema.json" />
-              <option name="schemaVersion" value="JSON Schema version 7" />
-              <option name="patterns">
-                <list>
-                  <Item>
-                    <option name="directory" value="true" />
-                    <option name="path" value="home/shahim/schema-testing/model.ccdh.v101" />
                     <option name="mappingKind" value="Directory" />
                   </Item>
                 </list>

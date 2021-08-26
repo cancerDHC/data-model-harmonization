@@ -1,0 +1,30 @@
+{
+  "something": {
+    "Title": "An example of a Diagnosis 'Example' based on the 'core' model.",
+    "Description": [
+      "The 'core' model means the model with CC and without the profiling entities.",
+      "This setup allows you to create examples for the schema as build (with string enums), with CC, or with the 'core'",
+      "Any JSON file in this directory will work the same. You can add examples to new files or in the same file",
+      "The first step is to create a JSON object in a file. Then, create an arbitrary key, 'something' in this case, and create an object under the key",
+      "Then add a 'Title', add and pick the 'Schema', and then add the 'Example'. ctrl-space should give good suggestions as you edit.",
+      "The prefix of the value you select for the 'Schema' field specifies which model you'll get validation for under the 'Example' field.",
+      "The suggest and auto complete for VSC seems to be working fine with the schema for this setup.",
+      "To give an example of another entity type, remove part or all of the string under 'Schema' and press ctrl-space.",
+      "You should get suggestions based on what has been typed so far for the 'Schema' field. Try 'Diagnosis' to see that you get choices for the different models for it.",
+      "If you see yellow or some other error indicator under 'Example', it means the IDE detected an issue with the example based on the selected entity 'Schema'.",
+      "If that happens, open the 'PROBLEMS' view and you should get a helpful message regarding what is wrong with the 'Example'.",
+      "This setup is still work in progress and might have bugs. If you notice something not working as expected please let Shahim know"
+    ],
+    "Schema": "ccdh.0713core.Diagnosis",
+    "Example": {
+      "condition": {
+        "coding": [
+          {
+            "system": "EnumCRDCHDiagnosisCondition",
+            "code": "Von Recklinghausen disease"
+          }
+        ]
+      }
+    }
+  }
+}
