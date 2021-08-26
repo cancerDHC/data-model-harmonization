@@ -1,0 +1,12 @@
+---
+any name here:
+  Title: Some example
+  Schema: ccdh.0713.Diagnosis
+  Example:
+    stage:
+      - method_type:
+          - AJCC staging system 4th edition
+      - observations:
+          # this is a comment
+          - observation_type: Clinical Metastasis (M)
+            valueCodeableConcept: N2

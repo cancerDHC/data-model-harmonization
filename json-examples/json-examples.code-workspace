@@ -9,6 +9,7 @@
 
 
 
+
 			{
 				"fileMatch": [
 					"/ccdh-json-schema-v1.0.1/*.json",
@@ -26,7 +27,7 @@
 			,
 			{
 				"fileMatch": [
-					"/json-schema-examples/examples/*.json"
+					"/json-schema-examples/json/*.json"
 				],
 				"url": "./json-schema-examples/schemas/examples-schema.json"
 			}
@@ -34,6 +35,9 @@
 		"workbench.colorCustomizations": {
 			"editor.lineHighlightBackground": "#123333f8"
 		},
-		"json.maxItemsComputed": 100000
+		"json.maxItemsComputed": 100000,
+		"yaml.schemas": {
+			"./json-schema-examples/schemas/examples-schema.json": "/json-schema-examples/yaml/*.yaml"
+		}
 	}
 }

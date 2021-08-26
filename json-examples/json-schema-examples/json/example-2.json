@@ -1,0 +1,22 @@
+{
+  "any name here": {
+    "Title": "Some example",
+    "Schema": "ccdh.0713.Diagnosis",
+    "Example": {
+      "stage": [
+        {
+          "method_type": [
+            "AJCC staging system 4th edition"
+          ],
+          "observations": [
+            {
+              "observation_type": "Clinical Node (N)",
+              "valueCodeableConcept": "N2"
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}
