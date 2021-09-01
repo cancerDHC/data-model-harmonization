@@ -1,0 +1,65 @@
+---
+gdc_specimen:
+  Title: GDC Specimen Example
+  Schema: ccdh.0713.Specimen
+  Example:                   # type = Specimen (https://cancerdhc.github.io/ccdhmodel/dev/Specimen/)
+    id: biosample:SAMEA1652204    # based on DST recommendation, expands to https://n2t.net/biosample:SAMEA1652204 
+    identifier:              # type = Identifier (https://cancerdhc.github.io/ccdhmodel/dev/Identifier/)
+      - value: target:TARGET-40-0A4I9I-01A
+      - value: gdc:9575763d-9c34-4e8e-a43a-419f5c13962f
+    specimen_type: initial sample
+    associated_project:      # type = ResearchProject (https://cancerdhc.github.io/ccdhmodel/dev/ResearchProject/)
+      id: crdc:pj1000004 
+      identifier:            # type = Identifier (https://cancerdhc.github.io/ccdhmodel/dev/Identifier/)
+       - value: target:TARGET-OS
+      research_project_type: Project
+    source_subject:          # type = Subject (https://cancerdhc.github.io/ccdhmodel/dev/Subject/)
+      id: crdc:su0000001 
+      identifier:            # type = Identifier (https://cancerdhc.github.io/ccdhmodel/dev/Identifier/)
+        - value: gdc:8a3df64f-8fa6-490b-9f90-5b63f74f8f4f
+        - value: target:TARGET-40-0A4I9I
+    source_material_type: Metastatic
+    general_tissue_morphology: Tumor
+    specific_tissue_morphology: Osteosarcoma (OS)
+    tumor_status_at_collection: Metastatic
+    quantity_measure:        # type = SpecimenQuantityObservation (https://cancerdhc.github.io/ccdhmodel/dev/SpecimenQuantityObservation/)
+      - observation_type: weight
+        valueQuantity:       # type = Quantity (https://cancerdhc.github.io/ccdhmodel/dev/Quantity/)
+          valueDecimal: 45.0
+          unit: milligrams
+    creation_activity:       # type = SpecimenCreationActivity (https://cancerdhc.github.io/ccdhmodel/dev/SpecimenCreationActivity/)
+      activity_type: collection from source
+      date_ended:            # type = TimePoint (https://cancerdhc.github.io/ccdhmodel/dev/TimePoint/)
+        offsetFromIndex:     # type = Quantity (https://cancerdhc.github.io/ccdhmodel/dev/Quantity/)
+          valueDecimal: 238.0
+          unit: days
+      quantity_collected:  # type = Quantity (https://cancerdhc.github.io/ccdhmodel/dev/Quantity/)
+        valueDecimal: 57.0
+        unit: milligrams 
+      collection_site:       # type = BodySite (https://cancerdhc.github.io/ccdhmodel/dev/BodySite/)
+        site: Lung
+      execution_time_observation:   # type = ExecutionTimeObservation (https://cancerdhc.github.io/ccdhmodel/dev/ExecutionTimeObservation/)
+        - observation_type: time_between_excision_and_freezing
+          valueQuantity:     # type = Quantity (https://cancerdhc.github.io/ccdhmodel/dev/Quantity/)
+            valueDecimal: 15.0
+            unit: minutes 
+    processing_activity:
+      - activity_type: Freezing
+        method_type: -80
+        
+
+                
+
+            
+
+          
+    
+
+
+   
+
+
+
+
+
+
