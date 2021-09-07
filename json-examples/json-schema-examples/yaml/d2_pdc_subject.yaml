@@ -1,0 +1,28 @@
+---
+pdc_subject:
+  Title: PDC Subject Example
+  Schema: ccdh.0713.Subject
+  # type = Subject
+  Example:
+    id: "ccdh:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
+    # type = Identifier
+    identifier:
+      # PDC.Cases.case_id
+      - value: "pdc:3a36a497-63d7-11e8-bcf1-0a2705229b82"
+      # PDC.Cases.case_submitter_id
+      - value: "tcga:TCGA-13-1409"
+      # PDC.Demographics.demographic_id
+      - value: "pdc:f69b9a03-7588-11e8-bcf1-0a2705229b82"
+      # PDC.Demographics.demographic_submitter_id
+      - value: "pdc:TCGA-13-1409-DM"
+    ethnicity: not hispanic or latino
+    race:
+      - white
+    sex: female
+    vital_status: Dead
+    year_of_birth: 1935
+    species: Homo sapiens
+    # type = Quantity
+    age_at_death:
+      unit: days
+      value_decimal: 28578

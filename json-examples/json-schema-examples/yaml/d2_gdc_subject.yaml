@@ -1,0 +1,28 @@
+---
+gdc_subject:
+  Title: GDC Subject Example
+  Schema: ccdh.0713.Subject
+  # type = Subject
+  Example:              
+    id: "ccdh:17029fd8-cd05-4089-8da3-52795823a647"
+    # type = Identifier
+    identifier:
+      # GDC.Cases.case_id
+      - value: "gdc:18e0e996-8f23-4f53-94a5-dde38b550863"
+      # GDC.Cases.submitter_id
+      - value: "tcga:TCGA-13-1409"
+      # GDC.Demographics.demographic_id
+      - value: "gdc:cf0eeee1-5dd7-5bef-ad40-5d881bf9d762"
+      # GDC.Demographics.submitter_id
+      - value: "gdc:TCGA-13-1409_demographic"
+    ethnicity: not hispanic or latino
+    race:
+      - white
+    sex: female
+    vital_status: Dead
+    year_of_birth: 1935
+    species: Homo sapiens
+    # type = Quantity
+    age_at_death:
+      unit: days
+      value_decimal: 28578

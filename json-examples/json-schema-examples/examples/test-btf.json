@@ -1,0 +1,21 @@
+{
+    "example1": {
+        "Title": "Example1",
+        "Schema": "ccdh.0713.Diagnosis",
+        "Example": {
+            "stage": [
+                {
+                    "method_type": [
+                        "FIGO staging system"
+                    ],
+                    "observations": [
+                        {
+                            "observation_type": "Overall",
+                            "valueCodeableConcept": "Stage IIIC"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

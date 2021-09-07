@@ -1,0 +1,35 @@
+---
+gdc_diagnosis:
+  Title: GDC Diagnosis Example
+  Schema: ccdh.0713.Diagnosis
+  # type = Diagnosis
+  Example:
+    id: "ccdh:fe908e53-4b99-4150-94d2-b086575cde41"
+    # type = Identifier
+    identifier:
+      # GDC.Diagnosis.diagnosis_id
+      - value: "gdc:6b0f33e6-884d-5a93-8335-9f55569790a7"
+      # GDC.Diagnosis.submitter_id
+      - value: "gdc:TCGA-13-1409_diagnosis"
+    morphology: 8441/3
+    # type = BodySite
+    primary_site:
+      - site: Ovary
+    # type = CancerStageObservationSet
+    stage:
+      - method_type:
+        - FIGO staging system
+        # type = CancerStageObservation
+        observations:
+          - observation_type: Overall
+            value_codeable_concept: Stage IIIC
+    # NB: Diagnosis.condition doesn't contain the ICD-10 codes
+    condition: Serous cystadenocarcinoma, NOS
+    year_at_diagnosis: 2008
+    # type = Quantity
+    age_at_diagnosis:
+      unit: days
+      value_decimal: 26836
+    subject:
+      id: "ccdh:17029fd8-cd05-4089-8da3-52795823a647"
+      
