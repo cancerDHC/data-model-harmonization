@@ -2,51 +2,78 @@
 gdc_specimen:
   Title: GDC Specimen Example
   Schema: ccdh.0713.Specimen
-  Example:                   # type = Specimen (https://cancerdhc.github.io/ccdhmodel/dev/Specimen/)
-    id: biosample:SAMEA1652204    # based on DST recommendation, expands to https://n2t.net/biosample:SAMEA1652204 
-    identifier:              # type = Identifier (https://cancerdhc.github.io/ccdhmodel/dev/Identifier/)
+  Description:
+    - "CRDC-H-compliant representation of the synthetic source data example described here: https://docs.google.com/spreadsheets/d/1t02d9shmUHrYrV7IPUeAIAyY3e45AYpTN53HzjyKdag/edit#gid=920835556"
+  Example:                   
+    id: "example:1"    #  TO DO: MAKE THUS A UUID
+    identifier:         
+      # type: Identifier          
       - value: target:TARGET-40-0A4I9I-01A
+      - value: biosample:SAMEA1652204       # based on DST recommendation, expands to https://n2t.net/biosample:SAMEA1652204
       - value: gdc:9575763d-9c34-4e8e-a43a-419f5c13962f
     specimen_type: initial sample
-    associated_project:      # type = ResearchProject (https://cancerdhc.github.io/ccdhmodel/dev/ResearchProject/)
-      id: crdc:pj1000004 
-      identifier:            # type = Identifier (https://cancerdhc.github.io/ccdhmodel/dev/Identifier/)
-       - value: target:TARGET-OS
+    associated_project:         # This is a minimal inlined Project instance.  To do: formally define model for defining references
+      # type: ResearchProject
+      id: "example:2"    #  TO DO: MAKE THUS A UUID
+      identifier:           
+        # type: Identifier
+        - value: gdc:TARGET-OS
+        - value: crdc:pj1000004
       research_project_type: Project
-    source_subject:          # type = Subject (https://cancerdhc.github.io/ccdhmodel/dev/Subject/)
-      id: crdc:su0000001 
-      identifier:            # type = Identifier (https://cancerdhc.github.io/ccdhmodel/dev/Identifier/)
+    source_subject:                 # This is a minimal inlined Subject instance.  To do: formally define model for defining references
+      # type: Subject
+      id: "example:3"  
+      identifier:            
+        # type: Identifier 
         - value: gdc:8a3df64f-8fa6-490b-9f90-5b63f74f8f4f
         - value: target:TARGET-40-0A4I9I
+        - value: crdc:su0000001     # DST-recommended identifier
     source_material_type: Metastatic
     general_tissue_morphology: Tumor
     specific_tissue_morphology: Osteosarcoma (OS)
-    tumor_status_at_collection: Metastatic
-    quantity_measure:        # type = SpecimenQuantityObservation (https://cancerdhc.github.io/ccdhmodel/dev/SpecimenQuantityObservation/)
+    tumor_status_at_collection: Metastatic      # formally bound to NCI:XXXX in the enum definition in the LinkML schema
+    quantity_measure:        
+      # type: QuantityMeasureObservation
       - observation_type: weight
-        valueQuantity:       # type = Quantity (https://cancerdhc.github.io/ccdhmodel/dev/Quantity/)
-          valueDecimal: 45.0
+        value_quantity:      
+          # type: Quantity
+          value_decimal: 50
           unit: milligrams
-    creation_activity:       # type = SpecimenCreationActivity (https://cancerdhc.github.io/ccdhmodel/dev/SpecimenCreationActivity/)
+    creation_activity:       
+      # type: SpecimenCreationActivity
       activity_type: collection from source
-      date_ended:            # type = TimePoint (https://cancerdhc.github.io/ccdhmodel/dev/TimePoint/)
-        offsetFromIndex:     # type = Quantity (https://cancerdhc.github.io/ccdhmodel/dev/Quantity/)
-          valueDecimal: 238.0
+      date_ended:
+        offset_from_index:
+          value_decimal: 238
           unit: days
-      quantity_collected:  # type = Quantity (https://cancerdhc.github.io/ccdhmodel/dev/Quantity/)
-        valueDecimal: 57.0
+        index_time_point:
+          event_type:
+            - "start of study"
+
+
+
+
+
+
+      quantity_collected:  
+        # type: Quantity
+        valueDecimal: 59.0
         unit: milligrams 
-      collection_site:       # type = BodySite (https://cancerdhc.github.io/ccdhmodel/dev/BodySite/)
+      collection_site:       
+        # type: BodySite
         site: Lung
-      execution_time_observation:   # type = ExecutionTimeObservation (https://cancerdhc.github.io/ccdhmodel/dev/ExecutionTimeObservation/)
+      execution_time_observation:   
+        # type: ExecutionTimeObservation
         - observation_type: time_between_excision_and_freezing
-          valueQuantity:     # type = Quantity (https://cancerdhc.github.io/ccdhmodel/dev/Quantity/)
+          valueQuantity:    
+            # type: Quantity
             valueDecimal: 15.0
             unit: minutes 
     processing_activity:
+      # type: SpecimenProcessingActivity
       - activity_type: Freezing
         method_type: -80
-        
+
 
                 
 
