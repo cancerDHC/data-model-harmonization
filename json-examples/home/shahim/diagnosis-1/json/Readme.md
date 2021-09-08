@@ -1,3 +1,0 @@
-Any .json file in this folder that does not start with "_" will be a Diagnosis object based on the schema from __schema.json.  The goal is to evolve the schema to show various JSON Schema features, and how to use them, to demonstrate the JSON Schema ability to support data validation based on condition, body site, stage by system, staging values per system, etc.
-
-The point is to demonstrate that JSON Schema can address our modeling and validation needs beyond what LinkML can provide at this point.

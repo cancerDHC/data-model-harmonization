@@ -30,6 +30,12 @@
 					"/json-schema-examples/json/*.json"
 				],
 				"url": "./json-schema-examples/schemas/examples-schema.json"
+			},
+			{
+				"fileMatch": [
+					"/f2f-2021-09-data-examples/*.json"
+				],
+				"url": "./schemas/2021-09-examples-json-schema.json"
 			}
 		],
 		"workbench.colorCustomizations": {
@@ -37,7 +43,8 @@
 		},
 		"json.maxItemsComputed": 100000,
 		"yaml.schemas": {
-			"./json-schema-examples/schemas/examples-schema.json": "/json-schema-examples/yaml/*.yaml"
+			"./json-schema-examples/schemas/examples-schema.json": "/json-schema-examples/yaml/*.yaml",
+			"./schemas/2021-09-examples-json-schema.json": "/f2f-2021-09-data-examples/*.yaml"
 		}
 	}
 }
