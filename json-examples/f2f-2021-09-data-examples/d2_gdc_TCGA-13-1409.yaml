@@ -1,0 +1,113 @@
+---
+gdc_subject:
+  Title: GDC Subject Example
+  Schema: ccdh.0713.Subject
+  # type = Subject
+  Example:              
+    id: "ccdh:17029fd8-cd05-4089-8da3-52795823a647"
+    # type = Identifier
+    identifier:
+      # GDC.Cases.case_id
+      - value: "gdc:18e0e996-8f23-4f53-94a5-dde38b550863"
+      # GDC.Cases.submitter_id
+      - value: "tcga:TCGA-13-1409"
+      # GDC.Demographics.demographic_id
+      - value: "gdc:cf0eeee1-5dd7-5bef-ad40-5d881bf9d762"
+      # GDC.Demographics.submitter_id
+      - value: "gdc:TCGA-13-1409_demographic"
+    ethnicity: not hispanic or latino
+    race:
+      - white
+    sex: female
+    vital_status: Dead
+    year_of_birth: 1935
+    species: Homo sapiens
+    # type = Quantity
+    age_at_death:
+      unit: days
+      value_decimal: 28578
+
+---
+gdc_diagnosis:
+  Title: GDC Diagnosis Example
+  Schema: ccdh.0713.Diagnosis
+  # type = Diagnosis
+  Example:
+    id: "ccdh:fe908e53-4b99-4150-94d2-b086575cde41"
+    # type = Identifier
+    identifier:
+      # GDC.Diagnosis.diagnosis_id
+      - value: "gdc:6b0f33e6-884d-5a93-8335-9f55569790a7"
+      # GDC.Diagnosis.submitter_id
+      - value: "gdc:TCGA-13-1409_diagnosis"
+    morphology: 8441/3
+    # type = BodySite
+    primary_site:
+      - site: Ovary
+    # type = CancerStageObservationSet
+    stage:
+      - method_type:
+        - FIGO staging system
+        # type = CancerStageObservation
+        observations:
+          - observation_type: Overall
+            value_codeable_concept: Stage IIIC
+    # NB: Diagnosis.condition doesn't contain the ICD-10 codes
+    condition: Serous cystadenocarcinoma, NOS
+    year_at_diagnosis: 2008
+    # type = Quantity
+    age_at_diagnosis:
+      unit: days
+      value_decimal: 26836
+    # type = Subject
+    subject:
+      id: "ccdh:17029fd8-cd05-4089-8da3-52795823a647"
+
+---
+gdc_researchProject:
+  Title: GDC ResearchProject Example
+  Schema: ccdh.0713.ResearchProject
+  # type = ResearchProject
+  Example:
+    id: "ccdh:ff364424-8506-41c4-b5e0-410339462560"
+    # type = Identifier
+    identifier:
+        # GDC.Project.project_id 
+        # NB we have this mapped to ResearchProject.id which seems incorrect.  this looks like a business id to me
+      - value: "gdc:TCGA-OV"
+    name: Ovarian Serous Cystadenocarcinoma
+    research_project_type: Project
+    # type = ResearchProject
+    part_of:
+      - id: "ccdh:6b0cc2d2-2fec-4049-8ac4-77edb6d914f8"
+        # type = Identifier
+        identifier:
+        - value: "gdc:b80aa962-9650-5110-b3eb-bd087da808db"
+        # GDC.Project.dbgap_accession_number
+        - value: "dbgap:phs000178"
+        research_project_type: Program
+        name: TCGA
+
+---
+gdc_researchsubject:
+  Title: GDC ResearchSubject Example
+  Schema: ccdh.0713.ResearchSubject
+  # type = ResearchSubject
+  Example:
+    id: "ccdh:bceb9b07-40bc-4d3e-a65a-6f3cc7e44827"
+    # type = Subject
+    # Below is an association by reference only
+    associated_subject:
+      id: "ccdh:17029fd8-cd05-4089-8da3-52795823a647"
+    # type = ResearchProject
+    # Below is an association by inline inclusion
+    member_of_research_project:
+      research_project_type: Project
+      id: "ccdh:ff364424-8506-41c4-b5e0-410339462560"
+      # type = Identifier
+      identifier:
+        # GDC.Project.project_id 
+        # NB we have this mapped to ResearchProject.id which seems incorrect.  this looks like a business id to me
+        - value: "gdc:TCGA-OV"
+      name: Ovarian Serous Cystadenocarcinoma
+
