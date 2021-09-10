@@ -13,11 +13,11 @@ harmonized_subject:
       - value: "tcga:TCGA-13-1409"                                  # GDC.Cases.submitter_id
       - value: "gdc:cf0eeee1-5dd7-5bef-ad40-5d881bf9d762"           # GDC.Demographics.demographic_id
       - value: "gdc:TCGA-13-1409_demographic"                       # GDC.Demographics.submitter_id
-    ethnicity: not hispanic or latino
+    ethnicity: Not Hispanic or Latino                               # 'Not Hispanic or Latino' is formally bound to NCIT:C41222
     race:
-      - white
-    sex: female
-    vital_status: Dead
+      - White                                                       # 'White' is formally bound to NCIT:C41261
+    sex: Female                                                     # 'Female' is formally bound to NCIT:C16576
+    vital_status: Dead                                              # 'Dead' is formally bound to NCIT:C28554 
     year_of_birth: 1935
     species: Homo sapiens
     age_at_death:                                                   # type: Quantity
@@ -41,7 +41,7 @@ harmonized_diagnosis:
       unit: days
       value_decimal: 26836
     year_at_diagnosis: 2008
-    condition: Serous cystadenocarcinoma, NOS
+    condition: Serous Cystadenocarcinoma                            # 'Serous Cystadenocarcinoma' is formally bound to NCIT:C3778
     morphology: 8441/3
     primary_site:
       - site: Ovary
@@ -50,7 +50,7 @@ harmonized_diagnosis:
         - FIGO staging system
         observations:                                               # type: CancerStageObservation
           - observation_type: Overall
-            value_codeable_concept: Stage IIIC        
+            value_enum: Stage IIIC        
 
 ---
 harmonized_researchproject:
@@ -75,13 +75,10 @@ harmonized_researchproject:
 harmonized_researchsubject:
   Title: Harmonized ResearchSubject Example
   Schema: ccdh.0713.ResearchSubject
-  
   Example:                                                          # type: ResearchSubject
     id: "ccdh:2b66c18b-dec1-4a7d-bbf5-8c435fd85efc"
-    
     associated_subject:                                             # type: Subject
       id: "ccdh:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
-    
     member_of_research_project:                                     # type: ResearchProject
       research_project_type: Project
       id: "ccdh:77ed81c1-5e63-481e-889d-604844807a10"

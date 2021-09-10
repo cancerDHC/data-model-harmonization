@@ -44,7 +44,7 @@ pdc_diagnosis:
         - FIGO staging system
         observations:                                               # type = CancerStageObservation
           - observation_type: Overall
-            value_codeable_concept: Stage IIIC        
+            value_enum: Stage IIIC        
 
 ---
 pdc_researchproject:

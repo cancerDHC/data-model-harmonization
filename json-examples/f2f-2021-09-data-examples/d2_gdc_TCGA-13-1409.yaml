@@ -37,7 +37,7 @@ gdc_diagnosis:
         - FIGO staging system                                       # type: CancerStageObservation
         observations:
           - observation_type: Overall
-            value_codeable_concept: Stage IIIC
+            value_enum: Stage IIIC
     # NB: Diagnosis.condition doesn't contain the ICD-10 codes
     condition: Serous cystadenocarcinoma, NOS
     year_at_diagnosis: 2008
