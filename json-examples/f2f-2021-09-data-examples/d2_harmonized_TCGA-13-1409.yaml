@@ -3,7 +3,7 @@ harmonized_subject:
   Title: Harmonized Subject Example
   Schema: ccdh.0713.Subject
   Example:                                                          # type: Subject
-    id: "ccdh:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
+    id: "f2f:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
     identifier:                                                     # type: Identifier
       - value: "pdc:3a36a497-63d7-11e8-bcf1-0a2705229b82"           # PDC.Cases.case_id
       - value: "tcga:TCGA-13-1409"                                  # PDC.Cases.case_submitter_id
@@ -13,11 +13,11 @@ harmonized_subject:
       - value: "tcga:TCGA-13-1409"                                  # GDC.Cases.submitter_id
       - value: "gdc:cf0eeee1-5dd7-5bef-ad40-5d881bf9d762"           # GDC.Demographics.demographic_id
       - value: "gdc:TCGA-13-1409_demographic"                       # GDC.Demographics.submitter_id
-    ethnicity: Not Hispanic or Latino                               # 'Not Hispanic or Latino' is formally bound to NCIT:C41222
+    ethnicity: Not Hispanic or Latino                               # 'Not Hispanic or Latino' is formally bound to NCIT:C41222 in the enum definition in the LinkML schema
     race:
-      - White                                                       # 'White' is formally bound to NCIT:C41261
-    sex: Female                                                     # 'Female' is formally bound to NCIT:C16576
-    vital_status: Dead                                              # 'Dead' is formally bound to NCIT:C28554 
+      - White                                                       # 'White' is formally bound to NCIT:C41261 in the enum definition in the LinkML schema
+    sex: Female                                                     # 'Female' is formally bound to NCIT:C16576 in the enum definition in the LinkML schema
+    vital_status: Dead                                              # 'Dead' is formally bound to NCIT:C28554 in the enum definition in the LinkML schema
     year_of_birth: 1935
     species: Homo sapiens
     age_at_death:                                                   # type: Quantity
@@ -29,22 +29,22 @@ harmonized_diagnosis:
   Title: Harmonized Diagnosis Example
   Schema: ccdh.0713.Diagnosis
   Example:                                                          # type: Diagnosis
-    id: "ccdh:e5a619d3-40b4-4aaa-a40e-c2a0d75e8d79"
+    id: "f2f:e5a619d3-40b4-4aaa-a40e-c2a0d75e8d79"
     identifier:                                                     # type: Identifier
       - value: "pdc:ff2f0efb-70ca-11e8-bcf1-0a2705229b82"           # PDC.Diagnosis.diagnosis_id
       - value: "pdc:TCGA-13-1409-DX"                                # PDC.Diagnosis.diagnosis_submitter_id
       - value: "gdc:6b0f33e6-884d-5a93-8335-9f55569790a7"           # GDC.Diagnosis.diagnosis_id
       - value: "gdc:TCGA-13-1409_diagnosis"                         # GDC.Diagnosis.submitter_id
     subject:                                                        # type: Subject
-      id: "ccdh:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
+      id: "f2f:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
     age_at_diagnosis:                                               # type: Quantity
       unit: days
       value_decimal: 26836
     year_at_diagnosis: 2008
-    condition: Serous Cystadenocarcinoma                            # 'Serous Cystadenocarcinoma' is formally bound to NCIT:C3778
+    condition: Serous Cystadenocarcinoma                            # 'Serous Cystadenocarcinoma' is formally bound to NCIT:C3778 in the enum definition in the LinkML schema
     morphology: 8441/3
     primary_site:
-      - site: Ovary
+      - site: Ovary                                                 # 'Ovary' is formally bound to NCIT:C12404 in the enum definition in the LinkML schema
     stage:                                                          # type: CancerStageObservationSet
       - method_type:
         - FIGO staging system
@@ -57,7 +57,7 @@ harmonized_researchproject:
   Title: PDC ResearchProject Example
   Schema: ccdh.0713.ResearchProject
   Example:                                                          # type: ResearchProject
-    id: "ccdh:77ed81c1-5e63-481e-889d-604844807a10"
+    id: "f2f:77ed81c1-5e63-481e-889d-604844807a10"
     identifier:                                                     # type: Identifier
       - value: "pdc:CPTAC-TCGA"
         # NB we have this mapped to ResearchProject.id which seems incorrect.  this looks like a business id to me
@@ -66,7 +66,7 @@ harmonized_researchproject:
     name: Ovarian Serous Cystadenocarcinoma
     # part_of:
     #   - research_project_type: Program
-    #     id: "ccdh:c19a8e03-f674-4124-b8ac-2222e08de978"
+    #     id: "f2f:c19a8e03-f674-4124-b8ac-2222e08de978"
     #     identifier:
     #       - value: "pdc:Clinical Proteomic Tumor Analysis Consortium"
     #     name: Clinical Proteomic Tumor Analysis Consortium
@@ -76,9 +76,9 @@ harmonized_researchsubject:
   Title: Harmonized ResearchSubject Example
   Schema: ccdh.0713.ResearchSubject
   Example:                                                          # type: ResearchSubject
-    id: "ccdh:2b66c18b-dec1-4a7d-bbf5-8c435fd85efc"
+    id: "f2f:2b66c18b-dec1-4a7d-bbf5-8c435fd85efc"
     associated_subject:                                             # type: Subject
-      id: "ccdh:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
+      id: "f2f:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
     member_of_research_project:                                     # type: ResearchProject
       research_project_type: Project
-      id: "ccdh:77ed81c1-5e63-481e-889d-604844807a10"
+      id: "f2f:77ed81c1-5e63-481e-889d-604844807a10"
