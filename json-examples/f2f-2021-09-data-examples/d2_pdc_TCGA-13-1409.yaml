@@ -2,19 +2,13 @@
 pdc_subject:
   Title: PDC Subject Example
   Schema: ccdh.0713.Subject
-  # type = Subject
-  Example:
+  Example:                                                          # type: Subject
     id: "ccdh:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
-    # type = Identifier
-    identifier:
-      # PDC.Cases.case_id
-      - value: "pdc:3a36a497-63d7-11e8-bcf1-0a2705229b82"
-      # PDC.Cases.case_submitter_id
-      - value: "tcga:TCGA-13-1409"
-      # PDC.Demographics.demographic_id
-      - value: "pdc:f69b9a03-7588-11e8-bcf1-0a2705229b82"
-      # PDC.Demographics.demographic_submitter_id
-      - value: "pdc:TCGA-13-1409-DM"
+    identifier:                                                     # type: Identifier
+      - value: "pdc:3a36a497-63d7-11e8-bcf1-0a2705229b82"           # PDC.Cases.case_id
+      - value: "tcga:TCGA-13-1409"                                  # PDC.Cases.case_submitter_id
+      - value: "pdc:f69b9a03-7588-11e8-bcf1-0a2705229b82"           # PDC.Demographics.demographic_id
+      - value: "pdc:TCGA-13-1409-DM"                                # PDC.Demographics.demographic_submitter_id
     ethnicity: not hispanic or latino
     race:
       - white
@@ -22,8 +16,7 @@ pdc_subject:
     vital_status: Dead
     year_of_birth: 1935
     species: Homo sapiens
-    # type = Quantity
-    age_at_death:
+    age_at_death:                                                   # type: Quantity
       unit: days
       value_decimal: 28578
     
@@ -31,20 +24,14 @@ pdc_subject:
 pdc_diagnosis:
   Title: PDC Diagnosis Example
   Schema: ccdh.0713.Diagnosis
-  # type = Diagnosis
-  Example:
+  Example:                                                          # type: Diagnosis
     id: "ccdh:424098d8-242f-4d8b-9ea7-6f73b4b2ec4c"
-    # type = Identifier
-    identifier:
-      # PDC.Diagnosis.diagnosis_id
-      - value: "pdc:ff2f0efb-70ca-11e8-bcf1-0a2705229b82"
-      # PDC.Diagnosis.diagnosis_submitter_id
-      - value: "pdc:TCGA-13-1409-DX"
-    # type = Subject
-    subject:
+    identifier:                                                     # type: Identifier
+      - value: "pdc:ff2f0efb-70ca-11e8-bcf1-0a2705229b82"           # PDC.Diagnosis.diagnosis_id
+      - value: "pdc:TCGA-13-1409-DX"                                # PDC.Diagnosis.diagnosis_submitter_id
+    subject:                                                        # type: Subject
       id: "ccdh:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
-    # type = Quantity
-    age_at_diagnosis:
+    age_at_diagnosis:                                               # type: Quantity
       unit: days
       value_decimal: 26836
     year_at_diagnosis: 2008
@@ -52,12 +39,10 @@ pdc_diagnosis:
     morphology: 8441/3
     primary_site:
       - site: Ovary
-    # type = CancerStageObservationSet
-    stage:
+    stage:                                                          # type = CancerStageObservationSet
       - method_type:
         - FIGO staging system
-        # type = CancerStageObservation
-        observations:
+        observations:                                               # type = CancerStageObservation
           - observation_type: Overall
             value_codeable_concept: Stage IIIC        
 
@@ -65,11 +50,9 @@ pdc_diagnosis:
 pdc_researchproject:
   Title: PDC ResearchProject Example
   Schema: ccdh.0713.ResearchProject
-  #type = ResearchProject
-  Example:
+  Example:                                                          # type: ResearchProject
     id: "ccdh:7196cb06-6999-4e6e-9b78-e1b4233629ab"
-    # type = Identifier
-    identifier:
+    identifier:                                                     # type: Identifier
       - value: "pdc:CPTAC-TCGA"
     research_project_type: Project
     # part_of:
@@ -83,13 +66,11 @@ pdc_researchproject:
 pdc_researchsubject:
   Title: PDC ResearchSubject Example
   Schema: ccdh.0713.ResearchSubject
-  # type = ResearchSubject
-  Example:
+
+  Example:                                                          # type: ResearchSubject
     id: "ccdh:1306ef67-11cd-4e72-a4db-ae05584460a1"
-    # type = Subject
-    associated_subject:
+    associated_subject:                                             # type: Subject
       id: "ccdh:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
-    #type = ResearchProject
-    member_of_research_project:
+    member_of_research_project:                                     #type = ResearchProject
       research_project_type: Project
       id: "ccdh:7196cb06-6999-4e6e-9b78-e1b4233629ab"
