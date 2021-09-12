@@ -7,7 +7,7 @@
           <value>
             <SchemaInfo>
               <option name="name" value="./json-scema-examples/schemas" />
-              <option name="relativePathToSchema" value="json-schema-examples/schemas/examples-schema.json" />
+              <option name="relativePathToSchema" value="home/shahim/_attic/examples-schema.json" />
               <option name="schemaVersion" value="JSON Schema version 7" />
               <option name="patterns">
                 <list>
