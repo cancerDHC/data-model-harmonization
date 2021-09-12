@@ -6,31 +6,6 @@
 	],
 	"settings": {
 		"json.schemas": [
-
-
-
-
-			{
-				"fileMatch": [
-					"/ccdh-json-schema-v1.0.1/*.json",
-					"!/ccdh-json-schema-v1.0.1/_*.json"
-				],
-				"url": "./ccdh-json-schema-v1.0.1/__schema.json"
-			},
-			{
-				"fileMatch": [
-					"/home/shahim/diagnosis-1/json/*.json",
-					"!/home/shahim/diagnosis-1/json/_*.json"
-				],
-				"url": "./home/shahim/diagnosis-1/schema/bundle.json"
-			}
-			,
-			{
-				"fileMatch": [
-					"/json-schema-examples/json/*.json"
-				],
-				"url": "./json-schema-examples/schemas/examples-schema.json"
-			},
 			{
 				"fileMatch": [
 					"/f2f-2021-09-data-examples/*.json"
@@ -43,7 +18,6 @@
 		},
 		"json.maxItemsComputed": 100000,
 		"yaml.schemas": {
-			"./json-schema-examples/schemas/examples-schema.json": "/json-schema-examples/yaml/*.yaml",
 			"./schemas/2021-09-examples-json-schema.json": "/f2f-2021-09-data-examples/*.yaml"
 		}
 	}
