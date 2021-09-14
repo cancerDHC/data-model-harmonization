@@ -8,18 +8,18 @@ gdc_diagnosis:
   Example:
     id: "f2f:de3468e83-4c86-4258-98d1-a986445cce73"
     
-    identifier:                                                      # type: Identifier
+    identifier:                                                      # type = Identifier
       - value: "gdc-diagnosis:21a0cbbb-c778-4b2c-cd54-8a5047a3a077"  # GDC.Diagnosis.diagnosis_id
       - value: "target:TARGET-40-0A4I9I-01D"                         # GDC.Diagnosis.submitter_id
 
-    subject:                                                         # type: Subject
+    subject:                                                         # type = Subject
       id: "ccdh:17029fd8-cd05-4089-8da3-52795823a647"       
       identifier:
         - value: "gdc-case:8a3df64f-8fa6-490b-9f90-5b63f74f8f4f"     # GDC.Diagnosis.case_id
         - value: "target:TARGET-40-0A4I9I"                           # GDC.Diagnosis.case_submitter_id
         - value: "crdc:su0000001"                                    # Proposed globally unique identifier per recommenedation of the CRDC-DST 
 
-    age_at_diagnosis:                                                # type: Quantity
+    age_at_diagnosis:                                                # type = Quantity
       value_decimal: 32518
       unit: days
 
@@ -28,7 +28,7 @@ gdc_diagnosis:
     primary_site:                                                    # type = BodySite
       - site: Bone                                                   # 'Bone'' is formally bound to NCIT:C12366 in the enum definition in the LinkML schema     
 
-    stage:                                                           # type: CancerStageObservationSet
+    stage:                                                           # type = CancerStageObservationSet
       - method_type:
           - AJCC staging system 7th edition             # TO DO: Update value to the recommended canonical value (current proposed NCIT term seems not right)
         observations:                                                # type = CancerStageObservation
