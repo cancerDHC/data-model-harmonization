@@ -34,7 +34,7 @@ gdc_diagnosis:
         observations:                                                # type = CancerStageObservation
           - observation_type: Overall  
             value_enum: Stage IVA                                    # 'Stage IVA' is formally bound to NCIT:C27979 in the enum definition in the LinkML schema 
-    diagnosis_date:                        # TO DO:  populate this field - needed to cross-reference with date of sample collection to determine patient disease status when sample was collected
+    diagnosis_date:                        # TO DO:  populate this field with a Timepoint object (refactor current modeling) - it is needed to cross-reference with date of sample collection to determine patient disease status when sample was collected
     related_specimen: "f2f:05f1574e-2a28-50bc-bdc1-e4c6dee92fd1"     # TO DO Confirm I am using the correct id to reference this
     
     

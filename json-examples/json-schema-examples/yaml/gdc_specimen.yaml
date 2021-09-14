@@ -6,6 +6,53 @@ gdc_specimen:
     - "CRDC-H-compliant representation of the synthetic source data example described here: https://docs.google.com/spreadsheets/d/1t02d9shmUHrYrV7IPUeAIAyY3e45AYpTN53HzjyKdag/edit#gid=920835556"
     - "For easiest viewing, **TURN WORD WRAP OFF** so that comments dont run onto a new line."
   Example:                   
+    mappings:
+      - specimen_type: 
+         - initial sample: ???
+      - associated_project:
+          - research_project_type: 
+              - Project: ????
+      - source_material_type: 
+          - Metastatic Neoplasm: NCIT:C3261                     
+      - general_tissue_morphology: 
+          - Tumor Tissue: NCIT:C18009                      
+      - specific_tissue_morphology: 
+          - Osteosarcoma: NCIT:C9145                    
+      - tumor_status_at_collection: 
+          - Metastatic Neoplasm: NCIT:C3261 
+      - quantity_measure:                                            
+          - observation_type: 
+              - weight: ????
+          - value_quantity:                                          
+              - unit: milligrams
+      - creation_activity:                                            
+          - activity_type: 
+              - collection from source: ????
+          - date_ended: 
+              - offset_from_index:                                               
+                  - unit: 
+                      - days: ????
+               - index_time_point:                                         
+                   - event_type:
+                       - Start of Study: ???
+          - quantity_collected:                   
+              - unit: 
+                  - milligrams:  ???
+          - collection_site:                                            
+              - site: 
+                  - Lung: NCIT:C12468
+          - execution_time_observation:                                
+              - observation_type: 
+                  - time_between_excision_and_freezing: ????
+              - value_quantity:                                         
+                  - unit: 
+                      - minutes: ???? 
+          - processing_activity:                                          
+              - activity_type: 
+                  - Freezing: ???
+              - method_type: 
+                  - -80: ????
+
     id: "f2f:05f1574e-2a28-50bc-bdc1-e4c6dee92fd1"                # Local uuid for the Specimen a assigned by the system in which this record lives (here, the CCDH F2F Demonstrator).
     identifier:                                                   # type = Identifier   (Identifier is a complex data type, but we are only showing a single field from this type)  
       - value: "target:TARGET-40-0A4I9I-01A"                      # GDC.Sample.sample_submitter_id
