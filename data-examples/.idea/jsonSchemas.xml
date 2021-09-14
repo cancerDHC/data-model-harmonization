@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JsonSchemaMappingsProjectConfiguration">
+    <state>
+      <map>
+        <entry key="./json-scema-examples/schemas">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="./json-scema-examples/schemas" />
+              <option name="relativePathToSchema" value="home/shahim/_attic/examples-schema.json" />
+              <option name="schemaVersion" value="JSON Schema version 7" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="json-schema-examples/examples" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="home/shahim/diagnosis-1/json/*.json">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="home/shahim/diagnosis-1/json/*.json" />
+              <option name="relativePathToSchema" value="home/shahim/diagnosis-1/schema/bundle.json" />
+              <option name="schemaVersion" value="JSON Schema version 7" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="home/shahim/diagnosis-1/json" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+      </map>
+    </state>
+  </component>
+</project>

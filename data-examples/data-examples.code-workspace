@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"json.schemas": [
+			{
+				"fileMatch": [
+					"/f2f-2021-09-data-examples/*.json"
+				],
+				"url": "./schemas/2021-09-examples-json-schema.json"
+			}
+		],
+		"workbench.colorCustomizations": {
+			"editor.lineHighlightBackground": "#123333f8"
+		},
+		"json.maxItemsComputed": 100000,
+		"yaml.schemas": {
+			"./schemas/2021-09-examples-json-schema.json": "/f2f-2021-09-data-examples/*.yaml"
+		}
+	}
+}
