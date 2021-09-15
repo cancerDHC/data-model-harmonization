@@ -2,9 +2,9 @@
 harmonized_subject:
   Title: Harmonized Subject Example
   Schema: ccdh.0713.Subject
-  Example:                                                          # type: Subject
+  Example:                                                          # type = Subject
     id: "f2f:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
-    identifier:                                                     # type: Identifier
+    identifier:                                                     # type = Identifier
       - value: "pdc:3a36a497-63d7-11e8-bcf1-0a2705229b82"           # PDC.Cases.case_id
       - value: "tcga:TCGA-13-1409"                                  # PDC.Cases.case_submitter_id
       - value: "pdc:f69b9a03-7588-11e8-bcf1-0a2705229b82"           # PDC.Demographics.demographic_id
@@ -20,7 +20,7 @@ harmonized_subject:
     vital_status: Dead                                              # 'Dead' is formally bound to NCIT:C28554 in the enum definition in the LinkML schema
     year_of_birth: 1935
     species: Homo sapiens
-    age_at_death:                                                   # type: Quantity
+    age_at_death:                                                   # type = Quantity
       unit: days
       value_decimal: 28578
     
@@ -28,16 +28,16 @@ harmonized_subject:
 harmonized_diagnosis:
   Title: Harmonized Diagnosis Example
   Schema: ccdh.0713.Diagnosis
-  Example:                                                          # type: Diagnosis
+  Example:                                                          # type = Diagnosis
     id: "f2f:e5a619d3-40b4-4aaa-a40e-c2a0d75e8d79"
-    identifier:                                                     # type: Identifier
+    identifier:                                                     # type = Identifier
       - value: "pdc:ff2f0efb-70ca-11e8-bcf1-0a2705229b82"           # PDC.Diagnosis.diagnosis_id
       - value: "pdc:TCGA-13-1409-DX"                                # PDC.Diagnosis.diagnosis_submitter_id
       - value: "gdc:6b0f33e6-884d-5a93-8335-9f55569790a7"           # GDC.Diagnosis.diagnosis_id
       - value: "gdc:TCGA-13-1409_diagnosis"                         # GDC.Diagnosis.submitter_id
-    subject:                                                        # type: Subject
+    subject:                                                        # type = Subject
       id: "f2f:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
-    age_at_diagnosis:                                               # type: Quantity
+    age_at_diagnosis:                                               # type = Quantity
       unit: days
       value_decimal: 26836
     year_at_diagnosis: 2008
@@ -45,10 +45,10 @@ harmonized_diagnosis:
     morphology: 8441/3
     primary_site:
       - site: Ovary                                                 # 'Ovary' is formally bound to NCIT:C12404 in the enum definition in the LinkML schema
-    stage:                                                          # type: CancerStageObservationSet
+    stage:                                                          # type = CancerStageObservationSet
       - method_type:
         - FIGO staging system
-        observations:                                               # type: CancerStageObservation
+        observations:                                               # type = CancerStageObservation
           - observation_type: Overall
             value_enum: Stage IIIC        
 
@@ -56,9 +56,9 @@ harmonized_diagnosis:
 harmonized_researchproject:
   Title: PDC ResearchProject Example
   Schema: ccdh.0713.ResearchProject
-  Example:                                                          # type: ResearchProject
+  Example:                                                          # type = ResearchProject
     id: "f2f:77ed81c1-5e63-481e-889d-604844807a10"
-    identifier:                                                     # type: Identifier
+    identifier:                                                     # type = Identifier
       - value: "pdc:CPTAC-TCGA"
         # NB we have this mapped to ResearchProject.id which seems incorrect.  this looks like a business id to me
       - value: "gdc:TCGA-OV"                                        # GDC.Project.project_id 
@@ -75,10 +75,10 @@ harmonized_researchproject:
 harmonized_researchsubject:
   Title: Harmonized ResearchSubject Example
   Schema: ccdh.0713.ResearchSubject
-  Example:                                                          # type: ResearchSubject
+  Example:                                                          # type = ResearchSubject
     id: "f2f:2b66c18b-dec1-4a7d-bbf5-8c435fd85efc"
-    associated_subject:                                             # type: Subject
+    associated_subject:                                             # type = Subject
       id: "f2f:9731ddf7-5524-4e12-beb9-adfc044ea0a6"
-    member_of_research_project:                                     # type: ResearchProject
+    member_of_research_project:                                     # type = ResearchProject
       research_project_type: Project
       id: "f2f:77ed81c1-5e63-481e-889d-604844807a10"

@@ -2,9 +2,9 @@
 pdc_subject:
   Title: PDC Subject Example
   Schema: ccdh.0713.Subject
-  Example:                                                          # type: Subject
+  Example:                                                          # type = Subject
     id: "f2f:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
-    identifier:                                                     # type: Identifier
+    identifier:                                                     # type = Identifier
       - value: "pdc-cases:3a36a497-63d7-11e8-bcf1-0a2705229b82"     # PDC.Cases.case_id
       - value: "tcga:TCGA-13-1409"                                  # PDC.Cases.case_submitter_id
     ethnicity: Not Hispanic or Latino                               # 'Not Hispanic or Latino' is formally bound to NCIT:C41222 in the enum definition in the LinkML schema
@@ -14,7 +14,7 @@ pdc_subject:
     vital_status: Dead                                              # 'Dead' is formally bound to NCIT:C28554 in the enum definition in the LinkML schema
     year_of_birth: 1935
     species: Homo sapiens
-    age_at_death:                                                   # type: Quantity
+    age_at_death:                                                   # type = Quantity
       unit: days
       value_decimal: 28578
     
@@ -22,13 +22,13 @@ pdc_subject:
 pdc_diagnosis:
   Title: PDC Diagnosis Example
   Schema: ccdh.0713.Diagnosis
-  Example:                                                          # type: Diagnosis
+  Example:                                                          # type = Diagnosis
     id: "f2f:424098d8-242f-4d8b-9ea7-6f73b4b2ec4c"
-    identifier:                                                     # type: Identifier
+    identifier:                                                     # type = Identifier
       - value: "pdc-diagnosis:ff2f0efb-70ca-11e8-bcf1-0a2705229b82" # PDC.Diagnosis.diagnosis_id
-    subject:                                                        # type: Subject
+    subject:                                                        # type = Subject
       id: "f2f:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
-    age_at_diagnosis:                                               # type: Quantity
+    age_at_diagnosis:                                               # type = Quantity
       unit: days
       value_decimal: 26836
     year_at_diagnosis: 2008
@@ -47,9 +47,9 @@ pdc_diagnosis:
 pdc_researchproject:
   Title: PDC ResearchProject Example
   Schema: ccdh.0713.ResearchProject
-  Example:                                                          # type: ResearchProject
+  Example:                                                          # type = ResearchProject
     id: "f2f:7196cb06-6999-4e6e-9b78-e1b4233629ab"
-    identifier:                                                     # type: Identifier
+    identifier:                                                     # type = Identifier
       - value: "pdc:CPTAC-TCGA"
     research_project_type: Project
     # part_of:
@@ -63,9 +63,9 @@ pdc_researchproject:
 pdc_researchsubject:
   Title: PDC ResearchSubject Example
   Schema: ccdh.0713.ResearchSubject
-  Example:                                                          # type: ResearchSubject
+  Example:                                                          # type = ResearchSubject
     id: "f2f:1306ef67-11cd-4e72-a4db-ae05584460a1"
-    associated_subject:                                             # type: Subject
+    associated_subject:                                             # type = Subject
       id: "f2f:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
     member_of_research_project:                                     #type = ResearchProject
       research_project_type: Project
