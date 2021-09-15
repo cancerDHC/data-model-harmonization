@@ -1,0 +1,52 @@
+# Codeable Concept based approach - captures the formal code, a human readable label, and the value from the original source. All co-located in the data.
+
+---
+gdc_specimen:
+  Title: GDC Specimen Example - Codeable Concept Proposal
+  Schema: ccdh.0713.Specimen
+  Description:
+    - "CRDC-H-compliant representation of the synthetic source data example described here: https://docs.google.com/spreadsheets/d/1t02d9shmUHrYrV7IPUeAIAyY3e45AYpTN53HzjyKdag/edit#gid=920835556"
+    - Demonstrates a Codeable Concept based proposal for capturing formal coded enums and original source values, co-located with human readable values in a single Codeable Concept object in the data message.
+    - Shows only a handful of fields form the original example record, to illustrate the proposed pattern.
+    - "For easiest viewing, **TURN WORD WRAP OFF** so that comments don't run onto a new line."
+  Example:                                                        # type = Specimen
+    id: "f2f:05f1574e-2a28-50bc-bdc1-e4c6dee92fd1"                # Local uuid for the Specimen a assigned by the system in which this record lives (here, the CCDH F2F Demonstrator).
+    identifier:                                                   # type = Identifier   (Identifier is a complex data type, but we are only showing a single field from this type)  
+      - value: "target:TARGET-40-0A4I9I-01A"                      # GDC.Sample.sample_submitter_id
+      - value: "gdc-sample:9575763d-9c34-4e8e-a43a-419f5c13962f"  # GDC.Sample.sample_id
+      - value: "biosample:SAMEA1652204"                           # Proposed globally unique identifier per recommendation of the CRDC-DST 
+
+    source_material_type:                                         # type = CodeableConcept
+      coding:                                                     # type = Coding
+        - code: C3261                                             # The first Coding holds the canonical/harmonized value for this concept - an NCIT term.
+          label: Metastatic Neoplasm                              # The label of the term as defined in NCIT.
+          code_system: http://ncithesaurus.nci.nih.gov/           # URL of the NCIT system (this is likely not the url we would ultimately use)      
+          tag:                                                    # Tag indicating this to be the harmonized code for this concept
+            - harmonized
+        - code: Metastatic                                        # The second Coding holds the original code used by the source node (GDC uses a human-readable string for their code).
+          label: Metastatic                                       # The human-readable label (in GDC the code itself is human readable, so the 'label' adds no real value)
+          code_system: http://crdc.nci.nih.gov/gdc                # Made up url for the GDC system - if we wanted to provide this in the data
+          tag:                                                    # Tag indicating this to be the original source value for this concept
+          - original 
+
+
+# -------------------------------------------------------------------------------
+
+
+# Approach discussed on the internal call today (9-15) where we punt on proposing any specific representation,
+# and represent the enums as text literals with the formal code in a comment.
+# We can say there are proposals in the works for how to formally place the code and orignal value proenance in the data,
+# but the data examples are pretty unsatisfactory, and make it look like we really havent done anything useful with terminologies. 
+
+
+  Example:                                                        # type = Specimen
+    id: "f2f:05f1574e-2a28-50bc-bdc1-e4c6dee92fd1"                # Local uuid for the Specimen a assigned by the system in which this record lives (here, the CCDH F2F Demonstrator).
+    identifier:                                                   # type = Identifier   (Identifier is a complex data type, but we are only showing a single field from this type)  
+      - value: "target:TARGET-40-0A4I9I-01A"                      # GDC.Sample.sample_submitter_id
+      - value: "gdc-sample:9575763d-9c34-4e8e-a43a-419f5c13962f"  # GDC.Sample.sample_id
+      - value: "biosample:SAMEA1652204"                           # Proposed globally unique identifier per recommendation of the CRDC-DST 
+
+    source_material_type:  Metastatic Neoplasm                    # ncit:C3261
+    
+# This exampels shows just one field (source_mateiral_type)  
+# A full data example illustrating this approach is here: https://github.com/cancerDHC/data-model-harmonization/blob/master/data-examples/f2f-2021-09-data-examples/d1_harmonized_gdc_specimen_labels.yaml
