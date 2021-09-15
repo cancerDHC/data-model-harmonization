@@ -13,22 +13,23 @@
         - code: C3261                                             # The first Coding holds the canonical/harmonized value for this concept - an NCIT term.
           label: Metastatic Neoplasm                              # The label of the term as defined in NCIT.
           code_system: http://ncithesaurus.nci.nih.gov/           # URL of the NCIT system (this is likely not the url we would ultimately use)      
-          tag:                                                    # Tag indicating this to be the harmonized code for this concept
+          tag:                                                    # Tag indicating this to be the harmonized code for this concept (this is one rough proposal for one way we might indicate which code is harminized vs original)
             - harmonized
         - code: Metastatic                                        # The second Coding holds the original code used by the source node (GDC uses a human-readable string for their code).
           label: Metastatic                                       # The human-readable label (in GDC the code itself is human readable, so the 'label' adds no real value)
           code_system: http://crdc.nci.nih.gov/gdc                # Made up url for the GDC system - if we wanted to provide this in the data
-          tag:                                                    # Tag indicating this to be the original source value for this concept
+          tag:                                                    # Tag indicating this to be the original source value for this concept (this is one rough proposal for one way we might indicate which code is harminized vs original)
           - original 
 
+# Note that the 'Coding' entity has other fields not used here, that would  allow capturing things like the version of the code system, a specific value set that the code is part of.
 
 # -------------------------------------------------------------------------------
 
 
-# Approach discussed on the internal call today (9-15) where we punt on proposing any specific representation,
-# and represent the enums as text literals with the formal code in a comment.
-# We can say there are proposals in the works for how to formally place the code and orignal value proenance in the data,
-# but the data examples are pretty unsatisfactory, and make it look like we really havent done anything useful with terminologies. 
+# Approach discussed on the Internal call on 9-15-21 where we punt on proposing any specific representation for the pilot,
+# and just capture enumerated values as text literals with the formal code in a comment.
+# We can say there are proposals in the works for how to formally place the code and orignal value provenance in the data.
+# The issue with this 'punting' approach is that the data examples are pretty unsatisfactory, and make it look like we really havent done anything useful with terminologies. 
 
 
     # type = Specimen                                               
