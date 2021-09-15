@@ -67,12 +67,12 @@ gdc_specimen:
     specific_tissue_morphology: Osteosarcoma                      # 'Osteosarcoma' is formally bound to ncit:C9145 in the mapping header above, and in the enum definition in the LinkML schema.
     tumor_status_at_collection: Metastatic Neoplasm               # 'Metastatic Neoplasm' is formally bound to ncit:C3261 in the mapping header above, and in the enum definition in the LinkML schema.
     quantity_measure:                                             # type = QuantityMeasureObservation
-      - observation_type: weight                                  # 'Weight' is formally bound to ncit:C25208 in the mapping header above, and in the enum definition in the LinkML schema.
+      - observation_type: Weight                                  # 'Weight' is formally bound to ncit:C25208 in the mapping header above, and in the enum definition in the LinkML schema.
         value_quantity:                                           # type = Quantity
           value_decimal: 50
           unit: Milligram                                         # 'Milligram' is formally bound to ncit:C28253 in the mapping header above, and in the enum definition in the LinkML schema.
     creation_activity:                                            # type = SpecimenCreationActivity. Data is inlined because this is not a stand-alone indentified entity.
-      activity_type: collection from source                       # This field indicates that the 'creation' activity is the initial collection from source, rather than derivation from an existing specimen 
+      activity_type: collection from source                       # This field indicates that the 'creation' activity is the initial collection from source, rather than derivation from an existing specimen. 'Collection from source' is formally bound to ncit:C93435 in the mapping header above, and in the enum definition in the LinkML schema.
       date_ended:                                                 # type = TimePoint
         offset_from_index:                                        # type = Quantity 
           value_decimal: 238   
@@ -86,7 +86,7 @@ gdc_specimen:
       collection_site:                                            # type =  BodySite
         site: Lung                                                # 'Lung' is formally bound to ncit:C12468 in the mapping header above, and in the enum definition in the LinkML schema.
       execution_time_observation:                                 # type = ExecutionTimeObservation
-        - observation_type: time_between_excision_and_freezing
+        - observation_type: time_between_excision_and_freezing    # To Do: find or create a formal code for this concept
           value_quantity:                                         # type = Quantity
             value_decimal: 15      
             unit: Minute                                          # 'Minute' is formally bound to ncit:C48154 in the mapping header above, and in the enum definition in the LinkML schema.
@@ -160,21 +160,21 @@ gdc_diagnosis:
       - value: "gdc-diagnosis:21a0cbbb-c778-4b2c-cd54-8a5047a3a077"  # GDC.Diagnosis.diagnosis_id
       - value: "target:TARGET-40-0A4I9I-01D"                         # GDC.Diagnosis.submitter_id
 
-    subject:                                                         # type: Subject
+    subject:                                                         # type = Subject
       id: "ccdh:17029fd8-cd05-4089-8da3-52795823a647"       
 
     age_at_diagnosis:                                                # type = Quantity
       value_decimal: 32518 
       unit: Day                                                      # 'Day' is formally bound to ncit:C25301 in the mapping header above, and in the enum definition in the LinkML schema.
 
-    condition: Osteosarcoma                                          # 'Osteosarcoma' is formally bound to ncit:C9145 in the mapping header abbove, and in the enum definition in the LinkML schema
+    condition: Osteosarcoma                                          # 'Osteosarcoma' is formally bound to ncit:C9145 in the mapping header above, and in the enum definition in the LinkML schema
 
     primary_site:                                                    # type = BodySite
-      - site: Bone                                                   # 'Bone'' is formally bound to ncit:C12366 in the mapping header above, and in the enum definition in the LinkML schema.     
+      - site: Bone                                                   # 'Bone' is formally bound to ncit:C12366 in the mapping header above, and in the enum definition in the LinkML schema.     
 
     stage:                                                           # type = CancerStageObservationSet
       - method_type:
-          - AJCC Staging Manual 7th Edition                          # 'AJCC Cancer Staging Manual 7th Edition' is formally bound to ncit:C125755 in the mapping header abbove, and in the enum definition in the LinkML schema. 
+          - AJCC Staging Manual 7th Edition                          # 'AJCC Cancer Staging Manual 7th Edition' is formally bound to ncit:C125755 in the mapping header above, and in the enum definition in the LinkML schema. 
         observations:                                                # type = CancerStageObservation - one of many possible individual Stage determinations that can comprise a single CancerStageObservationSet (here just an 'Overall' assessment, but may also include T, N, and M assessments).
           - observation_type: Overall                                # 'Overall' is formally bound to ncit:C25605 in the mapping header above, and in the enum definition in the LinkML schema.     
             value_enum: Stage IVA                                    # 'Stage IVA' is formally bound to ncit:C27979 in the mapping header above, and in the enum definition in the LinkML schema .
