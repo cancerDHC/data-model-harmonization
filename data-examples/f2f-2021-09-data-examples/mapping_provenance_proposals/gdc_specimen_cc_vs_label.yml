@@ -9,16 +9,17 @@
       - value: "biosample:SAMEA1652204"                           # Proposed globally unique identifier per recommendation of the CRDC-DST 
 
     source_material_type:                                         # type = CodeableConcept
-      coding:                                                     # type = Coding
-        - code: C3261                                             # The first Coding holds the canonical/harmonized value for this concept - an NCIT term.
+      - coding:                                                   # type = Coding
+          code: C3261                                             # The first Coding holds the canonical/harmonized value for this concept - an NCIT term.
           label: Metastatic Neoplasm                              # The label of the term as defined in NCIT.
           code_system: http://ncithesaurus.nci.nih.gov/           # URL of the NCIT system (this is likely not the url we would ultimately use)      
           tag:                                                    # Tag indicating this to be the harmonized code for this concept (this is one rough proposal for one way we might indicate which code is harminized vs original)
             - harmonized
-        - code: Metastatic                                        # The second Coding holds the original code used by the source node (GDC uses a human-readable string for their code).
+      - coding:                                                   # type = Coding 
+          code: Metastatic                                        # The second Coding holds the original code used by the source node (GDC uses a human-readable string for their code).
           label: Metastatic                                       # The human-readable label (in GDC the code itself is human readable, so the 'label' adds no real value)
           code_system: http://crdc.nci.nih.gov/gdc                # Made up url for the GDC system - if we wanted to provide this in the data
-          tag:                                                    # Tag indicating this to be the original source value for this concept (this is one rough proposal for one way we might indicate which code is harminized vs original)
+          tag:                                                    # Tag indicating this to be the original source value for this concept (this is one rough proposal for one way we might indicate which code is harmoinized vs original)
           - original 
 
 # Note that the 'Coding' entity has other fields not used here, that would  allow capturing things like the version of the code system, a specific value set that the code is part of.
