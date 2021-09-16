@@ -1,0 +1,132 @@
+---
+gdc_subject:
+  Title: GDC Subject Example
+  Schema: ccdh.0713cc.Subject
+  Example:                                                          # type = Subject
+    id: "f2f:17029fd8-cd05-4089-8da3-52795823a647"
+    identifier:                                                     # type = Identifier
+      - value: "gdc-cases:18e0e996-8f23-4f53-94a5-dde38b550863"     # GDC.Cases.case_id     
+      - value: "tcga:TCGA-13-1409"                                  # GDC.Cases.submitter_id
+    ethnicity:
+      coding:
+        - code: C41222
+          label: Not Hispanic or Latino
+          system: https://ncithesaurus.nci.nih.gov/
+          tag:
+            - harmonized
+        - code: not hispanic or latino
+          label: not hispanic or latino
+          system: http://crdc.nci.nih.gov/gdc
+    # ethnicity: Not Hispanic or Latino                               # 'Not Hispanic or Latino' is formally bound to NCIT:C41222 in the enum definition in the LinkML schema
+    race:
+      - coding:
+        - code: C41261
+          label: White
+          system: https://ncithesaurus.nci.nih.gov/
+        - code: white
+          label: white
+          system: http://crdc.nci.nih.gov/gdc
+    # race:
+    #   - White                                                       # 'White' is formally bound to NCIT:C41261 in the enum definition in the LinkML schema
+    sex:
+      coding:
+        - code: C16576
+          label: Female
+          system: https://ncithesaurus.nci.nih.gov/
+        - code: female
+          label: female
+          system: http://crdc.nci.nih.gov/gdc
+    # sex: Female                                                     # 'Female' is formally bound to NCIT:C16576 in the enum definition in the LinkML schema
+    vital_status:
+      coding:
+        - code: C28554
+          label: Dead
+          system: https://ncithesaurus.nci.nih.gov/
+        - code: Dead
+          label: Dead
+          system: http://crdc.nci.nih.gov/gdc
+    # vital_status: Dead                                              # 'Dead' is formally bound to NCIT:C28554 in the enum definition in the LinkML schema
+    species:
+      coding:
+        - code: C14225
+          label: Human
+          system: https://ncithesaurus.nci.nih.gov/
+    # species: Homo sapiens
+    year_of_birth: 1935
+    age_at_death:                                                   # type = Quantity
+      unit: days
+      value_decimal: 28578
+
+---
+gdc_diagnosis:
+  Title: GDC Diagnosis Example
+  Schema: ccdh.0713cc.Diagnosis
+  Example:                                                          # type = Diagnosis
+    id: "f2f:fe908e53-4b99-4150-94d2-b086575cde41"
+    identifier:                                                     # type = Identifier
+      - value: "gdc-diagnosis:6b0f33e6-884d-5a93-8335-9f55569790a7" # GDC.Diagnosis.diagnosis_id
+    morphology: 8441/3
+    primary_site:                                                   # type = BodySite
+      - site: Ovary                                                 # 'Ovary' is formally bound to NCIT:C12404 in the enum definition in the LinkML schema
+    stage:                                                          # type = CancerStageObservationSet
+      - method_type:
+        - FIGO staging system                                       # type = CancerStageObservation
+        observations:
+          - observation_type: Overall
+            value_enum: Stage IIIC
+    # condition: Serous Cystadenocarcinoma                            # 'Serous Cystadenocarcinoma' is formally bound to NCIT:C3778 in the enum definition in the LinkML schema
+    condition:
+      coding:
+        - code: C3778
+          label: Serous Cystadenocarcinoma
+          system: https://ncithesaurus.nci.nih.gov/
+        - code: Serous cystadenocarcinoma, NOS                      # GDC.Diagnosis.primary_diagnosis
+          label: Serous cystadenocarcinoma, NOS
+          system: http://crdc.nci.nih.gov/gdc
+        - code: C56.9                                               # GDC.Diagnosis.icd_10_code
+          label: C56.9                                              # TODO: change this to the ICD preferred term for C56.9
+          system: http://crdc.nci.nih.gov/gdc                       # TODO: change this to the ICD URL
+    year_at_diagnosis: 2008
+    age_at_diagnosis:                                               # type = Quantity
+      unit: days
+      value_decimal: 26836
+    subject:                                                        # type = Subject
+      id: "f2f:17029fd8-cd05-4089-8da3-52795823a647"
+
+---
+gdc_researchProject:
+  Title: GDC ResearchProject Example
+  Schema: ccdh.0713.ResearchProject
+  Example:                                                          # type = ResearchProject
+    id: "f2f:ff364424-8506-41c4-b5e0-410339462560"
+    identifier:                                                     # type = Identifier
+        # NB we have this mapped to ResearchProject.id which seems incorrect.  this looks like a business id to me
+      - value: "gdc:TCGA-OV"                                        # GDC.Project.project_id 
+    name: Ovarian Serous Cystadenocarcinoma
+    research_project_type: Project
+    part_of:                                                        # type = ResearchProject
+      - id: "f2f:6b0cc2d2-2fec-4049-8ac4-77edb6d914f8"
+        identifier:                                                 # type = Identifier
+        - value: "gdc:b80aa962-9650-5110-b3eb-bd087da808db"
+        - value: "dbgap:phs000178"                                  # GDC.Project.dbgap_accession_number
+        research_project_type: Program
+        name: TCGA
+
+---
+gdc_researchsubject:
+  Title: GDC ResearchSubject Example
+  Schema: ccdh.0713.ResearchSubject
+  # type = ResearchSubject
+  Example:
+    id: "f2f:bceb9b07-40bc-4d3e-a65a-6f3cc7e44827"
+    # Below is an association by reference only
+    associated_subject:                                             # type = Subject
+      id: "f2f:17029fd8-cd05-4089-8da3-52795823a647"
+    # Below is an association by inline inclusion
+    member_of_research_project:                                     # type = ResearchProject
+      research_project_type: Project
+      id: "f2f:ff364424-8506-41c4-b5e0-410339462560"
+      identifier:                                                   # type = Identifier
+        # NB we have this mapped to ResearchProject.id which seems incorrect.  this looks like a business id to me
+        - value: "gdc:TCGA-OV"                                      # GDC.Project.project_id 
+      name: Ovarian Serous Cystadenocarcinoma

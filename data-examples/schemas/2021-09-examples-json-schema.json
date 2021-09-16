@@ -837,13 +837,13 @@
               "description": "The code system where the code is defined.",
               "type": "string"
             },
-            "systemURL": {
-              "description": "A URL where the code system can be found.",
-              "type": "string"
-            },
-            "systemVersion": {
+            "system_version": {
               "description": "The version of the code system.",
               "type": "string"
+            },
+            "tag": {
+              "description": "An array of tags.",
+              "type": "array"
             }
           },
           "required": [
@@ -13548,13 +13548,13 @@
               "description": "The code system where the code is defined.",
               "type": "string"
             },
-            "systemURL": {
-              "description": "A URL where the code system can be found.",
-              "type": "string"
-            },
-            "systemVersion": {
+            "system_version": {
               "description": "The version of the code system.",
               "type": "string"
+            },
+            "tag": {
+              "description": "An array of tags.",
+              "type": "array"
             }
           },
           "required": [
@@ -15372,13 +15372,13 @@
               "description": "The code system where the code is defined.",
               "type": "string"
             },
-            "systemURL": {
-              "description": "A URL where the code system can be found.",
-              "type": "string"
-            },
-            "systemVersion": {
+            "system_version": {
               "description": "The version of the code system.",
               "type": "string"
+            },
+            "tag": {
+              "description": "An array of tags.",
+              "type": "array"
             }
           },
           "required": [
