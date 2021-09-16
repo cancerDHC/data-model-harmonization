@@ -1,7 +1,7 @@
 ---
 gdc_specimen:
   Title: GDC Specimen Example - Sept 2021 F2F Demonstrator 1
-  Schema: ccdh.0713.Specimen
+  Schema: ccdh.0713cc.Specimen
   Description:
     - "CRDC-H-compliant representation of the synthetic source data example described here: https://docs.google.com/spreadsheets/d/1t02d9shmUHrYrV7IPUeAIAyY3e45AYpTN53HzjyKdag/edit#gid=920835556"
     - "**FOR EASIEST VIEWING TURN WORD WRAP OFF SO THAT COMMENTS DON'T RUN ONTO A NEW LINE**"
@@ -17,14 +17,13 @@ gdc_specimen:
 
     specimen_type:                                                # type = CodeableConcept
       text: Initial Sample                                        # The CRDC-H preferred text representation for this concept (for purposes of display to the CRDC community)
-      - coding:                                                   # type = Coding
-          code: C84517                                            # The first Coding holds the harmonized code for this concept - the code for an NCIT term.
+      coding:                                                     # type = Coding
+        - code: C84517                                            # The first Coding holds the harmonized code for this concept - the code for an NCIT term.
           label: Fresh Specimen                                   # The preferred label of the term from NCIT.
           code_system: http://ncithesaurus.nci.nih.gov/           # A URL for the NCIT system (this is likely not the url we would ultimately use)      
           tag:                                                    # A tag indicating this to be the harmonized code for this concept
             - harmonized
-      - coding:                                                   # type = Coding 
-          code: Sample                                            # The second Coding holds the original code used by the source node. GDC uses a meaningful string for their code.
+        - code: Sample                                            # The second Coding holds the original code used by the source node. GDC uses a meaningful string for their code.
           label: Sample                                           # The human-readable label (implicitly the same as the code which is human-readable in GDC) 
           code_system: http://crdc.nci.nih.gov/gdc                # A URL for the GDC system (we made this up - t.b.d. what an official URL would look like)
           tag:                                                    # Tag indicating this to be the original source value for this concept.
@@ -34,54 +33,50 @@ gdc_specimen:
     source_subject:                                               # type = Subject.  
       id: "f2f:43bcd221-80ce-508c-a7bc-7f42c31c262d"              # Local uuid assigned by this system for the Subject. Respresentation of data for this Subject instnace is below.
     source_material_type:                                         # type = CodeableConcept (see comments on the 'sample_type' element above for a detailed explanation of this data type)
-      - coding:                                                   # type = Coding (holds the harmonized code)
-          code: C3261                                             
+      coding:                                                     # type = Coding
+        - code: C3261                                             
           label: Metastatic Neoplasm                              
           code_system: http://ncithesaurus.nci.nih.gov/                
           tag:                                                    
             - harmonized
-      - coding:                                                   # type = Coding (holds the original source code)
-          code: Metastatic                                        
+        - code: Metastatic                                        
           label: Metastatic                                       
           code_system: http://crdc.nci.nih.gov/gdc                
           tag:                                                    
             - original 
     general_tissue_pathology:                                     # type = CodeableConcept 
-      - coding:                                                   # type = Coding (holds the harmonized code)
-          code: C18009                                            
+      coding:                                                     # type = Coding 
+        - code: C18009                                            
           label: Tumor Tissue                                     
           code_system: http://ncithesaurus.nci.nih.gov/              
           tag:                                                    
             - harmonized
-      - coding:                                                   # type = Coding (holds the original source code)
-          code: Tumor                                             
+        - code: Tumor                                             
           label: Tumor                                            
           code_system: http://crdc.nci.nih.gov/gdc                
           tag:                                                    
             - original 
     specific_tissue_pathology:                                    # type = CodeableConcept 
-      - coding:                                                   # type = Coding (holds the harmonized code)
-          code: C9145                                            
+      coding:                                                     # type = Coding
+        - code: C9145                                            
           label: Osteosarcoma                                     
           code_system: http://ncithesaurus.nci.nih.gov/              
           tag:                                                    
             - harmonized
-      - coding:                                                   # type = Coding (holds the original source code)
-          code: Osteosarcoma (OS)                                             
+        - code: Osteosarcoma (OS)                                             
           label: Osteosarcoma (OS)                                            
           code_system: http://crdc.nci.nih.gov/gdc                
           tag:                                                    
             - original 
 
     tumor_status_at_collection:                                   # type = CodeableConcept 
-      - coding:                                                   # type = Coding (holds the harmonized code)
-          code: C3261                                            
+      coding:                                                     # type = Coding 
+        - code: C3261                                            
           label: Metastatic Neoplasm                                     
           code_system: http://ncithesaurus.nci.nih.gov/              
           tag:                                                    
             - harmonized
-      - coding:                                                   # type = Coding (holds the original source code)
-          code: Metastatic                                            
+        - code: Metastatic                                            
           label: Metastatic                                          
           code_system: http://crdc.nci.nih.gov/gdc                
           tag:                                                    
@@ -89,8 +84,8 @@ gdc_specimen:
  
     quantity_measure:                                             # type = QuantityMeasureObservation
       - observation_type:                                         # type = CodeableConcept 
-          - coding:                                               # type = Coding (Holds the harmonized code. This Codeable Concept does not contain a second Coding for the original source value because the weight of a specimen was captured in a dedicated attribute, not as a key-vaule pair as we do here)
-              code: C25208                                            
+          coding:                                                 # type = Coding (This Codeable Concept does not contain a second Coding for the original source value because the weight of a specimen was captured in a dedicated attribute, not as a key-vaule pair as we do here)
+            - code: C25208                                            
               label: Weight                                     
               code_system: http://ncithesaurus.nci.nih.gov/              
               tag:                                               
@@ -98,8 +93,8 @@ gdc_specimen:
         value_quantity:                                           # type = Quantity
           value_decimal: 50
           unit:                                                   # type = CodeableConcept
-            - coding:                                             # type = Coding (Holds the harmonized code. Unit of measure is not exlicitly declared in the source data, therefore there is no second Coding here to capture the original source code)
-                code: C28253                                            
+            coding:                                               # type = Coding (Unit of measure is not exlicitly declared in the source data, therefore there is no second Coding here to capture the original source code)
+              - code: C28253                                            
                 label: Milligram                                     
                 code_system: http://ncithesaurus.nci.nih.gov/              
                 tag:                                              
@@ -108,8 +103,8 @@ gdc_specimen:
     creation_activity:                                            # type = SpecimenCreationActivity. Data for this object are inlined because this is not a stand-alone, indentified entity.
       activity_type:                                              # type = CodeableConcept. This field indicates that the 'creation' activity is the initial collection from source, rather than derivation from an existing specimen.
         text: collection from source                              # Here we use the 'text' field to provide a preferred label for this concept for the CRDC community.
-        - coding:                                                 # type = Coding 
-            code: C93435                                            
+        coding:                                                   # type = Coding 
+          - code: C93435                                            
             label: Performed Specimen Collection                                     
             code_system: http://ncithesaurus.nci.nih.gov/              
             tag:                                                  
