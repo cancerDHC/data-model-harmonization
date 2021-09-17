@@ -41,5 +41,5 @@
 
     source_material_type:  Metastatic Neoplasm                    # ncit:C3261
     
-# This exampels shows just one field (source_mateiral_type)  
+# This example shows just one field (source_material_type)  
 # A full data example illustrating this approach is here: https://github.com/cancerDHC/data-model-harmonization/blob/master/data-examples/f2f-2021-09-data-examples/d1_harmonized_gdc_specimen_labels.yaml

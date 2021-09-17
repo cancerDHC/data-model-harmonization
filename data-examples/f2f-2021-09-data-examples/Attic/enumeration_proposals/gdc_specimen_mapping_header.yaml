@@ -15,9 +15,9 @@ gdc_specimen:
               - Project: ncit:C47885
       - source_material_type: 
           - Metastatic Neoplasm: ncit:C3261                     
-      - general_tissue_morphology: 
+      - general_tissue_pathology: 
           - Tumor Tissue: ncit:C18009                      
-      - specific_tissue_morphology: 
+      - specific_tissue_pathology: 
           - Osteosarcoma: ncit:C9145                    
       - tumor_status_at_collection: 
           - Metastatic Neoplasm: ncit:C3261 
@@ -63,8 +63,8 @@ gdc_specimen:
     source_subject:                                               # type = Subject.   This is a minimal inlined Subject instance. Demonstrator 2 provides a richer Subject example. Future releases we will include a formal model for defining references.
       id: "f2f:43bcd221-80ce-508c-a7bc-7f42c31c262d"              # Local uuid assigned by this system for the Subject. Respresentation of data for this Subject instnace is below.
     source_material_type: Metastatic Neoplasm                     # 'Metastatic Neoplasm' is formally bound to ncit:C3261 in the mapping header above, and in the enum definition in the LinkML schema .
-    general_tissue_morphology: Tumor Tissue                       # 'Tumor Tissue' is formally bound to ncit:C18009 in the mapping header above, and in the enum definition in the LinkML schema.
-    specific_tissue_morphology: Osteosarcoma                      # 'Osteosarcoma' is formally bound to ncit:C9145 in the mapping header above, and in the enum definition in the LinkML schema.
+    general_tissue_pathology: Tumor Tissue                       # 'Tumor Tissue' is formally bound to ncit:C18009 in the mapping header above, and in the enum definition in the LinkML schema.
+    specific_tissue_pathology: Osteosarcoma                      # 'Osteosarcoma' is formally bound to ncit:C9145 in the mapping header above, and in the enum definition in the LinkML schema.
     tumor_status_at_collection: Metastatic Neoplasm               # 'Metastatic Neoplasm' is formally bound to ncit:C3261 in the mapping header above, and in the enum definition in the LinkML schema.
     quantity_measure:                                             # type = QuantityMeasureObservation
       - observation_type: Weight                                  # 'Weight' is formally bound to ncit:C25208 in the mapping header above, and in the enum definition in the LinkML schema.
