@@ -10,9 +10,9 @@ pdc_specimen:
   Example:                                                        # type = Specimen
     id: "f2f:ecc2bf49-204d-11e9-b7f8-0a80fada099c"                # Local uuid for the Specimen a assigned by the system in which this record lives (here, the CCDH F2F Demonstrator, hence the 'f2f' prefix).
     identifier:                                                   # type = Identifier   (Identifier is a complex data type, but we are only showing a single field from this type)  
-      - value: "tcga-coad:C3N-01648-08"                           # PDC.Sample.sample_submitter_id
-      - value: "pdc-sample:ecc2bf49-204d-11e9-b7f8-0a80fada099c"  # PDC.Sample.sample_id
-      - value: "biosample:SAMEA1476035"                           # Proposed globally unique identifier format, per recommendation of the CRDC-DST 
+      - value: "tcga-coad:C3N-01648-08"                           # PDC.Sample.sample_submitter_id (specified here as a CURIE, where the prefix indicates the system that assigned it)
+      - value: "pdc-sample:ecc2bf49-204d-11e9-b7f8-0a80fada099c"  # PDC.Sample.sample_id (specified here as a CURIE, where the prefix indicates the system that assigned it)
+      - value: "biosample:SAMEA1476035"                           # Proposed globally unique identifier format, per recommendation of the CRDC-DST (specified here as a CURIE, where the prefix indicates the system that assigned it)
 
     specimen_type:                                                # type = CodeableConcept
       coding:                                                     # type = Coding
@@ -27,7 +27,7 @@ pdc_specimen:
           tag:                                                    # A 'tag' indicating this to be the code for this concept in the original source data.
             - original 
     associated_project:                                           # type = ResearchProject.   
-      id: "f2f:69886602-a4f1-4ad4-ba56-a0e031c2e294"              # Local uuid assigned by this system for the Research Project. The Project instance is represented separately later in this document.
+      id: "f2f:69886602-a4f1-4ad4-ba56-a0e031c2e294"              # Local uuid assigned by this system for the Research Project. The Project instance is represented separately later in this document. We will define a formal way to specify references in the next phase of work.
     source_subject:                                               # type = Subject  
       id: "f2f:55bad781-96ce-537c-ab5c-7492c31c836c"              # Local uuid assigned by this system for the Subject. The Subject instance is represented separately later in this document.
     source_material_type:                                         # type = CodeableConcept (see comments on the 'specimen_type' field above for a detailed explanation of this data object's content)
@@ -203,7 +203,7 @@ pdc_specimen:
     Example:                                                        # type: Subject
       id: "f2f:55bad781-96ce-537c-ab5c-7492c31c836c"                # Local uuid assigned by this system for the Subject
       identifier:                                                   # type: Identifier
-        - value: "pdc-cases:3073d082-63d8-11e8-bcf1-0a2705229b82"   # PDC.Cases.case_id     
+        - value: "pdc-case:3073d082-63d8-11e8-bcf1-0a2705229b82"   # PDC.Cases.case_id     
         - value: "tcga-coad:TCGA-AA-3518"                           # PDC.Cases.submitter_id
         - value: "crdc:su0000002"                                   # Proposed globally unique identifier per recommendation of the CRDC-DST 
 
