@@ -1,27 +1,27 @@
 ---
-gdc_subject:
-  Title: GDC Subject Example - Sept 2021 F2F Demonstrator 2
+pdc_subject:
+  Title: PDC Subject Example - Sept 2021 F2F Demonstrator 2
   Schema: ccdh.0713cc.Subject
   Description:
-    - "CRDCH-compliant representation of the GDC source data example described here: https://docs.google.com/spreadsheets/d/14lWLDD7iyJG0G57m6BgWYIeqrxK04P3qQRwxziqEz1A/edit#gid=0"
+    - "CRDCH-compliant representation of the PDC source data example described here: https://docs.google.com/spreadsheets/d/14lWLDD7iyJG0G57m6BgWYIeqrxK04P3qQRwxziqEz1A/edit#gid=0"
     - "**FOR EASIEST VIEWING TURN WORD WRAP OFF SO THAT COMMENTS DON'T RUN ONTO A NEW LINE**"
     - "In this example enumerated values are captured using a CodeableConcept object which bundles one or more Coding objects, each holding a single concept code and supporting metadata."
   Example:                                                                  # type = Subject
-    id: "f2f:17029fd8-cd05-4089-8da3-52795823a647"                          # Local uuid for the Subject as assigned by the system in which this record lives (here, the CCDH F2F Demonstrator, hence the 'f2f' prefix).
+    id: "f2f:c59cec71-88b1-439e-b7c5-b2498eaaca3a"                          # Local uuid for the Subject as assigned by the system in which this record lives (here, the CCDH F2F Demonstrator, hence the 'f2f' prefix).
     identifier:                                                             # type = Identifier
-      - value: "gdc-case:18e0e996-8f23-4f53-94a5-dde38b550863"              # GDC.Cases.case_id
-      - value: "tcga:TCGA-13-1409"                                          # GDC.Cases.submitter_id
+      - value: "pdc-case:3a36a497-63d7-11e8-bcf1-0a2705229b82"              # PDC.Cases.case_id
+      - value: "tcga:TCGA-13-1409"                                          # PDC.Cases.case_submitter_id
       - value: "crdc:su0000005"                                             # Proposed globally unique identifier per recommendation of the CRDC-DST 
     ethnicity:                                                              # type = CodeableConcept
       coding:                                                               # type = Coding
         - code: C41222                                                      # The first Coding holds the harmonized code for this concept - the code for an NCIT term.
           label: Not Hispanic or Latino                                     # The preferred label of the term from NCIT.
-          system: https://ncithesaurus.nci.nih.gov/                         # A URL for the NCIT system (this is likely not the url we would ultimately use) 
+          system: https://ncithesaurus.nci.nih.gov/                         # A URL for the NCIT system (this is likely not the url we would ultimately use)
           tag:                                                              # A tag indicating this to be the harmonized code for this concept
             - harmonized
-        - code: not hispanic or latino                                      # The second Coding holds the original code used by the source node.
-          label: not hispanic or latino                                     # The human-readable label (implicitly the same as the code, which are human-readable in GDC) 
-          system: http://crdc.nci.nih.gov/gdc                               # A URL for the GDC system (we made this up - t.b.d. what an official URL would look like)
+        - code: Not Hispanic or Latino                                      # The second Coding holds the original code used by the source node.
+          label: Not Hispanic or Latino                                     # The human-readable label (implicitly the same as the code, which are human-readable in GDC) 
+          system: http://crdc.nci.nih.gov/pdc                               # A URL for the PDC system (we made this up - t.b.d. what an official URL would look like)
           tag:                                                              # A 'tag' indicating this to be the code for this concept in the original source data.
             - original
     race:                                                                   # type = CodeableConcept
@@ -31,9 +31,9 @@ gdc_subject:
           system: https://ncithesaurus.nci.nih.gov/
           tag:
             - harmonized
-        - code: white
-          label: white
-          system: http://crdc.nci.nih.gov/gdc
+        - code: White
+          label: White
+          system: http://crdc.nci.nih.gov/pdc
           tag:
             - original
     sex:                                                                    # type = CodeableConcept
@@ -43,9 +43,9 @@ gdc_subject:
           system: https://ncithesaurus.nci.nih.gov/
           tag:
             - harmonized
-        - code: female
-          label: female
-          system: http://crdc.nci.nih.gov/gdc
+        - code: Female
+          label: Female
+          system: http://crdc.nci.nih.gov/pdc
           tag:
             - original
     vital_status:                                                           # type = CodeableConcept
@@ -57,9 +57,10 @@ gdc_subject:
             - harmonized
         - code: Dead
           label: Dead
-          system: http://crdc.nci.nih.gov/gdc
+          system: http://crdc.nci.nih.gov/pdc
           tag:
             - original
+    year_of_birth: 1935
     species:                                                                # type = CodeableConcept
       coding:                                                               # type = Coding
         - code: C14225
@@ -67,7 +68,6 @@ gdc_subject:
           system: https://ncithesaurus.nci.nih.gov/
           tag:
             - harmonized
-    year_of_birth: 1935
     age_at_death:                                                           # type = Quantity
       value_decimal: 28578
       unit:                                                                 # type = CodeableConcept (This Codeable Concept does not contain a second Coding for the original source code because unit of measure is not explicitly declared in the source data - so there is no original value.)
@@ -77,15 +77,43 @@ gdc_subject:
             system: http://ncithesaurus.nci.nih.gov/              
             tag:                                              
               - harmonized  
-
+    
 ---
-gdc_diagnosis:
-  Title: GDC Diagnosis Example - Sept 2021 F2F Demonstrator 2
+pdc_diagnosis:
+  Title: PDC Diagnosis Example - Sept 2021 F2F Demonstrator 2
   Schema: ccdh.0713cc.Diagnosis
   Example:                                                                  # type = Diagnosis
-    id: "f2f:fe908e53-4b99-4150-94d2-b086575cde41"
+    id: "f2f:424098d8-242f-4d8b-9ea7-6f73b4b2ec4c"
     identifier:                                                             # type = Identifier
-      - value: "gdc-diagnosis:6b0f33e6-884d-5a93-8335-9f55569790a7"         # GDC.Diagnosis.diagnosis_id
+      - value: "pdc-diagnosis:ff2f0efb-70ca-11e8-bcf1-0a2705229b82"         # PDC.Diagnosis.diagnosis_id
+      - value: "tcga:TCGA-13-1409-DX"                                       # PDC.Diagnosis.diagnosis_submitter_id
+    subject:                                                                # type = Subject
+      id: "f2f:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
+    age_at_diagnosis:                                                       # type = Quantity
+      value_decimal: 26836
+      unit:                                                                 # type = CodeableConcept (This Codeable Concept does not contain a second Coding for the original source code because unit of measure is not explicitly declared in the source data - so there is no original value.)
+        coding:                                                             # type = Coding
+          - code: C25301                                            
+            label: Day                                     
+            system: http://ncithesaurus.nci.nih.gov/              
+            tag:                                              
+              - harmonized  
+      # unit: days
+    # year_at_diagnosis: 2008
+    diagnosis_date:
+      date_time: 2008
+    condition:                                                              # type = CodeableConcept
+      coding:                                                               # type = Coding
+        - code: C3778
+          label: Serous Cystadenocarcinoma
+          system: https://ncithesaurus.nci.nih.gov/
+          tag:
+            - harmonized
+        - code: Serous cystadenocarcinoma, NOS                              # GDC.Diagnosis.primary_diagnosis
+          label: Serous cystadenocarcinoma, NOS
+          system: http://crdc.nci.nih.gov/pdc
+          tag:
+            - original
     morphology:                                                             # type = CodeableConcept
       coding:                                                               # type = Coding
         - code: C3778
@@ -108,7 +136,7 @@ gdc_diagnosis:
                 - harmonized
             - code: Ovary
               label: Ovary
-              system: http://crdc.nci.nih.gov/gdc
+              system: http://crdc.nci.nih.gov/pdc
               tag:
                 - original
     stage:                                                                  # type = CancerStageObservationSet
@@ -136,50 +164,19 @@ gdc_diagnosis:
                   - harmonized
               - code: Stage IIIC
                 label: Stage IIIC
-                system: http://crdc.nci.nih.gov/gdc
+                system: http://crdc.nci.nih.gov/pdc
                 tag:
                   - original
-    condition:                                                              # type = CodeableConcept
-      coding:                                                               # type = Coding
-        - code: C3778
-          label: Serous Cystadenocarcinoma
-          system: https://ncithesaurus.nci.nih.gov/
-          tag:
-            - harmonized
-        - code: Serous cystadenocarcinoma, NOS                              # GDC.Diagnosis.primary_diagnosis
-          label: Serous cystadenocarcinoma, NOS
-          system: http://crdc.nci.nih.gov/gdc
-          tag:
-            - original
-        - code: C56.9                                                       # GDC.Diagnosis.icd_10_code
-          label: Malignant neoplasm of unspecified ovary                    # This is the ICD-10 preferred term for C56.9
-          system: http://who.int/icd10/
-          tag:
-            - original
-    diagnosis_date:
-      date_time: 2008
-    age_at_diagnosis:                                                       # type = Quantity
-      value_decimal: 26836
-      unit:                                                                 # type = CodeableConcept (This Codeable Concept does not contain a second Coding for the original source code because unit of measure is not explicitly declared in the source data - so there is no original value.)
-        coding:                                                             # type = Coding
-          - code: C25301                                            
-            label: Day                                     
-            system: http://ncithesaurus.nci.nih.gov/              
-            tag:                                              
-              - harmonized  
-    subject:                                                                # type = Subject
-      id: "f2f:17029fd8-cd05-4089-8da3-52795823a647"
 
 ---
-gdc_researchProject:
-  Title: GDC ResearchProject Example - Sept 2021 F2F Demonstrator 2
+pdc_researchproject:
+  Title: PDC ResearchProject Example - Sept 2021 F2F Demonstrator 2
   Schema: ccdh.0713cc.ResearchProject
   Example:                                                                  # type = ResearchProject
-    id: "f2f:ff364424-8506-41c4-b5e0-410339462560"                          # Local uuid assigned by this system for the ResearchProject
+    id: "f2f:7196cb06-6999-4e6e-9b78-e1b4233629ab"
     identifier:                                                             # type = Identifier
-      - value: "gdc-project:TCGA-OV"                                        # GDC.Project.project_id 
-      - value: "crdc:pj1000015"                                             # Proposed globally unique identifier per recommendation of the CRDC-DST 
-    name: Ovarian Serous Cystadenocarcinoma
+      - value: "pdc-project:CPTAC-TCGA"
+      - value: "crdc:pj1000017"                                             # Proposed globally unique identifier per recommendation of the CRDC-DST 
     research_project_type:                                                  # type = CodeableConcept
       coding:                                                               # type = Coding
         - code: C47885
@@ -187,33 +184,31 @@ gdc_researchProject:
           system: http://ncithesaurus.nci.nih.gov/
           tag:
             - harmonized
-    part_of:                                                                # type = ResearchProject
-      - id: "f2f:6b0cc2d2-2fec-4049-8ac4-77edb6d914f8"                      # Local uuid assigned by this system for the Research Project
-        identifier:                                                         # type = Identifier
-          - value: "gdc-program:b80aa962-9650-5110-b3eb-bd087da808db"
-          - value: "dbgap:phs000178"                                          # GDC.Project.dbgap_accession_number
-          - value: "crdc:pg1000013"                                           # Proposed globally unique identifier per recommendation of the CRDC-DST
-        research_project_type:                                              # type = CodeableConcept
+    name: CPTAC2 Retrospective
+    part_of:
+      - research_project_type:                                              # type = CodeableConcept
           coding:                                                           # type = Coding
-            - code: C52647
-              label: Program
-              system: http://ncithesaurus.nci.nih.gov/
-              tag:
-                - harmonized
-        name: TCGA
+          - code: C52647
+            label: Program
+            system: http://ncithesaurus.nci.nih.gov/
+            tag:
+              - harmonized
+        id: "f2f:c19a8e03-f674-4124-b8ac-2222e08de978"
+        identifier:
+          - value: "pdc-program:10251935-5540-11e8-b664-00a098d917f8"
+          - value: "pdc-program:Clinical Proteomic Tumor Analysis Consortium"
+          - value: "crdc:pg1000023"                                         # Proposed globally unique identifier per recommendation of the CRDC-DST
+        name: Clinical Proteomic Tumor Analysis Consortium
 
 ---
-gdc_researchsubject:
-  Title: GDC ResearchSubject Example - Sept 2021 F2F Demonstrator 2
+pdc_researchsubject:
+  Title: PDC ResearchSubject Example - Sept 2021 F2F Demonstrator 2
   Schema: ccdh.0713cc.ResearchSubject
   Example:                                                                  # type = ResearchSubject
-    id: "f2f:bceb9b07-40bc-4d3e-a65a-6f3cc7e44827"
-    # Below is an association by reference only
+    id: "f2f:1306ef67-11cd-4e72-a4db-ae05584460a1"
     associated_subject:                                                     # type = Subject
-      id: "f2f:17029fd8-cd05-4089-8da3-52795823a647"
-    # Below is an association by inline inclusion
+      id: "f2f:c59cec71-88b1-439e-b7c5-b2498eaaca3a"
     member_of_research_project:                                             # type = ResearchProject
-      id: "f2f:ff364424-8506-41c4-b5e0-410339462560"
       research_project_type:                                                # type = CodeableConcept
         coding:                                                             # type = Coding
           - code: C47885
@@ -221,3 +216,4 @@ gdc_researchsubject:
             system: http://ncithesaurus.nci.nih.gov/
             tag:
               - harmonized
+      id: "f2f:7196cb06-6999-4e6e-9b78-e1b4233629ab"
