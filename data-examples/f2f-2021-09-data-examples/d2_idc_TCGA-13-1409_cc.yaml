@@ -68,7 +68,6 @@ idc_researchProject:
     identifier:                                                             # type = Identifier
       - value: "idc-project:tcga_ov"                                        # IDC.dicom_all.collection_id 
       - value: "crdc:pj1000015"                                             # Proposed globally unique identifier per recommendation of the CRDC-DST 
-    name: Ovarian Serous Cystadenocarcinoma
     research_project_type:                                                  # type = CodeableConcept
       coding:                                                               # type = Coding
         - code: C47885
