@@ -13,6 +13,8 @@ harmonized_subject:
       - value: "tcga:TCGA-13-1409"                                          # PDC.Cases.case_submitter_id
       - value: "gdc-case:18e0e996-8f23-4f53-94a5-dde38b550863"              # GDC.Cases.case_id
       - value: "tcga:TCGA-13-1409"                                          # GDC.Cases.submitter_id
+      - value: "idc-case:ffde0494-7583-44ca-9e9d-902e84a3b4b3"              # IDC.dicom_all.case_id
+      - value: "tcga:TCGA-13-1409"                                          # IDC.dicom_all.submitter_id
       - value: "crdc:su0000005"                                             # Proposed globally unique identifier per recommendation of the CRDC-DST 
     ethnicity:
       coding:
@@ -65,6 +67,11 @@ harmonized_subject:
           system: http://crdc.nci.nih.gov/pdc
           tag:
             - original
+        - code: F
+          label: F
+          system: http://crdc.nci.nih.gov/idc
+          tag:
+            - original
     vital_status:
       coding:
         - code: C28554
@@ -90,7 +97,13 @@ harmonized_subject:
           system: https://ncithesaurus.nci.nih.gov/
           tag:
             - harmonized
+        - code: Human
+          label: Human
+          system: http://crdc.nci.nih.gov/idc
+          tag:
+            - original
     age_at_death:                                                           # type = Quantity
+      value_decimal: 28578
       unit:
         coding:                                                             # type = Coding
           - code: C25301                                            
@@ -98,8 +111,6 @@ harmonized_subject:
             system: http://ncithesaurus.nci.nih.gov/              
             tag:                                              
               - harmonized  
-
-      value_decimal: 28578
     
 ---
 harmonized_diagnosis:
@@ -181,6 +192,11 @@ harmonized_diagnosis:
               system: http://crdc.nci.nih.gov/pdc
               tag:
                 - original
+            - code: Ovary
+              label: Ovary
+              system: http://crdc.nci.nih.gov/idc
+              tag:
+                - original
     stage:
       - method_type:
         - coding:
@@ -224,6 +240,7 @@ harmonized_researchproject:
     identifier:                                                             # type = Identifier
       - value: "crdc:pj1000015"                                             # Proposed globally unique identifier per recommendation of the CRDC-DST 
       - value: "gdc-project:TCGA-OV"                                        # GDC.Project.project_id 
+      - value: "idc-project:tcga_ov"                                        # IDC.dicom_all.collection_id 
     research_project_type: 
       coding:
       - code: C47885
