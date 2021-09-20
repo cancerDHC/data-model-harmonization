@@ -66,7 +66,6 @@ pdc_specimen:
           system: http://crdc.nci.nih.gov/pdc                
           tag:                                                    
             - original 
-
     tumor_status_at_collection:                                   # type = CodeableConcept 
       coding:                                                     # type = Coding 
         - code: C3261                                            
@@ -79,7 +78,6 @@ pdc_specimen:
           system: http://crdc.nci.nih.gov/pdc                
           tag:                                                    
             - original 
- 
     quantity_measure:                                             # type = QuantityMeasureObservation
       - observation_type:                                         # type = CodeableConcept (This Codeable Concept does not contain a second Coding for the original source code because the weight of a specimen is captured in PDC using a dedicated property (Sample.current_weight), not as a key-vaule pair as we do here)
           coding:                                                 # type = Coding 
@@ -88,7 +86,6 @@ pdc_specimen:
               system: http://ncithesaurus.nci.nih.gov             
               tag:                                               
                 - harmonized                                      
-
         value_quantity:                                           # type = Quantity
           value_decimal: 224
           unit:                                                   # type = CodeableConcept (This Codeable Concept does not contain a second Coding for the original source code because unit of measure is not explicitly declared in the source data - so there is no original value.)
@@ -98,7 +95,6 @@ pdc_specimen:
                 system: http://ncithesaurus.nci.nih.gov             
                 tag:                                              
                   - harmonized    
-
     creation_activity:                                            # type = SpecimenCreationActivity. This object encapsulates data related to how a specimen was created. It is inlined because this is not a stand-alone, identified entity.
       activity_type:                                              # type = CodeableConcept. This field indicates that the activity instance here represents the initial collection from a source, rather than derivation from an existing specimen (e.g via portioning or aliquoting).
         coding:                                                   # type = Coding 
