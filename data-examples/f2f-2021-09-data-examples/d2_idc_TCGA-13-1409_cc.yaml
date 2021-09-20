@@ -67,7 +67,7 @@ idc_researchProject:
     id: "f2f:3a24f021-7fb9-478f-81bc-e114e7263960"                          # Local uuid assigned by this system for the ResearchProject
     identifier:                                                             # type = Identifier
       - value: "idc-project:tcga_ov"                                        # IDC.dicom_all.collection_id 
-      - value: "crdc:pj1000045"                                             # Proposed globally unique identifier per recommendation of the CRDC-DST 
+      - value: "crdc:pj1000015"                                             # Proposed globally unique identifier per recommendation of the CRDC-DST 
     name: Ovarian Serous Cystadenocarcinoma
     research_project_type:                                                  # type = CodeableConcept
       coding:                                                               # type = Coding
